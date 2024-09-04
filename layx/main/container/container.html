@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Container Demo</title>
+
+        <link rel="stylesheet" href="container.css">
+        <link rel="stylesheet" href="/main/typography/typography.css">
+
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                font-family: "Red Hat Display", sans-serif;
+            }
+
+            .visual {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 35vh;
+                border-radius: .5rem;
+                margin-bottom: 1rem;
+                background: rgb(255, 203, 203);
+
+                &.edge {
+                    background: rgb(220, 220, 255);
+                    border-radius: 0;
+                    row-gap: .5rem;
+
+                    >div {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background-color:rgb(255, 203, 203);
+                        height: 100%;
+                    }
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <container style="margin-top: 2rem;">
+            <H2>Container Demo</H2>
+        </container>
+        <container class="visual">
+            <p class="ui-text">Container</p>
+        </container>
+        <container class="visual edge">
+            <div>
+                <p class="ui-text">Container EDGE</p>
+            </div>
+            <div class="full"><p class="ui-text">Container EDGE Full</p></div>
+        </container>
+    </body>
+
+</html>

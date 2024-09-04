@@ -1,0 +1,60 @@
+/* Define breakpoints for different screen sizes */
+:root {
+    --breakpoint-xs: 576px;   /* Extra small (landscape phones) */
+    --breakpoint-sm: 768px;   /* Small (tablets) */
+    --breakpoint-md: 992px;   /* Medium (desktops) */
+    --breakpoint-lg: 1200px;  /* Large (large desktops) */
+    --breakpoint-xl: 1400px;  /* Extra large (larger desktops) */
+    --breakpoint-xxl: 1800px; /* Extra extra large (extra large desktops) */
+    
+    /* Aspect ratio breakpoints */
+    --breakpoint-wd: 16 / 9;            /* Wide aspect ratio (16:9) */
+    --breakpoint-uwd: 21 / 9;       /* Ultrawide aspect ratio (21:9) */
+    --breakpoint-suwd: 32 / 9; /* Super ultrawide aspect ratio (32:9) */
+}
+
+
+/* (sm) Small devices (landscape phones, 576px and up) */
+@media (width >= 576px) { 
+    
+}
+
+/* (md) Medium devices (tablets, 768px and up) */
+@media (width >= 768px) { 
+    
+}
+
+/* (lg) Large devices (desktops, 992px and up) */
+@media (width >= 992px) { 
+   
+}
+
+/* (xl) X-Large devices (large desktops, 1200px and up) */
+@media (width >= 1200px) { 
+    
+}
+
+/* (xxl) XX-Large devices (larger desktops, 1400px and up) */
+@media (width >= 1400px) { 
+   
+}
+
+/* (xxxl) XXX-Large devices (Extra larger desktops, 1800px and up) */
+@media (width >= 1800px) { 
+
+}
+
+/* Wide screens */
+@media (aspect-ratio >= 16 / 9) and (width >= 1800px) { 
+    
+}
+
+/* Ultrawide screens */
+@media (aspect-ratio >= 21 / 9) and (width >= 2000px) { 
+    
+}
+
+/* Super ultrawide screens */
+@media (aspect-ratio >= 32 / 9) and (width >= 3000px) { 
+    
+}

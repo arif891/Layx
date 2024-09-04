@@ -1,0 +1,31 @@
+inline, .inline {
+    display: inline !important;
+}
+
+inline-block, .inline-block {
+    display: inline-block !important;
+}
+
+block, .block {
+    display: block !important;
+}
+
+grid, .grid {
+    display: grid !important;
+}
+
+inline-grid, .inline-grid {
+    display: inline-grid !important;
+}
+
+flex, .flex {
+    display: flex !important;
+}
+
+inline-flex, .inline-flex {
+    display: inline-flex !important;
+}
+
+.none {
+    display: none !important;
+}

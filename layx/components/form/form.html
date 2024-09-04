@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+
+        <link rel="stylesheet" href="form.css">
+
+        <link rel="stylesheet" href="/main/typography/typography.css">
+        <link rel="stylesheet" href="/main/container/container.css">
+
+
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                font-weight: 500;
+                font-family: 'Red Hat Display', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            .demo__container {
+                max-width: 500px;
+
+                > div {
+                    display: grid;
+                    margin-bottom: 1.5rem;
+
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+
+
+
+        <form action="">
+
+            <container class="demo__container">
+
+                <h3>Form Controls</h3>
+
+                <div>
+                    <h5>Text Fields</h5>
+                    <input type="email" id="text" placeholder="Email">
+
+                    <input type="password" name="" id="" placeholder="Password">
+
+                    <input type="number" name="" id="" placeholder="Number">
+                </div>
+
+                <div>
+                    <h5>Others Fields</h5>
+
+                    <input type="file" name="" id="">
+
+                    <input class="modern value" type="range" name="" id="" placeholder="">
+
+                    <input type="color" name="" id="col">
+
+                </div>
+
+                <div>
+                    <h5>Time and Date</h5>
+
+                    <input type="time" name="" id="">
+
+                    <input type="date" name="" id="">
+
+                    <input type="week" name="" id="">
+
+                    <input type="month" name="" id="">
+                </div>
+
+
+                <div>
+
+                    <h5>Checkbox and Radio</h5>
+
+                    <input type="checkbox" name="" id="" style="margin-bottom: 1rem;">
+
+                    <input type="radio" name="" id="" style="display: block; margin-bottom: 1rem;">
+
+                    <div>
+                        <input class="modern" type="checkbox" name="" id="checkbox" required>
+                        <label for="checkbox" tabindex="0">Checkbox</label>
+                    </div>
+
+                    <div>
+                        <input class="modern" type="radio" name="" id="radio">
+                        <label for="radio" tabindex="0">Radio</label>
+                    </div>
+
+                </div>
+
+                <div>
+                    <h5>Button</h5>
+
+                    <input type="button" value="Button">
+                </div>
+
+                <div>
+                    <h5>Select</h5>
+
+                    <select name="pets" id="pet-select">
+                        <option value="">--Please choose an option--</option>
+                        <option value="dog">Dog</option>
+                        <option value="cat">Cat</option>
+                        <option value="hamster">Hamster</option>
+                        <option value="parrot">Parrot</option>
+                        <option value="spider">Spider</option>
+                        <option value="goldfish">Goldfish</option>
+                    </select>
+                </div>
+               
+                <div>
+                    <h5>Text Area</h5>
+
+                    <textarea placeholder="Textarea"></textarea>
+                </div>
+
+            </container>
+
+        </form>
+
+
+
+        <script src="form.js"></script>
+
+    </body>
+
+</html>

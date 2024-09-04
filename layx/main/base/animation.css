@@ -1,0 +1,17 @@
+@keyframes opacity {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes translate {
+    to {
+        translate: 0 0;
+    }
+}
+
+@keyframes rotate {
+    to {
+        rotate: 0deg;
+    }
+}

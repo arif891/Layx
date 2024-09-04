@@ -1,0 +1,36 @@
+container,.container {
+    --edge-offset-x: .75rem;
+    display: block;
+    margin-inline: auto;
+    max-width: calc(100% - calc(var(--edge-offset-x) * 2));
+
+    &.edge {
+        display: grid;
+        grid-template-columns: var(--edge-offset-x, 0px) 1fr var(--edge-offset-x, 0px);
+        max-width: unset;
+
+        & > * {
+            grid-column: 2;
+        }
+
+        & > .full { 
+            grid-column: span 3;
+        }
+    }
+ 
+    @media (width >= 576px) {
+        --edge-offset-x: 2.5%;
+    }
+
+    @media (width >= 992px) {
+        --edge-offset-x: 5%;
+    }
+
+    @media (aspect-ratio >= 21/9) and (width >= 2000px) {
+        --edge-offset-x: 15%;
+    }
+
+    @media (aspect-ratio >= 32/9) and (width >= 3000px) {
+        --edge-offset-x: 25%;
+    }
+}

@@ -1,0 +1,17 @@
+/* Defult Scrollbar Fix */
+@supports selector(::-webkit-scrollbar) and (not (scrollbar-width: auto)) {
+    ::-webkit-scrollbar-thumb {
+        background: var(--scrollbar-color, rgba(0, 0, 0, 0.3));
+    } 
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+}
+
+@supports (scrollbar-width: auto) {
+    :root {
+        scrollbar-width: thin;
+        scrollbar-color: var(--scrollbar-color, rgba(0, 0, 0, 0.3)) transparent;
+    }
+}

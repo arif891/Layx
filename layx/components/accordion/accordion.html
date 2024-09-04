@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+
+        <link rel="stylesheet" href="accordion.css">
+
+        <link rel="stylesheet" href="/layx/main/typography/typography.css">
+        <link rel="stylesheet" href="/layx//main/container/container.css">
+
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                font-family: "Red Hat Display", sans-serif;
+            }
+
+            .demo__container {
+                max-width: 600px;
+                margin-top: 1rem;
+
+                accordion {
+                    border-radius: .5rem;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <container class="demo__container">
+
+            <h3 style="padding-left: .5rem;">Accordion</h3>
+
+            <accordion>
+                <div class="accordion-item">
+                    <button class="accordion-title">What services do you offer?</button>
+
+                    <div class="accordion-content">
+                        <p>We offer a range of web design services including website development, e-commerce solutions,
+                            responsive design, UX/UI design, and website maintenance.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-title">How much does a new website cost?</button>
+
+                    <div class="accordion-content">
+                        <p>The cost of a new website varies based on the project's complexity and specific requirements.
+                            Contact us for a detailed quote.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-title">How long does it take to design a website?</button>
+
+                    <div class="accordion-content">
+                        <p>The timeline for designing a website depends on the project's scope. Typically, it can take
+                            anywhere from 4 to 12 weeks from start to finish.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-title">Will my website be mobile-friendly?</button>
+
+                    <div class="accordion-content">
+                        <p>Yes, all our websites are designed to be responsive, ensuring they look and function well on
+                            all devices, including mobile phones and tablets.</p>
+                    </div>
+                </div>
+            </accordion>
+
+        </container>
+
+        <script src="accordion.js"></script>
+    </body>
+
+</html>

@@ -1,0 +1,193 @@
+/* 
+   Horizontal alignment along the x-axis
+   Justify items */
+.items-x-start {
+    justify-items: start; /* Align items to the start of the x-axis */
+}
+
+.items-x-end {
+    justify-items: end; /* Align items to the end of the x-axis */
+}
+
+.items-x-center {
+    justify-items: center; /* Center items along the x-axis */
+}
+
+.items-x-stretch {
+    justify-items: stretch; /* Stretch items to fill the entire x-axis */
+}
+
+/* 
+   Vertical alignment along the y-axis
+   Align items */
+.items-y-start {
+    align-items: start; /* Align items to the start of the y-axis */
+}
+
+.items-y-end {
+    align-items: end; /* Align items to the end of the y-axis */
+}
+
+.items-y-center {
+    align-items: center; /* Center items along the y-axis */
+}
+
+.items-y-stretch {
+    align-items: stretch; /* Stretch items to fill the entire y-axis */
+}
+
+/* 
+   Alignment along both axes
+   Place items */
+.items-start {
+    place-items: start; /* Place items at the start of both axes */
+}
+
+.items-end {
+    place-items: end; /* Place items at the end of both axes */
+}
+
+.items-center {
+    place-items: center; /* Center items along both axes */
+}
+
+.items-stretch {
+    place-items: stretch; /* Stretch items to fill both axes */
+}
+
+/* 
+   Horizontal justification of content along the x-axis */
+.content-x-start {
+    justify-content: start; /* Justify content to the start of the x-axis */
+}
+
+.content-x-end {
+    justify-content: end; /* Justify content to the end of the x-axis */
+}
+
+.content-x-center {
+    justify-content: center; /* Center content along the x-axis */
+}
+
+.content-x-stretch {
+    justify-content: stretch; /* Stretch content to fill the entire x-axis */
+}
+
+.content-x-around {
+    justify-content: space-around; /* Distribute content with space around it along the x-axis */
+}
+
+.content-x-between {
+    justify-content: space-between; /* Distribute content with space between it along the x-axis */
+}
+
+.content-x-evenly {
+    justify-content: space-evenly; /* Distribute content evenly along the x-axis */
+
+}
+
+/* 
+   Vertical justification of content along the y-axis
+   Align content */
+.content-y-start {
+    align-content: start; /* Align content to the start of the y-axis */
+}
+
+.content-y-end {
+    align-content: end; /* Align content to the end of the y-axis */
+}
+
+.content-y-center {
+    align-content: center; /* Center content along the y-axis */
+}
+
+.content-y-stretch {
+    align-content: stretch; /* Stretch content to fill the entire y-axis */
+}
+
+.content-y-around {
+    align-content: space-around; /* Distribute content with space around it along the y-axis */
+}
+
+.content-y-between {
+    align-content: space-between; /* Distribute content with space between it along the y-axis */
+}
+
+.content-y-evenly {
+    align-content: space-evenly; /* Distribute content evenly along the y-axis */
+}
+
+/* 
+   Alignment along both axes
+   Place content */
+.content-start {
+    place-content: start; /* Place content at the start of both axes */
+}
+
+.content-end {
+    place-content: end; /* Place content at the end of both axes */
+}
+
+.content-center {
+    place-content: center; /* Center content along both axes */
+}
+
+.content-stretch {
+    place-content: stretch; /* Stretch content to fill both axes */
+}
+
+/* 
+   Horizontal self-alignment along the x-axis */
+.self-x-start {
+    justify-self: start; /* Align self along the x-axis to the start */
+}
+
+.self-x-end {
+    justify-self: end; /* Align self along the x-axis to the end */
+}
+
+.self-x-center {
+    justify-self: center; /* Center self along the x-axis */
+}
+
+.self-x-stretch {
+    justify-self: stretch; /* Stretch self to fill the entire x-axis */
+}
+
+/* 
+   Vertical self-alignment along the y-axis
+   Align self */
+.self-y-start {
+    align-self: start; /* Align self along the y-axis to the start */
+}
+
+.self-y-end {
+    align-self: end; /* Align self along the y-axis to the end */
+}
+
+.self-y-center {
+    align-self: center; /* Center self along the y-axis */
+}
+
+.self-y-stretch {
+    align-self: stretch; /* Stretch self to fill the entire y-axis */
+}
+
+/* 
+   Alignment along both axes
+   Place self */
+.self-start {
+    place-self: start; /* Place self at the start of both axes */
+}
+
+.self-end {
+    place-self: end; /* Place self at the end of both axes */
+}
+
+.self-center {
+    place-self: center; /* Center self along both axes */
+}
+
+.self-stretch {
+    place-self: stretch; /* Stretch self to fill both axes */
+}

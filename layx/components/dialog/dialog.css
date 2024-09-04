@@ -1,0 +1,243 @@
+dialog {
+  --edge-offset-x: .5rem;
+  --edge-offset-y: .5rem;
+  --padding: 1.5rem;
+  --gap: 1rem;
+  --radius: .5rem;
+  --bg: rgb(245, 245, 245);
+  --bg-modern: linear-gradient(90deg, rgba(255, 255, 255, .6), rgba(255, 255, 255, .6));
+  --bg-blur: 15px;
+  --close-btn-color: #fff;
+  --accent-color: rgb(178, 241, 255);
+  --animation-duration: .6s;
+
+  position: fixed;
+  inset-inline: var(--edge-offset-x, .5rem);
+  inset-block: unset;
+  padding: var(--padding-y, var(--padding, .5rem)) var(--padding-x, var(--padding, .5rem));
+  width: min(calc(100% - var(--edge-offset-x, .5rem) * 2), clamp(500px, 30vw, 600px));
+  border: var(--border, unset);
+  border-radius: var(--radius, .5rem);
+  background: var(--bg, rgb(245, 245, 245));
+  transform-origin: center top;
+  animation: dialog-hide var(--animation-duration);
+
+  @media (aspect-ratio >=21/9) and (width >=2000px) {
+    --edge-offset-x: 15%;
+  }
+
+  @media (aspect-ratio >=32/9) and (width >=3000px) {
+    --edge-offset-x: 25%;
+  }
+
+
+  &[open] {
+    animation: dialog-show var(--animation-duration);
+
+    .dialog-content {
+      opacity: 0;
+      animation: dialog-content-show calc(var(--animation-duration) * .25) forwards calc(var(--animation-duration) * .75);
+    }
+
+    &::backdrop {
+      opacity: 1;
+     }
+
+  }
+
+  &::backdrop {
+   opacity: 0;
+   transition: .6s allow-discrete;
+  }
+
+  .dialog-content {
+    display: grid;
+    gap: var(--gap, .5rem);
+    opacity: 1;
+    animation: dialog-content-hide calc(var(--animation-duration) * .25) forwards;
+
+    .dialog-header {
+      display: flex;
+      gap: var(--gap, .5rem);
+      justify-content: space-between;
+
+      .dialog-title {
+        margin: unset;
+      }
+    }
+
+    .dialog-main {
+
+      &:last-child {
+        margin: unset;
+      }
+    }
+
+    .dialog-footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--gap, .5rem);
+
+      &.center {
+        justify-content: center;
+      }
+
+      &.end {
+        justify-content: end;
+      }
+
+      &.between {
+        justify-content: space-between;
+      }
+
+      &.grow {
+        >button {
+          flex-grow: 1;
+        }
+      }
+
+      &.vertical {
+        flex-direction: column;
+      }
+    }
+  }
+
+
+  &.modern {
+    background: var(--bg-modern, var(--bg));
+    backdrop-filter: blur(var(--bg-blur));
+    -webkit-backdrop-filter: blur(var(--bg-blur));
+  }
+
+  &:not(.center, .left, .rigth, .bottom) {
+    top: var(--edge-offset-y);
+  }
+
+  &.center {
+    inset-block: 0;
+    transform-origin: center;
+  }
+
+  &.left {
+    inset-inline: var(--edge-offset-x) auto;
+    transform-origin: top left;
+  }
+
+  &.rigth {
+    inset-inline: auto var(--edge-offset-x);
+    transform-origin: top right;
+  }
+
+  &.bottom {
+    bottom: var(--edge-offset-y);
+    transform-origin: bottom center;
+  }
+
+  &.left.bottom,
+  &.left.center {
+    transform-origin: bottom left;
+  }
+
+  &.rigth.bottom,
+  &.rigth.center {
+    transform-origin: bottom right;
+  }
+
+
+
+  &.info {
+    --side-bar-color: #8bdeff;
+    --dialog-bg-rgb: var(--dialog-info-bg-rgb);
+  }
+
+  &.success {
+    --side-bar-color: #8bffc9;
+    --dialog-bg-rgb: var(--dialog-success-bg-rgb);
+  }
+
+  &.warning {
+    --side-bar-color: #f9ff8b;
+    --dialog-bg-rgb: var(--dialog-warning-bg-rgb);
+  }
+
+  &.danger {
+    --side-bar-color: #ff8b8f;
+    --dialog-bg-rgb: var(--dialog-danger-bg-rgb);
+  }
+
+}
+
+@starting-style {
+  dialog[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+
+@keyframes dialog-show {
+  0% {
+    scale: 0;
+    display: none;
+  }
+
+  100% {
+    scale: 1;
+    display: block;
+  }
+}
+
+@keyframes dialog-hide {
+  0% {
+    scale: 1;
+    display: block;
+  }
+
+  25% {
+    scale: 1;
+  }
+
+  100% {
+    scale: 0;
+    display: none;
+  }
+}
+
+@keyframes dialog-content-show {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-content-hide {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-side-grow {
+  0% {
+    scale: 1 0;
+  }
+
+  100% {
+    scale: 1 1;
+  }
+}
+
+@keyframes dialog-side-shrink {
+  0% {
+    scale: 1 1;
+  }
+
+  100% {
+    scale: 1 0;
+  }
+}

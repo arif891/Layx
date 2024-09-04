@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+
+        <link rel="stylesheet" href="dialog.css">
+
+        <link rel="stylesheet" href="/main/typography/typography.css">
+        <link rel="stylesheet" href="/components/button/button.css">
+
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                font-family: "Red Hat Display", sans-serif;
+                height: 200vh;
+            }
+        </style>
+    </head>
+
+    <body>
+        <dialog id="dialog" class="dialog bottom">
+            <div class="dialog-content">
+                <div class="dialog-header">
+                    <h5 class="dialog-title">Some big demo dialog header?</h5>
+                    <button class="close"></button>
+                </div>
+                <div class="dialog-main">
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit mollitia illum perferendis
+                        molestiae voluptate debitis provident veritatis ipsam autem aut quaerat recusandae</p>
+                </div>
+                <div class="dialog-footer grow">
+                    <button class="lg light wide" type="button">Demo</button>
+                    <button class="lg dark wide" type="button">Book</button>
+                </div>
+            </div>
+        </dialog>
+
+        <button class="dialog-toggler" id="tem" data-toggle="dialog">Show</button>
+
+        <script src="dialog.js"></script>
+    </body>
+
+</html>

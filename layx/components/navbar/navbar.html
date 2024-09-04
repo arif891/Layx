@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Navbar Demo</title>
+
+        <link rel="stylesheet" href="navbar.css">
+
+        <link rel="stylesheet" href="/main/typography/typography.css">
+        <link rel="stylesheet" href="/components/button/button.css">
+        <link rel="stylesheet" href="/main/container/container.css">
+
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                font-family: "Red Hat Display", sans-serif;
+            }
+
+            navbar {
+                margin-bottom: 1rem;
+            }
+
+            container {
+                height: 200px;
+                background: rgb(255, 151, 151);
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+
+            <navbar>
+                <div class="warper">
+                    <div class="main center">
+                        <div class="brand">
+                            <h5 class="logo-text">Orbit Rock</h5>
+                            <button class="toggler"></button>
+                        </div>
+                        <div class="warp-able side">
+                            <button class="close"></button>
+                            <div>
+                                <nav class="link-warper">
+                                    <a href="" class="link">Home</a>
+                                    <a href="" class="link">Amout</a>
+                                    <a href="" class="link">Demo</a>
+                                    <a href="" class="link">Conatact</a>
+                                    <a href="" class="link">FAQs</a>
+                                    <a href="" class="link">Test</a>
+                                </nav>
+                            </div>
+                            <div>
+                                <button>Button</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </navbar>
+
+        </header>
+
+        <container></container>
+
+        <script src="navbar.js"></script>
+    </body>
+
+</html>

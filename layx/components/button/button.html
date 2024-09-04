@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+
+        <link rel="stylesheet" href="button.css">
+
+        <link rel="stylesheet" href="/main/typography/typography.css">
+        <link rel="stylesheet" href="/main/container/container.css">
+
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Red Hat Display", sans-serif;
+            }
+
+            div {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: flex-start;
+                gap: .5rem;
+                margin-bottom: 1.5rem;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <container class="demo__container">
+            <h3>Buttons</h3>
+
+            <div>
+                <button type="button">Demo</button>
+                <button class="dark" type="button">Demo</button>
+                <button class="r" type="button">Demo</button>
+            </div>
+
+            <div>
+                <button class="lg" type="button">Demo</button>
+                <button class="lg dark" type="button">Demo</button>
+                <button class="lg r" type="button">Demo</button>
+            </div>
+
+            <div>
+                <button class="xl" type="button">Demo</button>
+                <button class="xl dark" type="button">Demo</button>
+                <button class="xl r" type="button">Demo</button>
+            </div>
+
+        </container>
+
+    </body>
+
+</html>
