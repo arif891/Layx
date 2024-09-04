@@ -1,1 +1,1 @@
-<h1>This is Layx official repo</h1>
+<h1 align="center>This is Layx official repo</h1>
