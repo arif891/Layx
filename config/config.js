@@ -260,13 +260,19 @@ async function mainProcess(layxPath, basePath, layxOutPath, BaseOutPath, fileTyp
     const Content = await processImports(layx, layxPath, fileType);
     const filteredContent = removeImportStatements(Content);
 
-    await writeFile(layxOutPath, `/* layx ${fileType} code */\n${filteredContent}`);
+    if (fileType='js') {
+        finalContent = removeExportAndDefault(filteredContent);
+    } else {
+        finalContent = filteredContent;
+    }
+
+    await writeFile(layxOutPath, `/* layx ${fileType} code */\n${finalContent}`);
     console.log(`All layx ${fileType} code written to ${layxOutPath}`);
 
     await writeFile(BaseOutPath, `/* User base ${fileType} code */${removeComments(base)}`);
     console.log(`base.${fileType} code moved to ${BaseOutPath}`);
 
-    await writeFile(basePath, minify(filteredContent + base));
+    await writeFile(basePath, minify(finalContent + base));
     console.log(`All layx and user_base.${fileType} minified code written to ${basePath} successfully`);
 
     await processPages(pagesCSSDirectory, pagesCSSOutDirectory, fileType);
@@ -396,6 +402,14 @@ function extractImportUrls(content, fileType = 'css') {
 
 }
 
+function removeExportAndDefault(content) {
+    let transformedCode = content.replace(/export\s+default\s+/g, '');
+    transformedCode = transformedCode.replace(/export\s+/g, '');
+    transformedCode = transformedCode.replace(/\bdefault\s+/g, '');
+
+    return transformedCode;
+}
+
 function removeImportStatements(content) {
     return content.split('\n').filter(line => !line.trim().startsWith('@import') && !line.trim().startsWith('import')).join('\n');
 }
@@ -408,6 +422,7 @@ async function getFilesWithExtension(directory, extension) {
     const files = await readdir(directory);
     return files.filter(file => path.extname(file) === `.${extension}`);
 }
+
 
 // Code for optimizetion
 
