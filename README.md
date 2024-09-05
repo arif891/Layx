@@ -14,15 +14,14 @@ Layx is an extensible layout framework for modern web development, combining pow
 ## Installation
 
 ```bash
-npm install layx
+layx install
 ```
 
 ## Quick Start
 
 ```bash
-npx layx create my-project
-cd my-project
-npm start
+layx create
+layx build
 ```
 
 ## Documentation

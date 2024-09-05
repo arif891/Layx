@@ -76,7 +76,3 @@ small {
 a {
    text-decoration: none;
 }
-
-a:hover {
-    --link-color-rgb: var(--link-hover-color-rgb);
-}
