@@ -260,7 +260,7 @@ async function mainProcess(layxPath, basePath, layxOutPath, BaseOutPath, fileTyp
     const Content = await processImports(layx, layxPath, fileType);
     const filteredContent = removeImportStatements(Content);
 
-    if (fileType='js') {
+    if (fileType == 'js') {
         finalContent = removeExportAndDefault(filteredContent);
     } else {
         finalContent = filteredContent;
