@@ -65,69 +65,62 @@ navbar,
             }
 
             .warp-able {
-                position: absolute;
-                inset: 100% 0 auto;
                 display: flex;
-                flex-direction: column;
-                gap: .5rem;
-                padding: .5rem;
-                background: var(--navbar-warp-bg, #fff);
-                transition: var(--transition, .3s);
 
-                &:not(.side, .rigth),
-                full {
-                    visibility: hidden;
-                    opacity: 0;
+                @media (width < 992px) {
+                    position: absolute;
+                    inset: 100% 0 auto;
+                    flex-direction: column;
+                    gap: .5rem;
+                    padding: .5rem;
+                    background: var(--navbar-warp-bg, #fff);
+                    transition: var(--transition, .3s);
 
-                    &.open {
-                        visibility: visible;
-                        opacity: 1;
+                    &:not(.side, .rigth),full {
+                        visibility: hidden;
+                        opacity: 0;
+
+                        &.open {
+                            visibility: visible;
+                            opacity: 1;
+                        }
+                    }
+
+
+                    &.full,&.side,&.rigth {
+                        position: fixed;
+                        min-width: 80%;
+
+                        &.full {
+                            inset: 0;
+                        }
+
+                        &.side {
+                            inset: 0 auto 0 0;
+                            translate: -100% 0;
+
+                            &.open {
+                                translate: 0 0;
+                            }
+                        }
+
+                        &.rigth {
+                            inset: 0 0 0 auto;
+                            translate: 100% 0;
+
+                            &.open {
+                                translate: 0 0;
+                            }
+                        }
+
                     }
                 }
 
 
-                &.full,
-                &.side,
-                &.rigth {
-                    position: fixed;
-                    min-width: 80%;
-
-                    &.full {
-                        inset: 0;
-                    }
-
-                    &.side {
-                        inset: 0 auto 0 0;
-                        translate: -100% 0;
-
-                        &.open {
-                            translate: 0 0;
-                        }
-                    }
-
-                    &.rigth {
-                        inset: 0 0 0 auto;
-                        translate: 100% 0;
-
-                        &.open {
-                            translate: 0 0;
-                        }
-                    }
-
-                }
 
                 @media (width >=992px) {
-                    position: static !important;
-                    flex-direction: row;
                     justify-content: end;
                     align-items: center;
-                    background: unset;
-                    min-width: unset;
-                    padding: unset;
-                    visibility: unset !important;
-                    opacity: unset !important;
-                    translate: unset !important;
-                    backdrop-filter: unset;
 
                     &:has(>:nth-child(2)) {
                         justify-content: space-between;
@@ -252,6 +245,7 @@ navbar,
 
         &:not(:has(.main.modern)) {
             background: transparent;
+
             &.scrolled {
                 background: var(--navbar-bg, #fff);
             }
@@ -260,11 +254,20 @@ navbar,
         .main.modern.center {
             --gap: 10rem;
             background: transparent;
+
+            @media (width < 992px) {
+                backdrop-filter: unset;
+            }
         }
 
         &.scrolled {
             &:has(.main.modern.center) {
                 margin-top: 20px;
+
+
+                .main {
+                    background: var(--navbar-bg, #fff);
+                }
 
                 @media (width >=992px) {
                     margin-top: unset;
@@ -272,7 +275,6 @@ navbar,
 
                     .main {
                         flex-grow: 0;
-                        background: var(--navbar-bg, #fff);
                     }
                 }
             }
