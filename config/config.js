@@ -409,12 +409,51 @@ async function getFilesWithExtension(directory, extension) {
     return files.filter(file => path.extname(file) === `.${extension}`);
 }
 
+// Code for optimizetion
+
+function extractClasses(html, startClass, type = 'class') {
+    const escapedStartClass = startClass.replace(/[-_]/g, '\\$&');
+    let regex, processMatch;
+
+    switch (type) {
+        case 'class':
+            regex = new RegExp(`class="([^"]*?\\b${escapedStartClass}\\d+\\b[^"]*?)"`, 'g');
+            processMatch = (match) => {
+                return match[1].split(/\s+/).filter(className => className.startsWith(startClass));
+            };
+            break;
+        case 'media':
+            regex = new RegExp(`\\b${escapedStartClass}(\\w+)-\\d+\\b`, 'g');
+            processMatch = (match) => [match[1]];
+            break;
+        default:
+            throw new Error('Invalid type specified');
+    }
+
+    const resultSet = new Set();
+    let match;
+    while ((match = regex.exec(html)) !== null) {
+        processMatch(match).forEach(item => resultSet.add(item));
+    }
+
+    const sortFn = type === 'class'
+        ? (a, b) => parseInt(a.split(/[-_]/).pop()) - parseInt(b.split(/[-_]/).pop())
+        : (() => {
+            const mediaOrder = ['sm', 'md', 'lg', 'xl', 'xxl'];
+            return (a, b) => mediaOrder.indexOf(a) - mediaOrder.indexOf(b);
+        })();
+
+    return Array.from(resultSet).sort(sortFn);
+}
+
+// Node js functions
+
 async function readFile(filePath, encoding = 'utf8') {
     return await fs.readFile(filePath, { encoding });
 }
 
 async function writeFile(filePath, content, flag = 'w') {
-    return await fs.writeFile(filePath, content, { flag: flag});
+    return await fs.writeFile(filePath, content, { flag: flag });
 }
 
 async function readdir(dir) {
