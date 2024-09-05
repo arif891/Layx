@@ -8,9 +8,10 @@
 
         <link rel="stylesheet" href="navbar.css">
 
-        <link rel="stylesheet" href="/main/typography/typography.css">
-        <link rel="stylesheet" href="/components/button/button.css">
-        <link rel="stylesheet" href="/main/container/container.css">
+        <link rel="stylesheet" href="/layx/main/typography/typography.css">
+        <link rel="stylesheet" href="/layx/components/button/button.css">
+        <link rel="stylesheet" href="/layx/main/container/container.css">
+        <link rel="stylesheet" href="/layx/main/base/scrollbar.css">
 
         <style>
             * {
@@ -19,16 +20,23 @@
 
             body {
                 margin: 0;
+                min-height: 150vh;
                 font-family: "Red Hat Display", sans-serif;
+                background-color: antiquewhite;
             }
 
             navbar {
-                margin-bottom: 1rem;
+                --navbar-bg: rgba(255, 255, 255, 0.5);
+                --radius: .5rem;
+
             }
 
             container {
+                display: grid;
+                place-content: center;
                 height: 200px;
-                background: rgb(255, 151, 151);
+                margin-top: 30vh;
+                background: rgba(255, 255, 255, 0.5);
             }
         </style>
     </head>
@@ -36,11 +44,11 @@
     <body>
         <header>
 
-            <navbar>
+            <navbar class="fixed update-scroll-state">
                 <div class="warper">
-                    <div class="main center">
+                    <div class="main modern center move">
                         <div class="brand">
-                            <h5 class="logo-text">Orbit Rock</h5>
+                            <h5 class="logo-text">Layx</h5>
                             <button class="toggler"></button>
                         </div>
                         <div class="warp-able side">
@@ -65,9 +73,68 @@
 
         </header>
 
-        <container></container>
+        <container>
+            <p class="ui-text">Container</p>
+        </container>
 
-        <script src="navbar.js"></script>
+        <script>
+            const navbar = document.querySelector('navbar');
+            const navbarWarp = navbar.querySelector('.warp-able')
+            const navbarToggler = navbar.querySelector('.toggler');
+            const navbarCloseBtn = navbar.querySelector('.close');
+            let navbarBackdrop = navbar.querySelector('backdrop');
+
+            navbarToggler.addEventListener('click', () => {
+
+                if (!navbarBackdrop && !navbarWarp.classList.contains('full')) {
+                    navbarBackdrop = document.createElement('backdrop');
+                    navbarBackdrop.classList.add('navbar-backdrop');
+
+                    navbarBackdrop.addEventListener('click', () => {
+                        toggleNavbar();
+                    });
+
+                    navbarWarp.insertAdjacentElement('afterend', navbarBackdrop);
+                }
+
+                toggleNavbar();
+            });
+
+            function toggleNavbar() {
+                navbar.classList.toggle('open');
+                navbarWarp.classList.toggle('open');
+
+                if (!navbarWarp.classList.contains('full')) {
+                    navbarBackdrop.classList.toggle('open');
+                }
+
+                document.body.style.overflow = navbar.classList.contains('open') ? 'hidden' : '';
+            }
+
+            if (navbarCloseBtn) {
+                navbarCloseBtn.addEventListener('click', () => {
+                    toggleNavbar();
+                });
+            };
+
+            if (navbar.classList.contains('update-scroll-state')) {
+                const scrollDistance = window.innerHeight * .2;
+                let previousScrollPosition = window.scrollY;
+
+                function updateScrollState(element, distance) {
+                    const scrolledPastDistance = window.scrollY > distance;
+                    const scrollingDown = previousScrollPosition < window.scrollY && (distance * 3) < window.scrollY;
+
+                    element.classList.toggle('scrolled', scrolledPastDistance);
+                    element.classList.toggle('scrollingDown', scrollingDown);
+                    previousScrollPosition = window.scrollY;
+                }
+
+                window.addEventListener('scroll', function () {
+                    updateScrollState(navbar, scrollDistance);
+                }, { passive: true });
+            };
+        </script>
     </body>
 
 </html>

@@ -1,4 +1,5 @@
-navbar,.navbar {
+navbar,
+.navbar {
     --edge-offset-x: .75rem;
     --gap: 1rem;
     --padding-x: .75rem;
@@ -16,7 +17,7 @@ navbar,.navbar {
     transition: var(--transition, .3s);
     z-index: 5;
 
-    &:has(:not(.main.modern)) {
+    &:not(:has(.main.modern)) {
         border-radius: var(--radius);
         backdrop-filter: blur(var(--blur));
         background: var(--navbar-bg, #fff);
@@ -73,7 +74,8 @@ navbar,.navbar {
                 background: var(--navbar-warp-bg, #fff);
                 transition: var(--transition, .3s);
 
-                &:not(.side, .rigth), full {
+                &:not(.side, .rigth),
+                full {
                     visibility: hidden;
                     opacity: 0;
 
@@ -84,7 +86,9 @@ navbar,.navbar {
                 }
 
 
-                &.full,&.side,&.rigth {
+                &.full,
+                &.side,
+                &.rigth {
                     position: fixed;
                     min-width: 80%;
 
@@ -219,8 +223,8 @@ navbar,.navbar {
                 }
 
             }
-        
-            .warp-able:not(.side,.rigth,.full)~backdrop {
+
+            .warp-able:not(.side, .rigth, .full)~backdrop {
                 z-index: -1;
             }
 
@@ -245,18 +249,22 @@ navbar,.navbar {
     }
 
     &.update-scroll-state {
-        .main.center.move {
-            border-radius: var(--radius);
+
+        &:not(:has(.main.modern)) {
+            background: transparent;
+            &.scrolled {
+                background: var(--navbar-bg, #fff);
+            }
+        }
+
+        .main.modern.center {
+            --gap: 5rem;
+            background: transparent;
         }
 
         &.scrolled {
-            &:has(.main.center.move) {
-
+            &:has(.main.modern.center) {
                 margin-top: 20px;
-
-                .main {
-                    background: var(--navbar-main-bg);
-                }
 
                 @media (width >=992px) {
                     margin-top: unset;
@@ -264,6 +272,7 @@ navbar,.navbar {
 
                     .main {
                         flex-grow: 0;
+                        background: var(--navbar-bg, #fff);
                     }
                 }
             }
