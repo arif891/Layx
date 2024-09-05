@@ -1,11 +1,7 @@
 @import url(base/variable.css);
 @import url(base/scrollbar.css);
-@import url(base/reboot.css);
-@import url(base/animation.css);
-
+@import url(base/base.css);
 @import url(typography/typography.css);
-
 @import url(container/container.css);
-
 @import url(layout/layout.css);
 @import url(layout/layuot-helper.css);

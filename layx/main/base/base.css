@@ -16,7 +16,7 @@ body {
     font-size: var(--font-size);
     line-height: var(--line-height);
     -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
 }
 
 img,svg, video {
@@ -46,6 +46,31 @@ ol,ul,dl {
 
 :is(ol, ul) :is(ol, ul) {
     margin-block: unset;
+}
+
+pre,code,kbd,samp {
+    font-size: min(calc(.8rem + .15vw), 1rem);
+}
+
+pre {
+  margin-block: unset;
+}
+
+code {
+  color: var(--code-color, #d63384);
+}
+
+kbd { 
+  width: fit-content;  
+  padding: 0.1875rem 0.375rem;
+  color: var(--kbd-color, #fff);
+  background-color: var(--kbd-bg-color, #252525);
+  border-radius: 0.25rem;
+}
+
+small {
+    font-size: min(calc(.8rem + .1vw), 1rem);
+    font-weight: 475;
 }
 
 a {

@@ -21,6 +21,8 @@
     --secondary-color: #6c757d;
     --link-color: #0d6efd;
     --link-hover-color: #0a58ca;
+    --accent-color: #7bd1ff;
+    --scrollbar-color: rgba(var(--color-rgb), .4);
     --color: rgb(var(--color-rgb));
     --bg-color: rgb(var(--bg-color-rgb));
     color-scheme: light;
@@ -35,5 +37,6 @@
     --secondary-color: #6c757d;
     --link-color: #6ea8fe;
     --link-hover-color: #8bb9fe;
+    --accent-color: #56a9d6;
     color-scheme: dark;
 }
