@@ -119,7 +119,7 @@ IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
     IF EXIST "%PROGRAM_DIR%" (
     ECHO Removing Config Files.
     rmdir "%CURRENT_DIR%%CONFIG_DIR%" /S /Q
-    DEL "%CURRENT_DIR%/layx.bat" /S /Q
+    DEL "%CURRENT_DIR%layx.bat" /S /Q
     ECHO Removed Config Files.
     ) ELSE (
       ECHO Please first install layx
