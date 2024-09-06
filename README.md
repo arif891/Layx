@@ -65,4 +65,4 @@ Layx is open source software [licensed as MIT](LICENSE).
 
 ⭐ If you find Layx helpful, consider giving it a star on GitHub!
 
-[Report Bug](https://github.com/yourusername/Layx/issues) · [Request Feature](https://github.com/yourusername/Layx/issues)
+[Report Bug](https://github.com/arif891/Layx/issues) · [Request Feature](https://github.com/arif891/Layx/issues)
