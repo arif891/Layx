@@ -11,11 +11,11 @@ export default class Accordion {
     }
   
     toggleAccordion(event) {
-      const title = event.target.closest('.accordion-title');
+      const title = event.target.closest('.title');
       if (!title) return;
   
-      const currentItem = title.closest('.accordion-item');
-      const allItems = currentItem.closest('accordion').querySelectorAll('.accordion-item');
+      const currentItem = title.closest('.item');
+      const allItems = currentItem.closest('accordion').querySelectorAll('.item');
   
       currentItem.classList.toggle('active');
   

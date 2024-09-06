@@ -13,7 +13,7 @@ accordion {
     background: var(--bg);
     scrollbar-width: none;
 
-    .accordion-item {
+    .item {
         display: grid;
         grid-template-rows: max-content 0fr;
         padding: var(--padding-y, var(--padding, .5rem)) var(--padding-x, var(--padding, .5rem));
@@ -29,16 +29,16 @@ accordion {
         &.active {
             grid-template-rows: max-content 1fr;
             
-            .accordion-title::after {
+            .title::after {
                 rotate: 180deg;
             }
         }
 
-        &:has(.accordion-title:focus-visible) {
+        &:has(.title:focus-visible) {
             outline: 1px solid var(--accent-color);
         }
 
-        .accordion-title {
+        .title {
             display: flex;
             gap: .5lh;
             justify-content: space-between;
@@ -69,7 +69,7 @@ accordion {
             }
         }
 
-        .accordion-content {
+        .content {
             overflow: hidden;
 
             :first-child {
