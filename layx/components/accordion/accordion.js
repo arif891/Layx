@@ -1,4 +1,4 @@
-export default class Accordion {
+class Accordion {
     constructor(selector = 'accordion') {
       this.accordions = document.querySelectorAll(selector);
       this.init();
@@ -26,3 +26,6 @@ export default class Accordion {
       });
     }
   }
+
+  // Export an instance of Accordion to initialize it when imported
+  export default new Accordion();

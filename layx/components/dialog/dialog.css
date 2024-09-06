@@ -5,7 +5,7 @@ dialog {
   --gap: 1rem;
   --radius: .5rem;
   --bg: rgb(245, 245, 245);
-  --bg-modern: linear-gradient(90deg, rgba(255, 255, 255, .6), rgba(255, 255, 255, .6));
+  --bg-modern: linear-gradient(145deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
   --bg-blur: 15px;
   --close-btn-color: #fff;
   --accent-color: rgb(178, 241, 255);
@@ -34,46 +34,45 @@ dialog {
   &[open] {
     animation: dialog-show var(--animation-duration);
 
-    .dialog-content {
+    .content {
       opacity: 0;
       animation: dialog-content-show calc(var(--animation-duration) * .25) forwards calc(var(--animation-duration) * .75);
     }
 
     &::backdrop {
       opacity: 1;
-     }
+    }
 
   }
 
   &::backdrop {
-   opacity: 0;
-   transition: .6s allow-discrete;
+    opacity: 0;
+    transition: .6s allow-discrete;
   }
 
-  .dialog-content {
+  .content {
     display: grid;
     gap: var(--gap, .5rem);
     opacity: 1;
     animation: dialog-content-hide calc(var(--animation-duration) * .25) forwards;
 
-    .dialog-header {
+    .header {
       display: flex;
       gap: var(--gap, .5rem);
       justify-content: space-between;
 
-      .dialog-title {
+      .title {
         margin: unset;
       }
     }
 
-    .dialog-main {
-
+    .main {
       &:last-child {
         margin: unset;
       }
     }
 
-    .dialog-footer {
+    .footer {
       display: flex;
       flex-wrap: wrap;
       gap: var(--gap, .5rem);
