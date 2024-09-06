@@ -178,299 +178,245 @@ const layout = {
     }
 };
 
-// Node js code
-const fs = require('node:fs/promises');
-const path = require('node:path');
-const http = require('http');
+// build-tool.js
+import { promises as fs } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const currentDirectory = process.cwd();
-const args = process.argv.slice(2);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+class BuildTool {
+  constructor() {
+    this.currentDirectory = process.cwd();
+    this.programDirectory = 'C:/Program Files/layx/';
+    this.configDirectory = path.join(this.currentDirectory, 'config');
+    this.assetsDirectory = path.join(this.currentDirectory, 'assets');
+    this.layxDirectory = path.join(this.currentDirectory, 'layx');
+    this.pagesDirectory = path.join(this.currentDirectory, 'pages');
 
-const programDirectory = `C:/Program Files/layx/`;
-const configDirectory = `${currentDirectory}/config/`;
-const imagesDirectory = `${currentDirectory}/assets/images/`;
-const CSSDirectory = `${currentDirectory}/assets/css/`;
-const JSDirectory = `${currentDirectory}/assets/js/`;
-const baseCSSPath = `${CSSDirectory}base.css`;
-const baseJSPath = `${JSDirectory}base.js`;
-const layxDirectory = `${currentDirectory}/layx/`;
-const layxCSSDirectory = `${layxDirectory}assets/css/`;
-const layxJSDirectory = `${layxDirectory}assets/js/`;
-const layxCSSPath = `${layxDirectory}layx.css`;
-const layxJSPath = `${layxDirectory}layx.js`;
-const layxCSSOutPath = `${layxCSSDirectory}base.css`;
-const layxJSOutPath = `${layxJSDirectory}base.js`;
-const BaseCSSOutPath = `${layxCSSDirectory}user_base.css`;
-const BaseJSOutPath = `${layxJSDirectory}user_base.js`;
-const pagesDirectory = `${currentDirectory}/pages/`;
-const pagesCSSDirectory = `${currentDirectory}/assets/css/pages/`;
-const pagesJSDirectory = `${currentDirectory}/assets/js/pages/`;
-const pagesCSSOutDirectory = `${layxDirectory}/assets/css/pages/`;
-const pagesJSOutDirectory = `${layxDirectory}/assets/js/pages/`;
+    this.directories = {
+      images: path.join(this.assetsDirectory, 'images'),
+      css: path.join(this.assetsDirectory, 'css'),
+      js: path.join(this.assetsDirectory, 'js'),
+      layxCss: path.join(this.layxDirectory, 'assets', 'css'),
+      layxJs: path.join(this.layxDirectory, 'assets', 'js'),
+      pagesCss: path.join(this.assetsDirectory, 'css', 'pages'),
+      pagesJs: path.join(this.assetsDirectory, 'js', 'pages'),
+      pagesCssOut: path.join(this.layxDirectory, 'assets', 'css', 'pages'),
+      pagesJsOut: path.join(this.layxDirectory, 'assets', 'js', 'pages'),
+    };
 
+    this.files = {
+      baseCss: path.join(this.directories.css, 'base.css'),
+      baseJs: path.join(this.directories.js, 'base.js'),
+      layxCss: path.join(this.layxDirectory, 'layx.css'),
+      layxJs: path.join(this.layxDirectory, 'layx.js'),
+      layxCssOut: path.join(this.directories.layxCss, 'base.css'),
+      layxJsOut: path.join(this.directories.layxJs, 'base.js'),
+      baseCssOut: path.join(this.directories.layxCss, 'user_base.css'),
+      baseJsOut: path.join(this.directories.layxJs, 'user_base.js'),
+    };
+  }
 
-async function main() {
+  async build() {
+    console.log('Starting build process...');
+    await this.processFiles('css');
+    await this.processFiles('js');
+    await this.processPages('css');
+    await this.processPages('js');
+    console.log('Build process completed.');
+    console.warn('Warning: Do not build again. If you want to modify your project, first unbuild with "layx unbuild".');
+  }
 
-    if (currentDirectory.includes(programDirectory)) {
-        console.warn(`config.js: Cannot perform operation on directory ${programDirectory}`);
-        process.exit(1);
-    }
-
-    for (const arg of args) {
-        switch (arg) {
-            case "build":
-                await buildProject();
-                break;
-            case "unbuild":
-                await unbuildProject();
-                break;
-            default:
-                console.log(`Unknown command: ${arg}`);
-                break;
-        }
-    }
-}
-
-main().catch(error => {
-    console.error('An error occurred:', error);
-    process.exit(1);
-});
-
-async function buildProject() {
-    try {
-        await mainProcess(layxCSSPath, baseCSSPath, layxCSSOutPath, BaseCSSOutPath, fileType = 'css');
-        await mainProcess(layxJSPath, baseJSPath, layxJSOutPath, BaseJSOutPath, fileType = 'js');
-        console.warn('Warning: Do not build again. If you want to modify your project, first unbuild with "layx unbuild".');
-    } catch (error) {
-        console.error('Error during build process:', error);
-    }
-}
-
-async function mainProcess(layxPath, basePath, layxOutPath, BaseOutPath, fileType) {
-    const layx = await readFile(layxPath);
-    let base = '';
-
-    try {
-        base = await readFile(basePath);
-    } catch (error) {
-        console.warn(`Warning: Could not read ${basePath}. Continuing without it.`);
-    }
-
-    const Content = await processImports(layx, layxPath, fileType);
-    const filteredContent = removeImportStatements(Content);
-
-    if (fileType == 'js') {
-        finalContent = removeExportAndDefault(filteredContent);
-    } else {
-        finalContent = filteredContent;
-    }
-
-    await writeFile(layxOutPath, `/* layx ${fileType} code */\n${finalContent}`);
-    console.log(`All layx ${fileType} code written to ${layxOutPath}`);
-
-    await writeFile(BaseOutPath, `/* User base ${fileType} code */${removeComments(base)}`);
-    console.log(`base.${fileType} code moved to ${BaseOutPath}`);
-
-    await writeFile(basePath, minify(finalContent + base));
-    console.log(`All layx and user_base.${fileType} minified code written to ${basePath} successfully`);
-
-    await processPages(pagesCSSDirectory, pagesCSSOutDirectory, fileType);
-    await processPages(pagesJSDirectory, pagesJSOutDirectory, fileType);
-}
-
-async function processImports(Content, filePath, fileType) {
-    if (!Content) {
-        console.error(`Failed to read content for ${filePath}`);
-        return '';
-    }
-
-    const allFilesContent = [{ path: filePath, content: Content }];
-    const importUrls = extractImportUrls(Content, fileType);
-
-    for (const url of importUrls) {
-
-        switch (fileType) {
-            case 'css':
-                importedFilePath = path.resolve(path.dirname(filePath), url);
-                break;
-            case 'js':
-                importedFilePath = path.resolve(path.join(currentDirectory, url));
-                break;
-        }
-
-        try {
-            const nestedContent = await readFile(importedFilePath);
-            console.log(`Read file ${url} successfully`);
-            allFilesContent.push({ path: importedFilePath, content: nestedContent });
-        } catch (error) {
-            console.error(`Cannot read file ${importedFilePath}. Error: ${error.message}`);
-        }
-    }
-
-    return allFilesContent.map(file => file.content).join('\n');
-}
-
-async function processPages(pagesDirectory, pagesOutDirectory, fileType) {
-    try {
-        const pageFiles = await getFilesWithExtension(pagesDirectory, fileType);
-
-        for (const File of pageFiles) {
-            try {
-                const Content = await readFile(path.join(pagesDirectory, File));
-                await writeFile(path.join(pagesOutDirectory, File), Content);
-                await writeFile(path.join(pagesDirectory, File), minify(Content, fileType));
-                console.log(`${File} minified and original moved to ${path.join(pagesOutDirectory, File)}`);
-            } catch (error) {
-                console.error(`Cannot process ${File}`, error);
-            }
-        }
-    } catch (error) {
-        console.error(`Cannot process files at "${pagesDirectory}"`, error);
-    }
-}
-
-async function unbuildProject() {
-
-    restore(BaseCSSOutPath, baseCSSPath, 'css');
-    restore(BaseJSOutPath, baseJSPath, 'js');
-
-    await restorePages('css');
-    await restorePages('js');
-
+  async unbuild() {
+    console.log('Starting unbuild process...');
+    await this.restoreFile(this.files.baseCssOut, this.files.baseCss, 'css');
+    await this.restoreFile(this.files.baseJsOut, this.files.baseJs, 'js');
+    await this.restorePages('css');
+    await this.restorePages('js');
     console.log('Unbuild process completed.');
-}
+  }
 
-async function restore(BaseOutPath, basePath, fileType) {
+  async processFiles(fileType) {
+    const layxPath = fileType === 'css' ? this.files.layxCss : this.files.layxJs;
+    const basePath = fileType === 'css' ? this.files.baseCss : this.files.baseJs;
+    const layxOutPath = fileType === 'css' ? this.files.layxCssOut : this.files.layxJsOut;
+    const baseOutPath = fileType === 'css' ? this.files.baseCssOut : this.files.baseJsOut;
+
+    const layxContent = await this.readFile(layxPath);
+    let baseContent = await this.readFile(basePath).catch(() => {
+      console.warn(`Warning: Could not read ${basePath}. Continuing without it.`);
+      return '';
+    });
+
+    const processedContent = await this.processImports(layxContent, layxPath, fileType);
+    const filteredContent = this.removeImportStatements(processedContent);
+    const finalContent = fileType === 'js' ? this.removeExportAndDefault(filteredContent) : filteredContent;
+
+    await this.writeFile(layxOutPath, `/* layx ${fileType} code */\n${finalContent}`);
+    await this.writeFile(baseOutPath, `/* User base ${fileType} code */\n${this.removeComments(baseContent)}`);
+    await this.writeFile(basePath, this.minify(finalContent + baseContent, fileType));
+
+    console.log(`Processed ${fileType.toUpperCase()} files successfully.`);
+  }
+
+  async processPages(fileType) {
+    const pagesDir = fileType === 'css' ? this.directories.pagesCss : this.directories.pagesJs;
+    const pagesOutDir = fileType === 'css' ? this.directories.pagesCssOut : this.directories.pagesJsOut;
+
+    const pageFiles = await this.getFilesWithExtension(pagesDir, fileType);
+
+    for (const file of pageFiles) {
+      const filePath = path.join(pagesDir, file);
+      const outPath = path.join(pagesOutDir, file);
+      const content = await this.readFile(filePath);
+
+      await this.writeFile(outPath, content);
+      await this.writeFile(filePath, this.minify(content, fileType));
+      console.log(`Processed ${file}`);
+    }
+  }
+
+  async restoreFile(sourcePath, destinationPath, fileType) {
     try {
-        const userBaseCSS = await readFile(BaseOutPath);
-        await writeFile(basePath, userBaseCSS);
-        console.log(`base.${fileType} restored from ${BaseCSSOutPath}`);
+      const content = await this.readFile(sourcePath);
+      await this.writeFile(destinationPath, content);
+      console.log(`Restored ${fileType.toUpperCase()} file: ${path.basename(destinationPath)}`);
     } catch (error) {
-        console.error(`Cannot restore base.${fileType}. Error: ${error.message}`);
+      console.error(`Error restoring ${fileType.toUpperCase()} file:`, error.message);
     }
-}
+  }
 
-async function restorePages(fileType) {
-    const pagesDirectory = path.join(layxDirectory, 'assets', fileType, 'pages');
+  async restorePages(fileType) {
+    const pagesDir = fileType === 'css' ? this.directories.pagesCssOut : this.directories.pagesJsOut;
+    const destDir = fileType === 'css' ? this.directories.pagesCss : this.directories.pagesJs;
 
-    try {
-        const pageFiles = await getFilesWithExtension(pagesDirectory, fileType);
+    const pageFiles = await this.getFilesWithExtension(pagesDir, fileType);
 
-        for (const file of pageFiles) {
-            try {
-                const content = await readFile(path.join(pagesDirectory, file));
-                await writeFile(path.join(currentDirectory, 'assets', fileType, 'pages', file), content);
-                console.log(`${file} restored from ${path.join(pagesDirectory, file)}`);
-            } catch (error) {
-                console.error(`Cannot restore ${file}. Error: ${error.message}`);
-            }
-        }
-    } catch (error) {
-        console.error(`Cannot process files at ${pagesDirectory}. Error: ${error.message}`);
+    for (const file of pageFiles) {
+      const sourcePath = path.join(pagesDir, file);
+      const destPath = path.join(destDir, file);
+      await this.restoreFile(sourcePath, destPath, fileType);
     }
-}
+  }
 
-function minify(content, fileType = 'css') {
-    switch (fileType) {
-        case 'css':
-            return content
-                .replace(/\/\*[\s\S]*?\*\//g, '')
-                .replace(/\s+/g, ' ')
-                .replace(/\s*([{}:;>+,])\s*/g, '$1')
-                .replace(/;}/g, '}')
-                .trim();
-        case 'js':
-            return content
-                .replace(/\/\/.*?$/gm, '')
-                .replace(/\/\*[\s\S]*?\*\//g, '')
-                .replace(/\s+/g, ' ')
-                .replace(/\s*([+\-*/%=<>!?:&|,{}()[\];])\s*/g, '$1')
-                .replace(/;+\}/g, '}')
-                .replace(/;\s*$/, '')
-                .trim();
+  async processImports(content, filePath, fileType) {
+    const importUrls = this.extractImportUrls(content, fileType);
+    const importedContents = await Promise.all(importUrls.map(async (url) => {
+      const importedFilePath = fileType === 'css'
+        ? path.resolve(path.dirname(filePath), url)
+        : path.resolve(path.join(this.currentDirectory, url));
+      
+      try {
+        return await this.readFile(importedFilePath);
+      } catch (error) {
+        console.error(`Cannot read file ${importedFilePath}. Error: ${error.message}`);
+        return '';
+      }
+    }));
+
+    return [content, ...importedContents].join('\n');
+  }
+
+  minify(content, fileType) {
+    if (fileType === 'css') {
+      return content
+        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([{}:;>+,])\s*/g, '$1')
+        .replace(/;}/g, '}')
+        .trim();
+    } else if (fileType === 'js') {
+      return content
+        .replace(/\/\/.*?$/gm, '')
+        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([+\-*/%=<>!?:&|,{}()[\];])\s*/g, '$1')
+        .replace(/;+\}/g, '}')
+        .replace(/;\s*$/, '')
+        .trim();
     }
-}
+    return content;
+  }
 
-function extractImportUrls(content, fileType = 'css') {
-    switch (fileType) {
-        case 'css':
-            return [...content.matchAll(/@import\s+url\(([^)]+)\);/g)].map(match => match[1].replace(/['"]/g, ''));
-        case 'js':
-            return [...content.matchAll(/import\s+\w+\s+from\s+['"]([^'"]+)['"]/g)].map(match => match[1]);
-    }
+  extractImportUrls(content, fileType) {
+    const regex = fileType === 'css'
+      ? /@import\s+url\(([^)]+)\);/g
+      : /import\s+\w+\s+from\s+['"]([^'"]+)['"]/g;
+    
+    return [...content.matchAll(regex)].map(match => match[1].replace(/['"]/g, ''));
+  }
 
-}
+  removeExportAndDefault(content) {
+    return content
+      .replace(/export\s+default\s+/g, '')
+      .replace(/export\s+/g, '')
+      .replace(/\bdefault\s+/g, '');
+  }
 
-function removeExportAndDefault(content) {
-    let transformedCode = content.replace(/export\s+default\s+/g, '');
-    transformedCode = transformedCode.replace(/export\s+/g, '');
-    transformedCode = transformedCode.replace(/\bdefault\s+/g, '');
-
-    return transformedCode;
-}
-
-function removeImportStatements(content) {
+  removeImportStatements(content) {
     return content.split('\n').filter(line => !line.trim().startsWith('@import') && !line.trim().startsWith('import')).join('\n');
-}
+  }
 
-function removeComments(content) {
+  removeComments(content) {
     return content.replace(/\/\*[\s\S]*?\*\//g, '');
-}
+  }
 
-async function getFilesWithExtension(directory, extension) {
-    const files = await readdir(directory);
+  async getFilesWithExtension(directory, extension) {
+    const files = await fs.readdir(directory);
     return files.filter(file => path.extname(file) === `.${extension}`);
-}
+  }
 
+  async readFile(filePath, encoding = 'utf8') {
+    return await fs.readFile(filePath, { encoding });
+  }
 
-// Code for optimizetion
+  async writeFile(filePath, content, flag = 'w') {
+    await fs.mkdir(path.dirname(filePath), { recursive: true });
+    return await fs.writeFile(filePath, content, { flag });
+  }
 
-function extractClasses(html, startClass, type = 'class') {
+  extractClasses(html, startClass, type = 'class') {
     const escapedStartClass = startClass.replace(/[-_]/g, '\\$&');
     let regex, processMatch;
 
-    switch (type) {
-        case 'class':
-            regex = new RegExp(`class="([^"]*?\\b${escapedStartClass}\\d+\\b[^"]*?)"`, 'g');
-            processMatch = (match) => {
-                return match[1].split(/\s+/).filter(className => className.startsWith(startClass));
-            };
-            break;
-        case 'media':
-            regex = new RegExp(`\\b${escapedStartClass}(\\w+)-\\d+\\b`, 'g');
-            processMatch = (match) => [match[1]];
-            break;
-        default:
-            throw new Error('Invalid type specified');
+    if (type === 'class') {
+      regex = new RegExp(`class="([^"]*?\\b${escapedStartClass}\\d+\\b[^"]*?)"`, 'g');
+      processMatch = (match) => match[1].split(/\s+/).filter(className => className.startsWith(startClass));
+    } else if (type === 'media') {
+      regex = new RegExp(`\\b${escapedStartClass}(\\w+)-\\d+\\b`, 'g');
+      processMatch = (match) => [match[1]];
+    } else {
+      throw new Error('Invalid type specified');
     }
 
     const resultSet = new Set();
     let match;
     while ((match = regex.exec(html)) !== null) {
-        processMatch(match).forEach(item => resultSet.add(item));
+      processMatch(match).forEach(item => resultSet.add(item));
     }
 
     const sortFn = type === 'class'
-        ? (a, b) => parseInt(a.split(/[-_]/).pop()) - parseInt(b.split(/[-_]/).pop())
-        : (() => {
-            const mediaOrder = ['sm', 'md', 'lg', 'xl', 'xxl'];
-            return (a, b) => mediaOrder.indexOf(a) - mediaOrder.indexOf(b);
+      ? (a, b) => parseInt(a.split(/[-_]/).pop()) - parseInt(b.split(/[-_]/).pop())
+      : (() => {
+          const mediaOrder = ['sm', 'md', 'lg', 'xl', 'xxl'];
+          return (a, b) => mediaOrder.indexOf(a) - mediaOrder.indexOf(b);
         })();
 
     return Array.from(resultSet).sort(sortFn);
+  }
 }
 
-// Node js functions
+// Usage
+const buildTool = new BuildTool();
 
-async function readFile(filePath, encoding = 'utf8') {
-    return await fs.readFile(filePath, { encoding });
-}
+const [,, command] = process.argv;
 
-async function writeFile(filePath, content, flag = 'w') {
-    return await fs.writeFile(filePath, content, { flag: flag });
-}
-
-async function readdir(dir) {
-    return await fs.readdir(dir);
+if (command === 'build') {
+  buildTool.build().catch(console.error);
+} else if (command === 'unbuild') {
+  buildTool.unbuild().catch(console.error);
+} else {
+  console.log('Usage: node build-tool.js [build|unbuild]');
 }
