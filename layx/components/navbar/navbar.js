@@ -1,6 +1,6 @@
 export default function navbar() {
     const navbar = document.querySelector('navbar');
-    const navbarWarp = navbar.querySelector('.warp-able')
+    const navbarWarp = navbar.querySelector('.warp-able');
     const navbarToggler = navbar.querySelector('.toggler');
     const navbarCloseBtn = navbar.querySelector('.close');
     let navbarBackdrop = navbar.querySelector('backdrop');

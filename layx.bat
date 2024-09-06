@@ -45,8 +45,8 @@ FOR %%A IN (%*) DO (
     ) ELSE (
         ECHO Available options are "build", "unbuild", "create", "optimage", "noconfig", "install" and "uninstall".
         IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
-            ECHO Forwarding cmd to config.js
-            CALL :ExecuteNode "%USE_DIR%%CONFIG_DIR%config.js" %*
+            ECHO Forwarding cmd to config.mjs
+            CALL :ExecuteNode "%USE_DIR%%CONFIG_DIR%config.mjs" %*
         ) ELSE (
             ECHO Cannot perform this action here "%FR_CURRENT_DIR%"
         )
@@ -85,7 +85,7 @@ GOTO :EOF
 ECHO Building...
 CALL :CheckNode
 IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
-    CALL :ExecuteNode "%USE_DIR%%CONFIG_DIR%config.js" "build"
+    CALL :ExecuteNode "%USE_DIR%%CONFIG_DIR%config.mjs" "build"
 ) ELSE (
     ECHO Cannot perform this action here "%FR_CURRENT_DIR%"
 )
@@ -95,7 +95,7 @@ GOTO :EOF
 ECHO Unbuilding...
 CALL :CheckNode
 IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
-    CALL :ExecuteNode "%USE_DIR%%CONFIG_DIR%config.js" "unbuild"
+    CALL :ExecuteNode "%USE_DIR%%CONFIG_DIR%config.mjs" "unbuild"
 ) ELSE (
     ECHO Cannot perform this action here "%FR_CURRENT_DIR%"
 )
