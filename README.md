@@ -1,37 +1,68 @@
 # Layx
 
-Layx is an extensible layout framework for modern web development, combining powerful layout capabilities with high customizability.
+Layx is a powerful and extensible layout framework designed for modern web development. It combines advanced layout capabilities with high customizability, making it ideal for both small and large-scale projects. With its modular architecture, Layx offers the flexibility you need to create responsive, scalable, and maintainable web applications.
 
-## Features
+> **Note:** Layx is currently in the development stage and available for testing. We welcome your feedback and contributions!
 
-- Modular CSS architecture
-- Customizable components
-- Responsive grid system
-- Utility classes for rapid development
-- Built-in JavaScript components
-- Command-line interface for project management
+## 🚀 Key Features
 
-## Installation
+- 📦 **Modular CSS Architecture:** Organize your styles into reusable modules for better maintainability.
+- 🎨 **Customizable Components:** Tailor components to fit your project's unique design and functionality needs.
+- 📱 **Responsive Grid System:** Build fluid layouts that adapt seamlessly to any screen size.
+- ⚡ **Utility-First Classes:** Speed up your development workflow with a comprehensive set of utility classes.
+- 🔧 **Built-in JavaScript Components:** Enhance your layouts with interactive features using pre-built JS components.
+- 🖼️ **Image Optimization:** Boost performance with the integrated image optimizer.
+- 💻 **Command-Line Interface (CLI):** Efficiently manage your projects with our intuitive CLI.
+
+## 🛠️ Installation
+
+To install Layx on your Windows system:
+
+1. [Download the Layx Windows setup](https://github.com/arif891/layx/releases/download/v0.1.0-alpha/layx-setup-v0.1.0-alpha(win64).zip)
+2. Extract the ZIP file contents
+3. Run the following command or click `layx.bat`:
 
 ```bash
 layx install
 ```
 
-## Quick Start
+## 🚀 Quick Start Guide
 
-```bash
-layx create
-layx build
-```
+1. **Create a New Project:**
+   Open your terminal, navigate to your desired folder, and run:
+   ```bash
+   layx create
+   ```
 
-## Documentation
+2. **Start Coding:**
+   Dive into your new project directory and begin building!
 
-For full documentation, visit [layx.dev/docs](https://layx.dev/docs).
+3. **Build Your Project:**
+   When you're ready to deploy, run:
+   ```bash
+   layx build
+   ```
 
-## Contributing
+4. **Modify Your Project After Build:**
+   Need to make changes? Use the `unbuild` command:
+   ```bash
+   layx unbuild
+   ```
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for more details.
+## 📚 Documentation
 
-## License
+For comprehensive guides and API references, visit our [official documentation](https://layx.dev/docs).
 
-Layx is [MIT licensed](LICENSE).
+## 🤝 Contributing
+
+We welcome contributions of all kinds! To get started, please read our [Contributing Guide](CONTRIBUTING.md).
+
+## 📄 License
+
+Layx is open source software [licensed as MIT](LICENSE).
+
+---
+
+⭐ If you find Layx helpful, consider giving it a star on GitHub!
+
+[Report Bug](https://github.com/yourusername/Layx/issues) · [Request Feature](https://github.com/yourusername/Layx/issues)
