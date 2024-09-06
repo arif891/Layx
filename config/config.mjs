@@ -418,5 +418,5 @@ if (command === 'build') {
 } else if (command === 'unbuild') {
   buildTool.unbuild().catch(console.error);
 } else {
-  console.log('Usage: node build-tool.js [build|unbuild]');
+  console.log('Usage: layx [build|unbuild]');
 }
