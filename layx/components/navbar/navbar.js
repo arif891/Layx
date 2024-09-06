@@ -1,58 +1,68 @@
-export default function navbar() {
-    const navbar = document.querySelector('navbar');
-    const navbarWarp = navbar.querySelector('.warp-able');
-    const navbarToggler = navbar.querySelector('.toggler');
-    const navbarCloseBtn = navbar.querySelector('.close');
-    let navbarBackdrop = navbar.querySelector('backdrop');
+class Navbar {
+    constructor(navbarElement) {
+        this.navbar = navbarElement;
+        this.navbarWarp = this.navbar.querySelector('.warp-able');
+        this.navbarToggler = this.navbar.querySelector('.toggler');
+        this.navbarCloseBtn = this.navbar.querySelector('.close');
+        this.navbarBackdrop = this.navbar.querySelector('backdrop') || null;
+        this.previousScrollPosition = window.scrollY;
+        this.scrollDistance = window.innerHeight * 0.2;
 
-    navbarToggler.addEventListener('click', () => {
-
-        if (!navbarBackdrop && !navbarWarp.classList.contains('full')) {
-            navbarBackdrop = document.createElement('backdrop');
-            navbarBackdrop.classList.add('navbar-backdrop');
-
-            navbarBackdrop.addEventListener('click', () => {
-                toggleNavbar();
-            });
-
-            navbarWarp.insertAdjacentElement('afterend', navbarBackdrop);
-        }
-
-        toggleNavbar();
-    });
-
-    function toggleNavbar() {
-        navbar.classList.toggle('open');
-        navbarWarp.classList.toggle('open');
-
-        if (!navbarWarp.classList.contains('full')) {
-            navbarBackdrop.classList.toggle('open');
-        }
-
-        document.body.style.overflow = navbar.classList.contains('open') ? 'hidden' : '';
+        this.initialize();
     }
 
-    if (navbarCloseBtn) {
-        navbarCloseBtn.addEventListener('click', () => {
-            toggleNavbar();
-        });
-    };
+    initialize() {
+        this.navbarToggler.addEventListener('click', () => this.handleTogglerClick());
 
-    if (navbar.classList.contains('update-scroll-state')) {
-        const scrollDistance = window.innerHeight * .2;
-        let previousScrollPosition = window.scrollY;
-
-        function updateScrollState(element, distance) {
-            const scrolledPastDistance = window.scrollY > distance;
-            const scrollingDown = previousScrollPosition < window.scrollY && (distance * 3) < window.scrollY;
-
-            element.classList.toggle('scrolled', scrolledPastDistance);
-            element.classList.toggle('scrollingDown', scrollingDown);
-            previousScrollPosition = window.scrollY;
+        if (this.navbarCloseBtn) {
+            this.navbarCloseBtn.addEventListener('click', () => this.toggleNavbar());
         }
 
-        window.addEventListener('scroll', function () {
-            updateScrollState(navbar, scrollDistance);
-        }, { passive: true });
-    };
+        if (this.navbar.classList.contains('update-scroll-state')) {
+            window.addEventListener('scroll', () => this.updateScrollState(), { passive: true });
+        }
+    }
+
+    handleTogglerClick() {
+        if (!this.navbarBackdrop && !this.navbarWarp.classList.contains('full')) {
+            this.navbarBackdrop = document.createElement('backdrop');
+            this.navbarBackdrop.classList.add('navbar-backdrop');
+            this.navbarBackdrop.addEventListener('click', () => this.toggleNavbar());
+
+            this.navbarWarp.insertAdjacentElement('afterend', this.navbarBackdrop);
+        }
+        this.toggleNavbar();
+    }
+
+    toggleNavbar() {
+        this.navbar.classList.toggle('open');
+        this.navbarWarp.classList.toggle('open');
+
+        if (this.navbarBackdrop && !this.navbarWarp.classList.contains('full')) {
+            this.navbarBackdrop.classList.toggle('open');
+        }
+
+        document.body.style.overflow = this.navbar.classList.contains('open') ? 'hidden' : '';
+    }
+
+    updateScrollState() {
+        const scrolledPastDistance = window.scrollY > this.scrollDistance;
+        const scrollingDown = this.previousScrollPosition < window.scrollY && window.scrollY > this.scrollDistance * 3;
+
+        this.navbar.classList.toggle('scrolled', scrolledPastDistance);
+        this.navbar.classList.toggle('scrollingDown', scrollingDown);
+        this.previousScrollPosition = window.scrollY;
+    }
+
+    static initializeAll() {
+        const navbars = document.querySelectorAll('navbar');
+        navbars.forEach(navbar => new Navbar(navbar));
+    }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    Navbar.initializeAll();
+});
+
+// Export an instance of Navbar to initialize it when imported
+export default Navbar;
