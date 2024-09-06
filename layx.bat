@@ -55,8 +55,8 @@ IF NOT "%~1"=="" (
         ) ELSE (
             ECHO Available options are "build", "unbuild", "create","optimage", "noconfig", "install" and "uninstall".
             IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
-               ECHO Forwading cmd to config.js
-               "%NODE_EXE%" "%USE_DIR%%CONFIG_DIR%config.js"  %*
+               ECHO Forwading cmd to config.mjs
+               "%NODE_EXE%" "%USE_DIR%%CONFIG_DIR%config.mjs"  %*
             ) ELSE (
                ECHO Can not perform this action here "%FR_CURRENT_DIR%"
             )
@@ -79,7 +79,7 @@ IF ERRORLEVEL 1 (
 )
 
 IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
-  "%NODE_EXE%" "%USE_DIR%%CONFIG_DIR%config.js" "build"
+  "%NODE_EXE%" "%USE_DIR%%CONFIG_DIR%config.mjs" "build"
 ) ELSE (
     ECHO Can not perform this action here "%FR_CURRENT_DIR%"
 )
@@ -96,7 +96,7 @@ IF ERRORLEVEL 1 (
 )
 
 IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
-  "%NODE_EXE%" "%USE_DIR%%CONFIG_DIR%config.js" "unbuild"
+  "%NODE_EXE%" "%USE_DIR%%CONFIG_DIR%config.mjs" "unbuild"
 ) ELSE (
     ECHO Can not perform this action here "%FR_CURRENT_DIR%"
 )
