@@ -89,7 +89,7 @@ button:not(.defult),.btn {
         border-radius: 50%;
     }
 
-    &.cs {
+    &.as {
         &:active {
             scale: .9;
         }
