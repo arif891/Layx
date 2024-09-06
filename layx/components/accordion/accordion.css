@@ -3,14 +3,14 @@ accordion {
     --padding-y: 1rem;
     --border-radius: .5rem;
     --margin-bottom: 1rem;
-    --item-bg-color: #fff;
-    --accordion-bg: rgb(245, 245, 245);
+    --item-bg: #fff;
+    --bg: rgb(245, 245, 245);
     --accent-color: rgb(178, 241, 255);
 
     display: block;
     padding: .5rem;
     overflow-y: auto;
-    background: var(--accordion-bg);
+    background: var(--bg);
     scrollbar-width: none;
 
     .accordion-item {
@@ -18,7 +18,7 @@ accordion {
         grid-template-rows: max-content 0fr;
         padding: var(--padding-y, var(--padding, .5rem)) var(--padding-x, var(--padding, .5rem));
         border-radius: var(--border-radius, .5rem);
-        background-color: var(--item-bg-color);
+        background: var(--item-bg);
         outline-color: transparent;
         transition: grid-template-rows .3s ease-out;
 
