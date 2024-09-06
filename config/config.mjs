@@ -304,10 +304,8 @@ class BuildTool {
   async processImports(content, filePath, fileType) {
     const importUrls = this.extractImportUrls(content, fileType);
     const importedContents = await Promise.all(importUrls.map(async (url) => {
-      const importedFilePath = fileType === 'css'
-        ? path.resolve(path.dirname(filePath), url)
-        : path.resolve(path.join(this.currentDirectory, url));
-
+      const importedFilePath = path.resolve(path.dirname(filePath), url);
+       
       try {
         return await this.readFile(importedFilePath);
       } catch (error) {

@@ -1,4 +1,2 @@
-import accordion from '/layx/components/accordion/accordion.js';
-import navbar from '/layx/components/navbar/navbar.js';
-accordion();
-navbar();
+import Accordion from './components/accordion/accordion.js';
+const accordion = new Accordion(); 

@@ -1,19 +1,28 @@
-export default function accordion() {
-const accordions = document.querySelectorAll("accordion");
-
-accordions.forEach(accordion => {
-    accordion.addEventListener("click", (event) => {
-        const title = event.target.closest('.accordion-title');
-        if (!title) return;
-
-        const item = title.closest('.accordion-item');
-        const items = accordion.querySelectorAll(".accordion-item");
-        item.classList.toggle('active');
-        items.forEach(otherItem => {
-            if (otherItem !== item) {
-                otherItem.classList.remove("active");
-            }
-        });
-    });
-});
-}
+export default class Accordion {
+    constructor(selector = 'accordion') {
+      this.accordions = document.querySelectorAll(selector);
+      this.init();
+    }
+  
+    init() {
+      this.accordions.forEach(accordion => {
+        accordion.addEventListener('click', this.toggleAccordion.bind(this));
+      });
+    }
+  
+    toggleAccordion(event) {
+      const title = event.target.closest('.accordion-title');
+      if (!title) return;
+  
+      const currentItem = title.closest('.accordion-item');
+      const allItems = currentItem.closest('accordion').querySelectorAll('.accordion-item');
+  
+      currentItem.classList.toggle('active');
+  
+      allItems.forEach(item => {
+        if (item !== currentItem) {
+          item.classList.remove('active');
+        }
+      });
+    }
+  }
