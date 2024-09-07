@@ -21,21 +21,26 @@
             body {
                 margin: 0;
                 min-height: 200vh;
+                padding-block: 10rem;
                 font-family: "Red Hat Display", sans-serif;
                 background-color: antiquewhite;
             }
 
-            navbar {
+            .main-navbar {
                 --navbar-bg: rgba(255, 255, 255, 0.5);
                 --radius: .5rem;
                 --blur: 10px;
+            }
+
+            .other-navbar {
+                --navbar-bg: rgba(255, 255, 255, .6);
+                margin-bottom: 1rem;
             }
 
             container {
                 display: grid;
                 place-content: center;
                 height: 200px;
-                margin-top: 35vh;
                 background: rgba(255, 255, 255, 0.5);
             }
         </style>
@@ -44,7 +49,7 @@
     <body>
         <header>
 
-            <navbar class="fixed update-scroll-state">
+            <navbar class="fixed main-navbar update-scroll-state">
                 <div class="warper">
                     <div class="main modern center move">
                         <div class="brand">
@@ -65,6 +70,81 @@
                             </div>
                             <div>
                                 <button class="dark">Button</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </navbar>
+
+            <navbar class="other-navbar">
+                <div class="warper">
+                    <div class="main">
+                        <div class="brand">
+                            <h5 class="logo-text">Logo</h5>
+                            <button class="toggler"></button>
+                        </div>
+                        <div class="warp-able rigth">
+                            <button class="close"></button>
+                            <nav class="link-warper">
+                                <a href="" class="link">link</a>
+                                <a href="" class="link">link</a>
+                                <a href="" class="link">link</a>
+                                <a href="" class="link">link</a>
+                                <a href="" class="link">link</a>
+                                <a href="" class="link">link</a>
+                            </nav>
+                            <div>
+                                <button>Button</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </navbar>
+
+            <navbar class="other-navbar">
+                <div class="warper">
+                    <div class="main">
+                        <div class="brand">
+                            <h5 class="logo-text">Logo</h5>
+                            <button class="toggler"></button>
+                        </div>
+                        <div class="warp-able end side">
+                            <button class="close"></button>
+                            <nav class="link-warper">
+                                <a href="" class="link">link</a>
+                                <a href="" class="link">link</a>
+                                <a href="" class="link">link</a>
+                                <a href="" class="link">link</a>
+                                <a href="" class="link">link</a>
+                                <a href="" class="link">link</a>
+                            </nav>
+                            <div>
+                                <button>Button</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </navbar>
+
+            <navbar class="other-navbar">
+                <div class="warper">
+                    <div class="main center">
+                        <div class="brand">
+                            <h5 class="logo-text">Logo</h5>
+                            <button class="toggler"></button>
+                        </div>
+                        <div class="warp-able full">
+                            <button class="close"></button>
+                            <nav class="link-warper">
+                                <a href="" class="link">link</a>
+                                <a href="" class="link">link</a>
+                                <a href="" class="link">link</a>
+                                <a href="" class="link">link</a>
+                                <a href="" class="link">link</a>
+                                <a href="" class="link">link</a>
+                            </nav>
+                            <div>
+                                <button>Button</button>
                             </div>
                         </div>
                     </div>

@@ -15,7 +15,7 @@ navbar,
 
     display: block;
     transition: var(--transition, .3s);
-    z-index: 5;
+    z-index: 10;
 
     &:not(:has(.main.modern)) {
         border-radius: var(--radius);
@@ -73,6 +73,7 @@ navbar,
                     flex-direction: column;
                     gap: .5rem;
                     padding: .5rem;
+                    z-index: 15;
                     background: var(--navbar-warp-bg, #fff);
                     transition: var(--transition, .3s);
 

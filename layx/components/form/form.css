@@ -1,6 +1,6 @@
 form,label,input,textarea,select {
-    --padding-x: .6rem;
-    --padding-y: .8rem;
+    --padding-x: .8rem;
+    --padding-y: 1rem;
     --radius: .5rem;
     --color: #000;
     --bg-color: #fff;
