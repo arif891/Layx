@@ -1,6 +1,6 @@
 # Layx
 
-![](.github/layx_social_preview.png)
+![Layx Social Preview](.github/layx_social_preview.png)
 
 Layx is a powerful and extensible layout framework designed for modern web development. It combines advanced layout capabilities with high customizability, making it ideal for both small and large-scale projects. With its modular architecture, Layx offers the flexibility you need to create responsive, scalable, and maintainable web applications.
 
@@ -15,6 +15,7 @@ Layx is a powerful and extensible layout framework designed for modern web devel
 - 🔧 **Built-in JavaScript Components:** Enhance your layouts with interactive features using pre-built JS components.
 - 🖼️ **Image Optimization:** Boost performance with the integrated image optimizer.
 - 💻 **Command-Line Interface (CLI):** Efficiently manage your projects with our intuitive CLI.
+- 🚀 **No Runtime Needed:** Enjoy optimal performance without any runtime dependencies.
 
 ## 🧠 Approach
 
@@ -24,6 +25,36 @@ Layx takes inspiration from Bootstrap but adopts a more modern and modular appro
 - **Highly Customizable:** Easily modify layouts using CSS classes and variables.
 - **Full-Width Designs:** Layout and container elements can effortlessly extend to screen edges.
 - **Modern Web Standards:** Built with the latest CSS features for optimal performance and design capabilities.
+- **Zero Runtime Overhead:** Unlike some frameworks, Layx doesn't require any JavaScript runtime, ensuring faster load times and better performance.
+
+## 🎨 Syntax
+
+Layx introduces intuitive syntax for common layout elements:
+
+### Container
+```html
+<container>
+   <div class='content'></div>
+</container>
+```
+
+### Main Layout System
+```html
+<layout>
+  <div class='x-6'></div>
+  <div class='x-6'></div>
+</layout>
+```
+
+### Components (e.g., Navbar)
+```html
+<navbar>
+  <nav class='link-warper'>
+    <a class='link' href='#'>link</a>
+    <a class='link' href='#'>link</a>
+  </nav>
+</navbar>
+```
 
 ## 🛠️ Installation
 
@@ -33,9 +64,10 @@ To install Layx on your Windows system:
 2. Extract the ZIP file contents
 3. Run the following command or click `layx.bat`:
 
-```bash
-layx install
-```
+    ```bash
+    layx install
+    ```
+4. (Optional) For VS Code users: Add "C:/Preferences/" to your VS Code Emmet extensions Path for Layx syntax support.
 
 ## 🚀 Quick Start Guide
 
