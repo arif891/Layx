@@ -5,7 +5,7 @@ dialog {
   --gap: 1rem;
   --radius: .5rem;
   --bg: rgb(245, 245, 245);
-  --bg-modern: linear-gradient(145deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
+  --bg-modern: linear-gradient(145deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.4));
   --bg-blur: 15px;
   --close-btn-color: #fff;
   --accent-color: rgb(178, 241, 255);
