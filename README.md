@@ -2,9 +2,26 @@
 
 ![Layx Social Preview](.github/layx_social_preview.png)
 
-Layx is a powerful and extensible layout framework designed for modern web development. It combines advanced layout capabilities with high customizability, making it ideal for both small and large-scale projects. With its modular architecture, Layx offers the flexibility you need to create responsive, scalable, and maintainable web applications.
+Layx is a powerful and extensible layout framework designed for modern web development. It combines advanced layout capabilities with high customizability, making it ideal for both small and large-scale projects. With its modular architecture, Layx offers the flexibility you need to create responsive, scalable, and maintainable web applications. 
 
 > **Note:** Layx is currently in the development stage and available for testing. We welcome your feedback and contributions!
+
+## Table of Contents
+
+- [Layx](#layx)
+  - [Table of Contents](#table-of-contents)
+  - [🚀 Key Features](#-key-features)
+  - [🧠 Approach](#-approach)
+  - [🎨 Syntax](#-syntax)
+    - [Container](#container)
+    - [Main Layout System](#main-layout-system)
+    - [Components (e.g., Navbar)](#components-eg-navbar)
+  - [📁 Project Structure](#-project-structure)
+  - [🛠️ Installation](#️-installation)
+  - [🚀 Quick Start Guide](#-quick-start-guide)
+  - [📚 Documentation](#-documentation)
+  - [🤝 Contributing](#-contributing)
+  - [📄 License](#-license)
 
 ## 🚀 Key Features
 
@@ -55,6 +72,71 @@ Layx introduces intuitive syntax for common layout elements:
   </nav>
 </navbar>
 ```
+
+## 📁 Project Structure
+
+Layx is organized into a well-structured directory hierarchy:
+
+<details>
+<summary>Click to expand project structure</summary>
+
+```
+root
+    │   index.html
+    │   layx.bat
+    │
+    ├───assets
+    │   ├───brand
+    │   ├───css
+    │   │   │   base.css
+    │   │   └───pages
+    │   ├───font
+    │   ├───images
+    │   │   ├───home
+    │   │   └───svg
+    │   ├───js
+    │   │   │   base.js
+    │   │   └───pages
+    │   └───media
+    │       ├───audio
+    │       └───video
+    │
+    ├───config
+    │   │   config.css
+    │   │   config.html
+    │   │   config.mjs
+    │   │   node.exe
+    │   │   webp.exe
+    │   └───preference
+    │           snippets.json
+    │
+    ├───layx
+    │   │   layx.css
+    │   │   layx.js
+    │   ├───assets
+    │   │   ├───css
+    │   │   │   └───pages
+    │   │   └───js
+    │   ├───components
+    │   │   components.css
+    │   ├───main
+    │   │   main.css
+    │   ├───others
+    │   └───utilities
+    │       │   utilities.css
+    │
+    └───pages
+```
+</details>
+
+Key directories:
+- `layx/`: The core of the framework, including components, main styles, and utilities.
+- `config/`: Holds configuration files, tools and preferences.
+- `assets/`: Here you can put your all assets like CSS, JS, images, and media files.
+- `assets/[css|js]/base.[css|js]`: Here you can write your base CSS and JS which are common, it will be added after `layx` 
+   CSS or JS in build time. This original CSS or JS file will be moved inside `layx/assets/[css|js]/user_base.[css|js]`.
+- `assets/[css|js]/pages/`: For page-specific content. Inside this dir all CSS and JS file will be minified and original one
+  moved to `layx/assets/[css|js]/pages/`.
 
 ## 🛠️ Installation
 
@@ -108,4 +190,4 @@ Layx is open source software [licensed as MIT](LICENSE).
 
 ⭐ If you find Layx helpful, consider giving it a star on GitHub!
 
-[Report Bug](https://github.com/arif891/Layx/issues) · [Request Feature](https://github.com/arif891/Layx/issues)
+[Report Bug](https://github.com/arif891/Layx/issues) · [Request Feature](https://github.com/arif891/Layx/issues) · [Join our Community](https://discord.gg/layx)
