@@ -2,7 +2,7 @@
 
 Layx is a powerful and extensible layout framework designed for modern web development. It combines advanced layout capabilities with high customizability, making it ideal for both small and large-scale projects. With its modular architecture, Layx offers the flexibility you need to create responsive, scalable, and maintainable web applications.
 
-> #### **Note:** Layx is currently in the development stage and available for testing. We welcome your feedback and contributions!
+> **Note:** Layx is currently in the development stage and available for testing. We welcome your feedback and contributions!
 
 ## 🚀 Key Features
 
@@ -13,6 +13,15 @@ Layx is a powerful and extensible layout framework designed for modern web devel
 - 🔧 **Built-in JavaScript Components:** Enhance your layouts with interactive features using pre-built JS components.
 - 🖼️ **Image Optimization:** Boost performance with the integrated image optimizer.
 - 💻 **Command-Line Interface (CLI):** Efficiently manage your projects with our intuitive CLI.
+
+## 🧠 Approach
+
+Layx takes inspiration from Bootstrap but adopts a more modern and modular approach:
+
+- **Advanced Layout System:** Utilizes CSS Grid instead of hard-coded numbers, offering greater flexibility and customization.
+- **Highly Customizable:** Easily modify layouts using CSS classes and variables.
+- **Full-Width Designs:** Layout and container elements can effortlessly extend to screen edges.
+- **Modern Web Standards:** Built with the latest CSS features for optimal performance and design capabilities.
 
 ## 🛠️ Installation
 
