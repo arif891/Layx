@@ -21,11 +21,18 @@
                 font-family: "Red Hat Display", sans-serif;
                 background-color: antiquewhite;
             }
+
+            .button-warper {
+             display: flex;
+             gap: .5rem;
+             flex-wrap: wrap;
+             margin-top: .5rem;
+            }
         </style>
     </head>
 
     <body>
-        <dialog id="deom-dialog" class="dialog bottom modern">
+        <dialog id="deom-dialog" class="dialog modern">
             <div class="content">
                 <div class="header">
                     <h5 class="title">Some big demo dialog header?</h5>
@@ -42,8 +49,63 @@
             </div>
         </dialog>
 
-        <button class="dialog-toggler" data-toggle="deom-dialog">Show</button>
+        <dialog id="deom-dialog2" class="dialog center modern">
+            <div class="content">
+                <div class="header">
+                    <h5 class="title">Some big demo dialog header?</h5>
+                    <button class="close"></button>
+                </div>
+                <div class="main">
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit mollitia illum perferendis
+                        molestiae voluptate debitis provident veritatis ipsam autem aut quaerat recusandae</p>
+                </div>
+                <div class="footer grow">
+                    <button class="lg light wide" type="button">Demo</button>
+                    <button class="lg dark wide" type="button">Book</button>
+                </div>
+            </div>
+        </dialog>
 
+        <dialog id="deom-dialog3" class="dialog bottom modern">
+            <div class="content">
+                <div class="header">
+                    <h5 class="title">Some big demo dialog header?</h5>
+                    <button class="close"></button>
+                </div>
+                <div class="main">
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit mollitia illum perferendis
+                        molestiae voluptate debitis provident veritatis ipsam autem aut quaerat recusandae</p>
+                </div>
+                <div class="footer grow">
+                    <button class="lg light wide" type="button">Demo</button>
+                    <button class="lg dark wide" type="button">Book</button>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog id="deom-dialog4" class="dialog rigth modern">
+            <div class="content">
+                <div class="header">
+                    <h5 class="title">Some big demo dialog header?</h5>
+                    <button class="close"></button>
+                </div>
+                <div class="main">
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit mollitia illum perferendis
+                        molestiae voluptate debitis provident veritatis ipsam autem aut quaerat recusandae</p>
+                </div>
+                <div class="footer grow">
+                    <button class="lg light wide" type="button">Demo</button>
+                    <button class="lg dark wide" type="button">Book</button>
+                </div>
+            </div>
+        </dialog>
+
+        <div class="button-warper">
+        <button class="lg light dialog-toggler" data-toggle="deom-dialog">Show</button>
+        <button class="lg light dialog-toggler" data-toggle="deom-dialog2">Show Center</button>
+        <button class="lg light dialog-toggler" data-toggle="deom-dialog3">Show Bottom</button>
+        <button class="lg light dialog-toggler" data-toggle="deom-dialog4">Show Rigth</button>
+    </div>
         <script type="module">
           import Dialog from './dialog.js';
         </script>
