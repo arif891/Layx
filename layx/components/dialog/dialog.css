@@ -142,28 +142,6 @@ dialog {
     transform-origin: bottom right;
   }
 
-
-
-  &.info {
-    --side-bar-color: #8bdeff;
-    --dialog-bg-rgb: var(--dialog-info-bg-rgb);
-  }
-
-  &.success {
-    --side-bar-color: #8bffc9;
-    --dialog-bg-rgb: var(--dialog-success-bg-rgb);
-  }
-
-  &.warning {
-    --side-bar-color: #f9ff8b;
-    --dialog-bg-rgb: var(--dialog-warning-bg-rgb);
-  }
-
-  &.danger {
-    --side-bar-color: #ff8b8f;
-    --dialog-bg-rgb: var(--dialog-danger-bg-rgb);
-  }
-
 }
 
 @starting-style {
