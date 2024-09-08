@@ -21,12 +21,9 @@
          .warper {
             display: grid;
             gap: 1rem;
-            max-width: 650px;
+            max-width: 600px;
          }
 
-         alert {
-            
-         }
     </style>
 </head>
 <body>
@@ -34,15 +31,19 @@
 
         <div class="warper">
             <h2>Alert Demo</h2>
-            <alert class="modern fit">A simple alert—check it out!</alert>
-            <alert class="modern" style="animation-delay:calc(var(--animation-duration) * .75);">A simple alert—check it out!</alert>
-            <alert class="modern" style="animation-delay: calc(var(--animation-duration) * 1.5);">
+            <alert class="modern fit" open >A simple alert—check it out!</alert>
+            <alert class="modern" open style="animation-delay: calc(var(--animation-duration) * .75);">A simple alert—check it out!</alert>
+            <alert class="modern" open style="animation-delay: calc(var(--animation-duration) * 1.5);">
                 A simple alert—check it out!
                 <button class="close"></button>
             </alert>
         </div>
 
     </container>
+
+    <script type="module">
+       import Alert from './alert.js';
+    </script>
     
 </body>
 </html>

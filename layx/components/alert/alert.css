@@ -1,5 +1,5 @@
 alert,.alert {
-    --padding: 1.5rem;
+    --padding: 1rem;
     --gap: 1rem;
     --radius: .5rem;
     --bg: rgb(240, 240, 240);
@@ -18,7 +18,15 @@ alert,.alert {
     border: var(--border);
     opacity: 0;
     translate: 0 100%;
-    animation: alert var(--animation-duration, .6s) forwards cubic-bezier(0, 0, 0.2, 1);
+    animation: alertHide var(--animation-duration, .6s) forwards ease-in;
+
+    &[open] {
+        animation: alertShow var(--animation-duration, .6s) forwards ease-out;
+    }
+
+    &:not([open]) {
+        animation-delay: 0s !important;
+    }
 
     &.fit {
         width: fit-content;
@@ -39,14 +47,30 @@ alert,.alert {
     }
 }
 
-@keyframes alert {
+@keyframes alertShow {
     from {
         opacity: 0;
         translate: 0 100%;
+        visibility: hidden;
     }
 
     to {
         opacity: 1;
         translate: 0 0;
+        visibility: visible;
+    }
+}
+
+@keyframes alertHide {
+    from {
+        opacity: 1;
+        translate: 0 0;
+        visibility: visible;
+    }
+
+    to {
+        opacity: 0;
+        translate: 0 100%;
+        visibility: hidden;
     }
 }
