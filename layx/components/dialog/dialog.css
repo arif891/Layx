@@ -6,7 +6,7 @@ dialog {
   --radius: .5rem;
   --bg: rgb(245, 245, 245);
   --bg-modern: linear-gradient(145deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.4));
-  --bg-blur: 15px;
+  --blur: 15px;
   --close-btn-color: #fff;
   --accent-color: rgb(178, 241, 255);
   --animation-duration: .6s;
@@ -104,8 +104,8 @@ dialog {
 
   &.modern {
     background: var(--bg-modern, var(--bg));
-    backdrop-filter: blur(var(--bg-blur));
-    -webkit-backdrop-filter: blur(var(--bg-blur));
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
   }
 
   &:not(.center, .left, .rigth, .bottom) {

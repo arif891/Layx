@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alert Demo</title>
+
+    <link rel="stylesheet" href="alert.css">
+
+    <link rel="stylesheet" href="/layx/main/base/base.css">
+    <link rel="stylesheet" href="/layx/main/typography/typography.css">
+    <link rel="stylesheet" href="/layx/components/button/button.css">
+    <link rel="stylesheet" href="/layx/main/container/container.css">
+
+    <style>
+         body {
+            font-family: "Red Hat Display", sans-serif;
+            background-color: antiquewhite;
+         }
+
+         .warper {
+            display: grid;
+            gap: 1rem;
+            max-width: 650px;
+         }
+
+         alert {
+            
+         }
+    </style>
+</head>
+<body>
+    <container class="__container">
+
+        <div class="warper">
+            <h2>Alert Demo</h2>
+            <alert class="modern fit">A simple alert—check it out!</alert>
+            <alert class="modern" style="animation-delay:calc(var(--animation-duration) * .75);">A simple alert—check it out!</alert>
+            <alert class="modern" style="animation-delay: calc(var(--animation-duration) * 1.5);">
+                A simple alert—check it out!
+                <button class="close"></button>
+            </alert>
+        </div>
+
+    </container>
+    
+</body>
+</html>
