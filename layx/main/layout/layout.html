@@ -7,7 +7,8 @@
         <title>Layout demo</title>
 
         <link rel="stylesheet" href="layout.css">
-        <link rel="stylesheet" href="layuot-helper.css">
+
+        <link rel="stylesheet" href="/layx/helpers/layout/layuot_helper.css">
 
         <link rel="stylesheet" href="/layx//main/typography/typography.css">
         <link rel="stylesheet" href="/layx/main/container/container.css">
@@ -26,7 +27,6 @@
 
             .demo__layout {
                 min-height: 25vh;
-                
 
                 div {
                     background-color: rgba(255, 255, 255, .5);
@@ -40,6 +40,14 @@
                         margin: unset;
                     }
                 }
+            }
+
+            .demo__container {
+                height: 25vh;
+                width: 100%;
+                display: grid;
+                place-items: center;
+                background-color: rgba(255, 255, 255, .5);
             }
         </style>
     </head>
@@ -234,6 +242,10 @@
                     </div>
                 </div>
             </layout>
+
+            <container class="demo__container">
+                <p>Container</p>
+            </container>
         </div>
 
     </body>
