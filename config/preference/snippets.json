@@ -7,7 +7,7 @@
       "layout-edge" : "layout.edge",
       "section": "section.__section",
       "section-full" : "section>container>layout",
-      "navbar" : "navbar>.warper>.main>(.brand>(h5.logo-text{Logo})(button.toggler))((.warp-able>(button.close)(nav.link-warper>a.link{link}*6)(div>button{Button})"
+      "navbar" : "navbar>.wrapper>.main>(.brand>(h5.logo-text{Logo})(button.toggler))((.warp-able>(button.close)(nav.link-wrapper>a.link{link}*6)(div>button{Button})"
     }
   }
 }

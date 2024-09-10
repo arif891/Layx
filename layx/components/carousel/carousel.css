@@ -1,4 +1,5 @@
 carousel,.carousel {
+    --edge-offset: .5rem;
     display: block;
     position: relative;
     
@@ -33,35 +34,52 @@ carousel,.carousel {
         }
     }
 
-    .indicator-warper {
+    .indicator-wrapper {
         position: absolute;
-        inset: auto 0 0;
-        margin-inline: auto;
-        height: fit-content;
-        width: fit-content;
+        inset: auto 0 var(--edge-offset, 0);
+        display: flex;
+        gap: .5rem;
+        justify-content: center;
+        pointer-events: none;
 
         .indicator {
+            padding: 0;
+            height: .4rem;
+            width: 2rem;
+            flex-shrink: 1;
+            box-sizing: content-box;
+            border-block: 1rem solid transparent;
+            pointer-events: auto;
+            opacity: .5;
+            background: var(--indicator-bg,#fff);
+            background-clip: padding-box;
+            transition: all .3s;
 
             &.active {
-                background-color: aquamarine;
+               width: 3rem;
+               opacity: 1;
             }
         }
     }
 
-    .control-warper {
+    .control-wrapper {
 
         .left,.right {
             position: absolute;
-            margin-block: auto;
-            height: fit-content;
-            width: fit-content;
+            display: flex;
+            align-items: center;
+            pointer-events: none;
 
             &.left {
-                inset: 0 auto 0 0;
+                inset: 0 auto 0 var(--edge-offset, 0);
             }
 
             &.right {
-                inset: 0 0 0 auto;
+                inset: 0 var(--edge-offset, 0) 0 auto;
+            }
+
+            * {
+                pointer-events: auto;
             }
         }
     }

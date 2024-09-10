@@ -66,7 +66,7 @@ Layx introduces intuitive syntax for common layout elements:
 ### Components (e.g., Navbar)
 ```html
 <navbar>
-  <nav class='link-warper'>
+  <nav class='link-wrapper'>
     <a class='link' href='#'>link</a>
     <a class='link' href='#'>link</a>
   </nav>

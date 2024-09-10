@@ -289,7 +289,7 @@ select {
     background-size: .8lh;
 }
 
-.validate-warper:is([valid], [invalid]):has(input, textarea, select) {
+.validate-wrapper:is([valid], [invalid]):has(input, textarea, select) {
     display: grid;
     grid-template-rows: fit-content(100%) 0fr;
     margin-bottom: var(--margin-bottom, 1rem);
