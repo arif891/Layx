@@ -4,7 +4,6 @@ carousel,.carousel {
     
     .main {
         display: flex;
-        gap: .5rem;
         height: 50vh;
         overflow: auto;
         scrollbar-width: none;
@@ -14,7 +13,6 @@ carousel,.carousel {
             flex-shrink: 0;
             height: 100%;
             width: 100%;
-            background-color: brown;
             scroll-snap-align: start;
 
             &.auto {
@@ -39,9 +37,15 @@ carousel,.carousel {
         position: absolute;
         inset: auto 0 0;
         margin-inline: auto;
-        height: 50px;
-        width: 150px;
-        background-color: aliceblue;
+        height: fit-content;
+        width: fit-content;
+
+        .indicator {
+
+            &.active {
+                background-color: aquamarine;
+            }
+        }
     }
 
     .control-warper {
@@ -49,7 +53,6 @@ carousel,.carousel {
         .left,.right {
             position: absolute;
             margin-block: auto;
-            background-color: antiquewhite;
             height: fit-content;
             width: fit-content;
 
