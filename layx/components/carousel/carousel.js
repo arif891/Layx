@@ -11,80 +11,100 @@ class Carousel {
 
             if (!main || items.length === 0) return;
 
-            const state = this.createState(main, items);
-            this.setupDOM(carousel, items);
-            this.setupEventListeners(carousel, state);
-            this.updateCarousel(carousel, state);
+            // Add controls and indicators if they do not exist
+            this.ensureControls(carousel);
+            this.ensureIndicators(carousel, items);
+
+            const state = {
+                currentIndex: 0,
+                isVertical: main.classList.contains('vertical'),
+                itemCount: items.length,
+                itemWidths: Array.from(items).map(item => item.offsetWidth),
+                itemHeights: Array.from(items).map(item => item.offsetHeight),
+            };
+
+            const prevBtn = carousel.querySelector('.prev');
+            const nextBtn = carousel.querySelector('.next');
+            const indicatorsWrapper = carousel.querySelector('.indicator-wrapper');
+
+            this.setupEventListeners(carousel, state, prevBtn, nextBtn, indicatorsWrapper);
+            this.updateCarousel(carousel, state); // Ensure initial update
         });
-    }
-
-    createState(main, items) {
-        return {
-            currentIndex: 0,
-            isVertical: main.classList.contains('vertical'),
-            itemCount: items.length,
-            itemSizes: Array.from(items).map(item => 
-                this.isVertical ? item.offsetHeight : item.offsetWidth
-            ),
-            totalSize: Array.from(items).reduce((sum, item) => 
-                sum + (this.isVertical ? item.offsetHeight : item.offsetWidth), 0
-            ),
-        };
-    }
-
-    setupDOM(carousel, items) {
-        this.ensureControls(carousel);
-        this.ensureIndicators(carousel, items.length);
     }
 
     ensureControls(carousel) {
-        if (!carousel.hasAttribute('controls')) return;
+        let controlWrapper = carousel.querySelector('.control-wrapper');
 
-        const controlWrapper = document.createElement('div');
-        controlWrapper.className = 'control-wrapper';
-        ['prev', 'next'].forEach(direction => {
-            const button = document.createElement('button');
-            button.className = direction;
-            button.textContent = direction.charAt(0).toUpperCase() + direction.slice(1);
-            controlWrapper.appendChild(button);
+        if (!controlWrapper && carousel.hasAttribute('controls')) {
+            controlWrapper = document.createElement('div');
+            controlWrapper.classList.add('control-wrapper');
+
+            const leftControl = document.createElement('div');
+            leftControl.classList.add('left');
+            const prevButton = document.createElement('button');
+            prevButton.classList.add('prev');
+            prevButton.textContent = 'Prev';
+            leftControl.appendChild(prevButton);
+
+            const rightControl = document.createElement('div');
+            rightControl.classList.add('right');
+            const nextButton = document.createElement('button');
+            nextButton.classList.add('next');
+            nextButton.textContent = 'Next';
+            rightControl.appendChild(nextButton);
+
+            controlWrapper.appendChild(leftControl);
+            controlWrapper.appendChild(rightControl);
+
+            carousel.appendChild(controlWrapper);
+        }
+    }
+
+    ensureIndicators(carousel, items) {
+        let indicatorWrapper = carousel.querySelector('.indicator-wrapper');
+
+        if (!indicatorWrapper && carousel.hasAttribute('indicators')) {
+            indicatorWrapper = document.createElement('div');
+            indicatorWrapper.classList.add('indicator-wrapper');
+            carousel.appendChild(indicatorWrapper);
+        }
+
+        if (indicatorWrapper && !carousel.querySelectorAll('.indicator').length) {
+            // Clear out any existing indicators to avoid duplicates
+            indicatorWrapper.innerHTML = '';
+
+            items.forEach((item, index) => {
+                const indicatorButton = document.createElement('button');
+                indicatorButton.classList.add('indicator');
+                indicatorButton.setAttribute('index', index);
+                indicatorWrapper.appendChild(indicatorButton);
+            });
+        }
+    }
+
+    setupEventListeners(carousel, state, prevBtn, nextBtn, indicatorsWrapper) {
+        // Event listeners for controls
+        prevBtn?.addEventListener('click', () => this.navigate(carousel, state, -1));
+        nextBtn?.addEventListener('click', () => this.navigate(carousel, state, 1));
+
+        // Event delegation for indicators
+        indicatorsWrapper?.addEventListener('click', (event) => {
+            if (event.target.matches('.indicator')) {
+                const index = parseInt(event.target.getAttribute('index'), 10);
+                this.goToSlide(carousel, state, index);
+            }
         });
-        carousel.appendChild(controlWrapper);
-    }
 
-    ensureIndicators(carousel, itemCount) {
-        if (!carousel.hasAttribute('indicators')) return;
-
-        const indicatorWrapper = document.createElement('div');
-        indicatorWrapper.className = 'indicator-wrapper';
-        for (let i = 0; i < itemCount; i++) {
-            const indicator = document.createElement('button');
-            indicator.className = 'indicator';
-            indicator.setAttribute('data-index', i);
-            indicatorWrapper.appendChild(indicator);
-        }
-        carousel.appendChild(indicatorWrapper);
-    }
-
-    setupEventListeners(carousel, state) {
+        // Scroll event handling with debouncing
         const main = carousel.querySelector('.main');
-        carousel.addEventListener('click', this.handleClick.bind(this, carousel, state));
-        main.addEventListener('scroll', this.debounce(this.handleScroll.bind(this, carousel, state), 100));
-    }
-
-    handleClick(carousel, state, event) {
-        const { target } = event;
-        if (target.classList.contains('prev')) this.navigate(carousel, state, -1);
-        else if (target.classList.contains('next')) this.navigate(carousel, state, 1);
-        else if (target.classList.contains('indicator')) {
-            const index = parseInt(target.getAttribute('data-index'), 10);
-            this.goToSlide(carousel, state, index);
-        }
-    }
-
-    handleScroll(carousel, state) {
-        const main = carousel.querySelector('.main');
-        state.currentIndex = this.calculateCurrentIndex(main, state);
-        this.updateIndicators(carousel, state);
+        let scrollTimeout;
+        main?.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                state.currentIndex = this.calculateCurrentIndex(main, state);
+                this.updateIndicators(carousel, state);
+            }, 100);
+        });
     }
 
     navigate(carousel, state, direction) {
@@ -99,17 +119,17 @@ class Carousel {
 
     updateCarousel(carousel, state) {
         const main = carousel.querySelector('.main');
-        const scrollPosition = this.calculateScrollPosition(state);
-        const scrollOptions = {
-            [state.isVertical ? 'top' : 'left']: scrollPosition,
-            behavior: 'smooth'
-        };
-        main.scrollTo(scrollOptions);
+        const scrollPosition = state.isVertical
+            ? { top: this.calculateScrollPosition(state, 'vertical'), behavior: 'smooth' }
+            : { left: this.calculateScrollPosition(state, 'horizontal'), behavior: 'smooth' };
+
+        main.scrollTo(scrollPosition);
         this.updateIndicators(carousel, state);
     }
 
     updateIndicators(carousel, state) {
-        carousel.querySelectorAll('.indicator').forEach((indicator, index) => {
+        const indicators = carousel.querySelectorAll('.indicator');
+        indicators?.forEach((indicator, index) => {
             indicator.classList.toggle('active', index === state.currentIndex);
         });
     }
@@ -118,28 +138,21 @@ class Carousel {
         const scrollPosition = state.isVertical ? main.scrollTop : main.scrollLeft;
         let accumulatedSize = 0;
         for (let i = 0; i < state.itemCount; i++) {
-            if (accumulatedSize + state.itemSizes[i] / 2 > scrollPosition) {
+            const itemSize = state.isVertical ? state.itemHeights[i] : state.itemWidths[i];
+            if (accumulatedSize + itemSize / 2 > scrollPosition) {
                 return i;
             }
-            accumulatedSize += state.itemSizes[i];
+            accumulatedSize += itemSize;
         }
         return state.itemCount - 1;
     }
 
-    calculateScrollPosition(state) {
-        return state.itemSizes.slice(0, state.currentIndex).reduce((sum, size) => sum + size, 0);
-    }
-
-    debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
+    calculateScrollPosition(state, direction) {
+        let position = 0;
+        for (let i = 0; i < state.currentIndex; i++) {
+            position += direction === 'vertical' ? state.itemHeights[i] : state.itemWidths[i];
+        }
+        return position;
     }
 }
 
