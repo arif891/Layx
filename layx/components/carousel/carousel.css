@@ -1,0 +1,65 @@
+carousel,.carousel {
+    display: block;
+    position: relative;
+    
+    .main {
+        display: flex;
+        gap: .5rem;
+        height: 50vh;
+        overflow: auto;
+        scrollbar-width: none;
+        scroll-snap-type: x mandatory;
+
+        .item {
+            flex-shrink: 0;
+            height: 100%;
+            width: 100%;
+            background-color: brown;
+            scroll-snap-align: start;
+
+            &.auto {
+               width: auto;
+            }
+        }
+
+        &.vertical {
+            flex-direction: column;
+            scroll-snap-type: y mandatory;
+
+            .item {
+
+                &.auto {
+                    height: auto;
+                 }
+            }
+        }
+    }
+
+    .indicator-warper {
+        position: absolute;
+        inset: auto 0 0;
+        margin-inline: auto;
+        height: 50px;
+        width: 150px;
+        background-color: aliceblue;
+    }
+
+    .control-warper {
+
+        .left,.right {
+            position: absolute;
+            margin-block: auto;
+            background-color: antiquewhite;
+            height: 50px;
+            width: 50px;
+
+            &.left {
+                inset: 0 0 0 auto;
+            }
+
+            &.right {
+                inset: 0 auto 0 0;
+            }
+        }
+    }
+}
