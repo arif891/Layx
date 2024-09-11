@@ -11,10 +11,16 @@
         <link rel="stylesheet" href="/layx/main/typography/typography.css">
         <link rel="stylesheet" href="/layx/main/base/base.css">
         <link rel="stylesheet" href="/layx/main/container/container.css">
+        <link rel="stylesheet" href="/layx/components/button/button.css">
 
         <style>
             body {
                 font-family: "Red Hat Display", sans-serif;
+            }
+
+            card {
+                background-color:antiquewhite;
+                width: 300px;
             }
         </style>
     </head>
@@ -22,7 +28,13 @@
     <body>
         <container class="demo__container">
             <card>
-
+                <img src="../carousel/assets/img_snow_wide.webp" class="card-img-top" alt="...">
+                <div class="main">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
             </card>
         </container>
     </body>
