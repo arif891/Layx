@@ -14,18 +14,35 @@
         <link rel="stylesheet" href="/layx/components/button/button.css">
 
         <style>
+            body {
+                font-family: "Red Hat Display", sans-serif;
+            }
 
+            .demo__carousel {
+                .item {
+                    display: grid;
+                    place-items: center;
+                    background-size: cover;
+                    color: #fff;
+                }
+            }
         </style>
 
     </head>
 
     <body>
         <container class="__container">
-            <carousel>
+            <carousel class="demo__carousel">
                 <div class="main">
-                    <div class="item" style="background-color: antiquewhite;">a</div>
-                    <div class="item" style="background-color: aliceblue;width: 50%;">a</div>
-                    <div class="item" style="background-color: antiquewhite;">a</div>
+                    <div class="item" style="background-image: url(assets/img_lights_wide.webp);">
+                        <h3>First slide</h3>
+                    </div>
+                    <div class="item" style="background-image: url(assets/img_mountains_wide.webp);">
+                        <h3>Second slide</h3>
+                    </div>
+                    <div class="item" style="background-image: url(assets/img_snow_wide.webp);">
+                        <h3>Third slide</h3>
+                    </div>
                 </div>
                 <div class="indicator-wrapper">
                     <button class="indicator" index="0"></button>
@@ -34,10 +51,10 @@
                 </div>
                 <div class="control-wrapper">
                     <div class="left">
-                        <button class="prev">Prev</button>
+                        <button class="prev"></button>
                     </div>
                     <div class="right">
-                        <button class="next">Next</button>
+                        <button class="next"></button>
                     </div>
                 </div>
             </carousel>

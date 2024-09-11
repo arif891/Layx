@@ -43,14 +43,12 @@ class Carousel {
             leftControl.classList.add('left');
             const prevButton = document.createElement('button');
             prevButton.classList.add('prev');
-            prevButton.textContent = 'Prev';
             leftControl.appendChild(prevButton);
 
             const rightControl = document.createElement('div');
             rightControl.classList.add('right');
             const nextButton = document.createElement('button');
             nextButton.classList.add('next');
-            nextButton.textContent = 'Next';
             rightControl.appendChild(nextButton);
 
             controlWrapper.appendChild(leftControl);
