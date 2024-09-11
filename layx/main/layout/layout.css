@@ -2,7 +2,11 @@ layout,.layout {
     display: grid;
     grid-template-columns: repeat(var(--num-x, 12), 1fr);
     grid-template-rows: repeat(var(--num-y, none), 1fr);
-    gap: var(--gap-y) var(--gap-x);
+    gap: var(--gap-y,0) var(--gap-x,0);
+
+    &:has(>:not([class|="x"])) {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
 
     &.edge {
         --edge-offset-x: .75rem;

@@ -1,13 +1,12 @@
 container,.container {
     --edge-offset-x: .75rem;
     display: block;
-    margin-inline: auto;
-    max-width: calc(100% - calc(var(--edge-offset-x) * 2));
+    margin-inline:var(--edge-offset-x);
 
     &.edge {
         display: grid;
         grid-template-columns: var(--edge-offset-x, 0px) 1fr var(--edge-offset-x, 0px);
-        max-width: unset;
+        margin-inline: unset;
 
         & > * {
             grid-column: 2;
