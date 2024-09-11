@@ -19,6 +19,8 @@
             }
 
             .demo__carousel {
+                margin-bottom: 1rem;
+
                 .item {
                     display: grid;
                     place-items: center;
@@ -34,6 +36,33 @@
         <container class="__container">
             <carousel class="demo__carousel">
                 <div class="main">
+                    <div class="item" style="background-image: url(assets/img_lights_wide.webp);">
+                        <h3>First slide</h3>
+                    </div>
+                    <div class="item" style="background-image: url(assets/img_mountains_wide.webp);">
+                        <h3>Second slide</h3>
+                    </div>
+                    <div class="item" style="background-image: url(assets/img_snow_wide.webp);">
+                        <h3>Third slide</h3>
+                    </div>
+                </div>
+                <div class="indicator-wrapper">
+                    <button class="indicator" index="0"></button>
+                    <button class="indicator" index="1"></button>
+                    <button class="indicator" index="2"></button>
+                </div>
+                <div class="control-wrapper">
+                    <div class="left">
+                        <button class="prev"></button>
+                    </div>
+                    <div class="right">
+                        <button class="next"></button>
+                    </div>
+                </div>
+            </carousel>
+
+            <carousel class="demo__carousel">
+                <div class="main vertical">
                     <div class="item" style="background-image: url(assets/img_lights_wide.webp);">
                         <h3>First slide</h3>
                     </div>
