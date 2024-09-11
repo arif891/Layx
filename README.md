@@ -149,7 +149,6 @@ To install Layx on your Windows system:
     ```bash
     layx install
     ```
-4. (Optional) For VS Code users: Add "C:/Preferences/" to your VS Code Emmet extensions Path for Layx syntax support.
 
 ## 🚀 Quick Start Guide
 
