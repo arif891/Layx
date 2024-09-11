@@ -182,7 +182,7 @@ IF EXIST "%PROGRAM_DIR%" (
 ECHO Installing...
 ECHO Copying Files.
 Xcopy "%SCRIPT_DIR%" "%PROGRAM_DIR%" /Y /E /S /V /I 
-Xcopy "%SCRIPT_DIR%%CONFIG_DIR%preference\layx.code-snippets" "C:\Users\%username%\AppData\Roaming\Code\User\snippets\" /Y /E /S /V /I 
+Xcopy "%SCRIPT_DIR%%CONFIG_DIR%syntax\layx.code-snippets" "C:\Users\%username%\AppData\Roaming\Code\User\snippets\" /Y /E /S /V /I 
 
 ECHO %PATH% | FIND /I "%PROGRAM_DIR%" >nul
 IF ERRORLEVEL 1 (
