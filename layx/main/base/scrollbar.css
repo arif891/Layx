@@ -16,15 +16,15 @@
     }
 }
 
-.thin-scrollbar {
+.sb-thin {
     scrollbar-width: thin;
 }
 
-.no-scrollbar {
+.sb-none {
     scrollbar-width: none;
 }
 
-.hover-scrollbar {
+.sb-hover {
     scrollbar-width: none;
 
     &:hover {
