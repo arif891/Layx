@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Improved Dynamic Template System with Consistent Attribute Handling</title>
+</head>
+<body>
+    <h1 class="dynamic after" age="{User.age|18}">Hello, {User.name|user}</h1>
+    <h1 class="dynamic">Role {section|default-role}</h1>
+    <h1 class="dynamic">Date: {Date()}</h1>
+
+    <script src="dynamic.js"></script>
+    <script>
+        const section = 'Manager';
+
+        
+        const dynamic = new Dynamic();
+        // Simulate delayed data loading
+        setTimeout(() => {
+            User = {
+                name: 'John',
+                age: 30
+            };
+
+            dynamic.updateAfterElements();
+        }, 1000);
+    </script>
+</body>
+</html>
+</html>
