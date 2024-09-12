@@ -5,7 +5,7 @@ carousel,.carousel {
     
     .main {
         display: flex;
-        height: 48vh;
+        height: var(--height, 500px);
         overflow: auto;
         scrollbar-width: none;
         scroll-snap-type: x mandatory;

@@ -34,7 +34,7 @@ card, .card {
 
     .header {
    
-      }
+    }
   
     .main {
     
@@ -67,5 +67,4 @@ card, .card {
           flex-direction: column;
         }
       }
-
 }
