@@ -1,31 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Improved Dynamic Template System with Consistent Attribute Handling</title>
-</head>
-<body>
-    <h1 class="dynamic after" age="{User.age|18}">Hello, {User.name|user}</h1>
-    <h1 class="dynamic">Role {section|default-role}</h1>
-    <h1 class="dynamic">Date: {Date()}</h1>
 
-    <script src="dynamic.js"></script>
-    <script>
-        const section = 'Manager';
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Improved Dynamic Template System with Consistent Attribute Handling</title>
+    </head>
 
-        
-        const dynamic = new Dynamic();
-        // Simulate delayed data loading
-        setTimeout(() => {
-            User = {
-                name: 'John',
-                age: 30
-            };
+    <body>
+        <h1 class="dynamic after" age="{age|18}">Hello, {name|user}</h1>
+        <h1 class="dynamic">Role {section|default-role}</h1>
+        <h1 class="dynamic">Date: {Date()}</h1>
 
-            dynamic.updateAfterElements();
-        }, 1000);
-    </script>
-</body>
+        <script src="dynamic.js"></script>
+        <script>
+            const section = 'Manager';
+
+
+            const dynamic = new Dynamic();
+            // Simulate delayed data loading
+            async function delayValue(value, delay) {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve(value);
+                    }, delay);
+                });
+            }
+            (async () => {
+                const UserName = await delayValue('Jhon', 1000);
+                const UserAge = await delayValue(30, 1000);
+                name = UserName;
+                age = UserAge;
+                dynamic.updateAfterElements();
+            })();
+
+        </script>
+    </body>
+
 </html>
+
 </html>
