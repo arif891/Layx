@@ -1,5 +1,5 @@
 card, .card {
-    --padding: 1.5rem;
+    --padding: 1rem;
     --gap: 1rem;
     --radius: .5rem;
     --bg: rgb(245, 245, 245);
@@ -7,12 +7,65 @@ card, .card {
     --blur: 15px;
 
     display: block;
+    border-radius: var(--radius);
+    background: var(--bg);
+    overflow: hidden;
 
-    &:not(:has(.main)) {
-        padding: 1rem;
+    &.modern {
+     background: var(--bg-modern);
+     backdrop-filter: blur(var(--blur));  
     }
 
+    &:not(:has(.wrapper)) {
+        padding: var(--padding-y, var(--padding, .5rem)) var(--padding-x, var(--padding, .5rem));
+
+        &:last-child {
+            margin-bottom: unset;
+        }
+    }
+
+    .wrapper {
+        padding: var(--padding-y, var(--padding, .5rem)) var(--padding-x, var(--padding, .5rem));
+
+        &:last-child {
+            margin-bottom: unset;
+        }
+    }
+
+    .header {
+   
+      }
+  
     .main {
-        padding: 1rem;
+    
     }
+  
+      .footer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--gap, .5rem);
+  
+        &.center {
+          justify-content: center;
+        }
+  
+        &.end {
+          justify-content: end;
+        }
+  
+        &.between {
+          justify-content: space-between;
+        }
+  
+        &.grow {
+          >button {
+            flex-grow: 1;
+          }
+        }
+  
+        &.vertical {
+          flex-direction: column;
+        }
+      }
+
 }

@@ -18,9 +18,12 @@
                 font-family: "Red Hat Display", sans-serif;
             }
 
+            .demo__container {
+                margin-top: 1rem;
+            }
+
             card {
-                background-color:antiquewhite;
-                width: 300px;
+                width: 400px;
             }
         </style>
     </head>
@@ -28,12 +31,19 @@
     <body>
         <container class="demo__container">
             <card>
-                <img src="../carousel/assets/img_snow_wide.webp" class="card-img-top" alt="...">
-                <div class="main">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                <img src="../carousel/assets/img_snow_wide.webp" alt="...">
+                <div class="wrapper">
+                    <div class="header">
+                        <h5>Some demo header</h5>
+                    </div>
+                    <div class="main">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit mollitia illum perferendis
+                            molestiae.</p>
+                    </div>
+                    <div class="footer">
+                        <button class="light" type="button">Demo</button>
+                        <button class="dark" type="button">Book</button>
+                    </div>
                 </div>
             </card>
         </container>
