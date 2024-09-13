@@ -1,0 +1,51 @@
+pagination,.pagination {
+  display: flex;
+  gap: var(--gap,.5rem);
+
+  .item {
+    padding: .75rem 1rem;
+    background: var(--bg, rgb(250, 250, 250));
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    border-radius: .25rem;
+    cursor: pointer;
+    user-select: none;
+    transition: .3s;
+
+    a {
+      text-decoration: none;
+      color: var(--color);
+    }
+
+    &.active {
+      pointer-events: none;
+      background: var(--bg-hover, rgb(240, 240, 240));
+
+      a {
+        color: inherit;
+      }
+    }
+
+    &.prev {
+      &::after {
+        content: '<<';
+        color: var(--color);
+      }
+    }
+
+    &.next {
+      &::after {
+        content: '>>';
+        color: var(--color);
+      }
+    }
+
+    &:active {
+      scale: .8;
+    }
+
+    &:hover {
+      background: var(--bg-hover, rgb(240, 240, 240));
+    }
+  }
+}
