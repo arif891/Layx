@@ -5,18 +5,42 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Improved Dynamic Template System with Consistent Attribute Handling</title>
+
+        <link rel="stylesheet" href="/layx/main/base/base.css">
+        <link rel="stylesheet" href="/layx/main/container/container.css">
+        <link rel="stylesheet" href="/layx/main/typography/typography.css">
+
+        <style>
+            body {
+                font-family: "Red Hat Display", sans-serif;
+            }
+
+            .demo__container {
+                margin-top: 1rem;
+            }
+
+            .user__img {
+                height: 128px;
+                border-radius: 50%;
+            }
+        </style>
+
+        <script src="dynamic.js"></script>
     </head>
 
     <body>
-        <h1 class="dynamic after" age="{age|18}">Hello, {name|user}</h1>
-        <h1 class="dynamic">Role {section|default-role}</h1>
-        <h1 class="dynamic">Date: {Date()}</h1>
+        <container class="demo__container">
+            <img class="dynamic after user__img" src="{img|assets/defult_user.webp}" alt="">
+            <h2 class="dynamic after">Hello, {name|user}</h2>
+            <h3 class="dynamic">Role: {role|default-role}</h3>
+            <h3 class="dynamic">Date: {Date()}</h3>
+            <h3 class="dynamic">Info: <br>Height {window.innerHeight}px <br>Width {window.innerWidth}px</h3>
+        </container>
 
-        <script src="dynamic.js"></script>
+
         <script>
-            const section = 'Manager';
-
-
+            const role = 'Manager';
+            
             const dynamic = new Dynamic();
             // Simulate delayed data loading
             async function delayValue(value, delay) {
@@ -28,9 +52,9 @@
             }
             (async () => {
                 const UserName = await delayValue('Jhon', 1000);
-                const UserAge = await delayValue(30, 1000);
+                const UserImg = await delayValue('assets/user.webp', 1000);
                 name = UserName;
-                age = UserAge;
+                img = UserImg;
                 dynamic.updateAfterElements();
             })();
 
