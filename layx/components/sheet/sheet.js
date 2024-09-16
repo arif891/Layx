@@ -1,7 +1,7 @@
 class Sheet {
-    constructor(selector = 'sheet') {
+    constructor(selector = 'sheet', dragThreshold = .4) {
         this.sheets = document.querySelectorAll(selector);
-        this.dragThreshold = 0.4; // 40% of sheet size
+        this.dragThreshold = dragThreshold; // % of sheet size
         this.init();
     }
 
@@ -53,19 +53,30 @@ class Sheet {
             let startY, startX;
             let currentY, currentX;
             let isDragging = false;
+            const draggableArea = document.querySelector('.draggable-area') || sheet;
 
-            const onTouchStart = (e) => {
-                startY = e.touches[0].clientY;
-                startX = e.touches[0].clientX;
+            const onStart = (e) => {
+                if (e.type === 'touchstart') {
+                    startY = e.touches[0].clientY;
+                    startX = e.touches[0].clientX;
+                } else {
+                    startY = e.clientY;
+                    startX = e.clientX;
+                }
                 isDragging = true;
                 sheet.style.transition = 'none';
             };
 
-            const onTouchMove = (e) => {
+            const onMove = (e) => {
                 if (!isDragging) return;
 
-                currentY = e.touches[0].clientY;
-                currentX = e.touches[0].clientX;
+                if (e.type === 'touchmove') {
+                    currentY = e.touches[0].clientY;
+                    currentX = e.touches[0].clientX;
+                } else {
+                    currentY = e.clientY;
+                    currentX = e.clientX;
+                }
 
                 const deltaY = currentY - startY;
                 const deltaX = currentX - startX;
@@ -81,7 +92,7 @@ class Sheet {
                 }
             };
 
-            const onTouchEnd = () => {
+            const onEnd = () => {
                 if (!isDragging) return;
 
                 isDragging = false;
@@ -116,19 +127,28 @@ class Sheet {
                 }
             };
 
-            const draggbleArea = document.querySelector('.draggable-area');
+            
+            const addTouchListeners = () => {
+                draggableArea.addEventListener('touchstart', onStart);
+                draggableArea.addEventListener('touchmove', onMove);
+                draggableArea.addEventListener('touchend', onEnd);
+            };
 
-            if (draggbleArea) {
-                draggbleArea.addEventListener('touchstart', onTouchStart);
-                draggbleArea.addEventListener('touchmove', onTouchMove);
-                draggbleArea.addEventListener('touchend', onTouchEnd);
+            const addMouseListeners = () => {
+                draggableArea.addEventListener('mousedown', onStart);
+                window.addEventListener('mousemove', onMove);
+                window.addEventListener('mouseup', onEnd);
+            };
+
+         
+            if ('ontouchstart' in window) {
+                addTouchListeners(); 
             } else {
-                sheet.addEventListener('touchstart', onTouchStart);
-                sheet.addEventListener('touchmove', onTouchMove);
-                sheet.addEventListener('touchend', onTouchEnd);
+                addMouseListeners(); 
             }
         });
     }
+
 
     openSheet(sheet) {
         sheet.setAttribute('open', '');
