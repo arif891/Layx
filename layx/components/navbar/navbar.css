@@ -216,7 +216,6 @@ navbar,
                     visibility: visible;
                     opacity: 1;
                 }
-
             }
 
             .warp-able:not(.side, .rigth, .full)~backdrop {

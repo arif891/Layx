@@ -1,0 +1,58 @@
+sheet,.sheet {
+    visibility: hidden;
+    position: fixed;
+    background-color: aliceblue;
+    z-index: 5;
+    transition: var(--transition, .3s);
+    overscroll-behavior: none;
+
+    &[open] {
+      visibility: visible;
+    }
+
+    &:not(.none-modam) {
+      &~backdrop {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, .8);
+        visibility: hidden;
+        opacity: 0;
+        transition: var(--transition, .3s);
+
+        &[open] {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
+
+    &.top,&.right,&.bottom,&.left {
+      &[open] {
+        translate: 0 0;
+      }
+    }
+
+    &.top {
+      inset: 0 0 auto;
+      translate: 0 -100%;
+    }
+
+    &.right {
+      inset: 0 0 0 auto;
+      translate: 100% 0;
+    }
+
+    &.bottom {
+      inset: auto 0 0;
+      translate: 0 100%;
+    }
+
+    &.left {
+      inset: 0 auto 0 0;
+      translate: -100% 0;
+    }
+
+    .close {
+      --bg: none;
+    }
+  }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sheet Demo</title>
+
+    <link rel="stylesheet" href="sheet.css">
+
+    <link rel="stylesheet" href="/layx/main/base/base.css">
+    <link rel="stylesheet" href="/layx/main/typography/typography.css">
+    <link rel="stylesheet" href="/layx/components/button/button.css">
+
+    <style>
+      body {
+        font-family: "Red Hat Display", sans-serif;
+        background-color: antiquewhite;
+        overscroll-behavior: none;
+      }
+
+      sheet {
+        height: 400px;
+      }
+
+      .draggable-area {
+        height: 25px;
+        background-color: rgb(255, 207, 144);
+      }
+    </style>
+  </head>
+
+  <body>
+    <button data-sheet-target="#mySheet">Open Sheet</button>
+
+    <sheet id="mySheet" class="bottom modal">
+      <h1>Sheet Demo</h1>
+      <button class="close"></button>
+    </sheet>
+
+  </body>
+
+  <script type="module">
+    import Sheet from "./sheet.js";
+  </script>
+
+</html>
