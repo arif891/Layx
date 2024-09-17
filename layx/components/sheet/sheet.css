@@ -1,58 +1,82 @@
 sheet,.sheet {
-    visibility: hidden;
-    position: fixed;
-    background-color: aliceblue;
-    z-index: 5;
-    transition: var(--transition, .3s);
-    overscroll-behavior: none;
+  visibility: hidden;
+  position: fixed;
+  z-index: 5;
+  padding: var(--padding-y, var(--padding, .5rem)) var(--padding-x, var(--padding, .5rem));
+  background: var(--bg, #fff);
+  transition: var(--transition, .3s);
+  overscroll-behavior: none;
 
-    &[open] {
-      visibility: visible;
-    }
+  &[open] {
+    visibility: visible;
+  }
 
-    &:not(.none-modam) {
-      &~backdrop {
-        position: fixed;
-        inset: 0;
-        background-color: rgba(0, 0, 0, .8);
-        visibility: hidden;
-        opacity: 0;
-        transition: var(--transition, .3s);
+  &:not(.none-modal) {
+    &~backdrop {
+      position: fixed;
+      inset: 0;
+      background: var(--backdrop-bg, rgba(0, 0, 0, .8));
+      visibility: hidden;
+      opacity: 0;
+      transition: var(--transition, .3s);
 
-        &[open] {
-          visibility: visible;
-          opacity: 1;
-        }
-      }
-    }
-
-    &.top,&.right,&.bottom,&.left {
       &[open] {
-        translate: 0 0;
+        visibility: visible;
+        opacity: 1;
       }
-    }
-
-    &.top {
-      inset: 0 0 auto;
-      translate: 0 -100%;
-    }
-
-    &.right {
-      inset: 0 0 0 auto;
-      translate: 100% 0;
-    }
-
-    &.bottom {
-      inset: auto 0 0;
-      translate: 0 100%;
-    }
-
-    &.left {
-      inset: 0 auto 0 0;
-      translate: -100% 0;
-    }
-
-    .close {
-      --bg: none;
     }
   }
+
+  &.top,&.right,&.bottom,&.left {
+    &[open] {
+      translate: 0 0;
+    }
+  }
+
+  &.top {
+    inset: 0 0 auto;
+    translate: 0 -100%;
+  }
+
+  &.right {
+    inset: 0 0 0 auto;
+    translate: 100% 0;
+  }
+
+  &.bottom {
+    inset: auto 0 0;
+    translate: 0 100%;
+  }
+
+  &.left {
+    inset: 0 auto 0 0;
+    translate: -100% 0;
+  }
+
+  .close {
+    --bg: none;
+    padding: unset;
+    height: 1rem;
+  }
+
+  &.top,&.bottom {
+    &::after {
+      content: '';
+      position: absolute;
+      margin-inline: auto;
+      height: .4rem;
+      width: 3.5rem;
+      background: rgba(0, 0, 0, .2);
+      border-radius: 5rem;
+      user-select: none;
+    }
+
+    &.top::after {
+      inset: auto 0 .5rem ;
+    }
+
+    &.bottom::after {
+      inset: .5rem 0 auto;
+    }
+  }
+}

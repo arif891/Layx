@@ -20,18 +20,31 @@
       }
 
       sheet {
+        --padding: 1.5rem;
+        --bg: rgba(255, 255, 255, .8);
+       
         height: 450px;
-      }
 
+        &~backdrop {
+          --backdrop-bg:rgba(255, 255, 255, .3);
+        }
+
+        .wrapper {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
     </style>
   </head>
 
   <body>
     <button data-sheet-target="#mySheet">Open Sheet</button>
-    
+
     <sheet id="mySheet" class="bottom">
-      <h1>Sheet Demo</h1>
-      <button class="close"></button>
+      <div class="wrapper">
+        <h3>Sheet Demo</h3>
+        <button class="close"></button>
+      </div>
     </sheet>
 
   </body>
