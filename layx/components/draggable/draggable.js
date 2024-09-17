@@ -12,10 +12,10 @@ class Draggable {
     }
 
     addDragListeners(draggable) {
-        let startX = 0, startY = 0;
-        let initialX = 0, initialY = 0;
+        let startX, startY;
+        let initialX, initialY;
         let isDragging = false;
-        const draggableArea = document.querySelector('.draggable-area') || draggable;
+        const draggableArea = draggable.querySelector('.draggable-area') || draggable;
 
         const onStart = (e) => {
             e.preventDefault();

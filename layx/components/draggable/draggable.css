@@ -1,0 +1,50 @@
+draggable,.draggable {
+    --edge-offset: 5px;
+    position: fixed;
+    display: block;
+    transition: var(--transition, .6s);
+
+    .draggable-area {
+        padding-block: 1rem;
+    }
+
+    &.left {
+        translate: var(--edge-offset, 0px) var(--edge-offset, 0px);
+
+        &.middle {
+            translate: var(--edge-offset, 0px) calc(50dvh - 50%);
+        }
+
+        &.bottom {
+            translate: var(--edge-offset, 0px) calc(100dvh - (100% + var(--edge-offset, 0px)));
+        }
+    }
+
+    &.right {
+        translate: calc(100dvw - (100% + var(--edge-offset, 0px))) var(--edge-offset, 0px);
+
+        &.middle {
+            translate: calc(100dvw - (100% + var(--edge-offset, 0px))) calc(50dvh - 50%);
+        }
+
+        &.bottom {
+            translate: calc(100dvw - (100% + var(--edge-offset, 0px))) calc(100dvh - (100% + var(--edge-offset, 0px)));
+        }
+    }
+
+    &.center {
+        translate: calc(50dvw - 50%) var(--edge-offset, 0px);
+
+        &.middle {
+            translate: calc(50dvw - 50%) calc(50dvh - 50%);
+        }
+
+        &.bottom {
+            translate: calc(50dvw - 50%) calc(100dvh - (100% + var(--edge-offset, 0px)));
+        }
+    }
+
+    &.bottom {
+        translate: var(--edge-offset, 0px) calc(100dvh - (100% + var(--edge-offset, 0px)));
+    }
+}

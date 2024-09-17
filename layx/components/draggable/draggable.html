@@ -1,33 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
 
-    <style>
-        body {
-            margin: 0;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
 
-        draggable {
-            display: block;
-            height: 150px;
-            width: 200px;
-            background-color: antiquewhite;
-            position: fixed;
-            transition: .6s ;
-        }
-    </style>
-</head>
-<body>
-    <draggable>
-    </draggable>
-    
+        <link rel="stylesheet" href="draggable.css">
 
-    <script type="module">
-       import Draggable from './draggable.js'
-    </script>
-    
-</body>
+        <link rel="stylesheet" href="/layx/main/base/base.css">
+        <link rel="stylesheet" href="/layx/main/typography/typography.css">
+
+        <style>
+            body {
+                margin: 0;
+                font-family: "Red Hat Display", sans-serif;
+                background-color: antiquewhite;
+                overscroll-behavior: none;
+            }
+
+            draggable {
+                height: 30vh;
+                width: 30vw;
+                background-color: rgba(255, 255, 255, .5);
+                border-radius: .5rem;
+                overflow: hidden;
+
+                &:not(.middle) {
+                  display: grid;
+                  place-content: center;
+                }
+
+                .draggable-area {
+                    background-color: rgba(255, 255, 255, .8);
+                }
+
+                p {
+                    margin: unset;
+                }
+
+                * {
+                    user-select: none;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <draggable class="left">
+            <p>draggable</p>
+        </draggable>
+        <draggable class="right">
+            <p>draggable</p>
+        </draggable>
+        <draggable class="center middle">
+            <div class="draggable-area">
+                <p style="text-align: center;">draggable</p>
+            </div>
+        </draggable>
+        <draggable class="bottom">
+            <p>draggable</p>
+        </draggable>
+        <draggable class="bottom right">
+            <p>draggable</p>
+        </draggable>
+
+        <script type="module">
+          import Draggable from './draggable.js';
+        </script>
+
+    </body>
+
 </html>
