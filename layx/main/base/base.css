@@ -77,3 +77,9 @@ small {
 a {
 
 }
+
+backdrop {
+    position: fixed;
+    inset: 0;
+    background: var(--backdrop-bg, rgba(0,0,0,.3));
+}
