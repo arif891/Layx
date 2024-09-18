@@ -1,5 +1,4 @@
-navbar,
-.navbar {
+navbar,.navbar {
     --edge-offset-x: .75rem;
     --gap: 1rem;
     --padding-x: .75rem;
@@ -77,18 +76,18 @@ navbar,
                     background: var(--navbar-warp-bg, #fff);
                     transition: var(--transition, .3s);
 
-                    &:not(.side, .rigth),full {
+                    &:not(.left, .right),full {
                         visibility: hidden;
                         opacity: 0;
 
-                        &.open {
+                        &[open] {
                             visibility: visible;
                             opacity: 1;
                         }
                     }
 
 
-                    &.full,&.side,&.rigth {
+                    &.full,&.left,&.right {
                         position: fixed;
                         min-width: 80%;
 
@@ -96,20 +95,20 @@ navbar,
                             inset: 0;
                         }
 
-                        &.side {
+                        &.left {
                             inset: 0 auto 0 0;
                             translate: -100% 0;
 
-                            &.open {
+                            &[open] {
                                 translate: 0 0;
                             }
                         }
 
-                        &.rigth {
+                        &.right {
                             inset: 0 0 0 auto;
                             translate: 100% 0;
 
-                            &.open {
+                            &[open] {
                                 translate: 0 0;
                             }
                         }
@@ -212,25 +211,25 @@ navbar,
                 opacity: 0;
                 transition: var(--transition, .3s);
 
-                &.open {
+                &[open] {
                     visibility: visible;
                     opacity: 1;
                 }
             }
 
-            .warp-able:not(.side, .rigth, .full)~backdrop {
+            .warp-able:not(.left, .right, .full)~backdrop {
                 z-index: -1;
             }
 
-            :is(.warp-able.side, .warp-able.rigth)~backdrop {
+            :is(.warp-able.left, .warp-able.right)~backdrop {
                 width: 20%;
             }
 
-            .warp-able.side~backdrop {
+            .warp-able.left~backdrop {
                 inset: 0 0 0 auto;
             }
 
-            .warp-able.rigth~backdrop {
+            .warp-able.right~backdrop {
                 inset: 0 auto 0 0;
             }
         }
@@ -289,6 +288,8 @@ navbar,
             }
         }
     }
+
+
 
     @media (width >=576px) {
         --edge-offset-x: 1.5%;
