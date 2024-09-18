@@ -8,6 +8,7 @@
 
         <link rel="stylesheet" href="dialog.css">
 
+        <link rel="stylesheet" href="/layx/main/base/base.css">
         <link rel="stylesheet" href="/layx/main/typography/typography.css">
         <link rel="stylesheet" href="/layx/components/button/button.css">
 
@@ -49,7 +50,7 @@
             </div>
         </dialog>
 
-        <dialog id="deom-dialog2" class="dialog center modern">
+        <dialog id="deom-dialog2" class="dialog center modern modal">
             <div class="content">
                 <div class="header">
                     <h5 class="title">Some big demo dialog header?</h5>
@@ -101,10 +102,10 @@
         </dialog>
 
         <div class="button-wrapper">
-        <button class="lg light dialog-toggler" data-toggle="deom-dialog">Show</button>
-        <button class="lg light dialog-toggler" data-toggle="deom-dialog2">Show Center</button>
-        <button class="lg light dialog-toggler" data-toggle="deom-dialog3">Show Bottom</button>
-        <button class="lg light dialog-toggler" data-toggle="deom-dialog4">Show Rigth</button>
+        <button class="lg light dialog-toggler" data-dialog-target="#deom-dialog">Show</button>
+        <button class="lg light dialog-toggler" data-dialog-target="#deom-dialog2">Show Center</button>
+        <button class="lg light dialog-toggler" data-dialog-target="#deom-dialog3">Show Bottom</button>
+        <button class="lg light dialog-toggler" data-dialog-target="#deom-dialog4">Show Rigth</button>
     </div>
         <script type="module">
           import Dialog from './dialog.js';

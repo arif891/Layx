@@ -1,74 +1,84 @@
 class Dialog {
-  constructor() {
+  constructor(slector = 'dialog') {
     this.dialogs = document.querySelectorAll('dialog');
-    this.dialogTogglers = document.querySelectorAll('.dialog-toggler');
+    this.togglers = document.querySelectorAll('[data-dialog-target]');
     this.initialize();
   }
 
   initialize() {
-    this.dialogTogglers.forEach(toggler => {
-      toggler.addEventListener('click', () => this.handleToggleClick(toggler));
-    });
+    this.addTriggerListeners();
+    this.addCloseButtonListeners();
+    this.addBackdropListeners();
+  }
 
-    this.dialogs.forEach(dialog => {
-      const closeButtons = dialog.querySelectorAll('.close');
-      closeButtons.forEach(button => {
-        button.addEventListener('click', () => this.closeDialog(dialog));
+  addTriggerListeners() {
+    this.togglers.forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = trigger.getAttribute('data-dialog-target');
+        const targetDialog = document.querySelector(targetId);
+        if (targetDialog) {
+          this.toggledialog(targetDialog);
+        }
       });
     });
   }
 
-  handleToggleClick(toggler) {
-    const targetDialogId = toggler.dataset.toggle;
-    const targetDialog = document.getElementById(targetDialogId);
-
-    if (targetDialog) {
-      this.toggleDialog(targetDialog);
-
-      if (targetDialog.classList.contains('auto-hide')) {
-        this.setAutoHide(targetDialog);
-        this.handleDialogHover(targetDialog);
-      }
-    } else {
-      console.warn(`Dialog with ID "${targetDialogId}" not found!`);
-    }
+  addCloseButtonListeners() {
+    document.querySelectorAll('.close').forEach(closeButton => {
+      closeButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const dialog = closeButton.closest('dialog');
+        if (dialog) {
+          this.closeDialog(dialog);
+        }
+      });
+    });
   }
 
-  showDialog(dialog) {
+  addBackdropListeners() {
+    document.addEventListener('click', (e) => {
+      if (e.target.tagName.toLowerCase() === 'backdrop') {
+        const dialog = e.target.previousElementSibling;
+        if (dialog && (dialog.tagName.toLowerCase() === 'dialog' || dialog.classList.contains('dialog'))) {
+          this.closeDialog(dialog);
+        }
+      }
+    });
+  }
+
+  openDialog(dialog) {
+    dialog.setAttribute('open', '');
     if (dialog.classList.contains('modal')) {
-      dialog.showModal();
-    } else {
-      dialog.show();
+      let dialogBackdrop = dialog.parentElement.querySelector('backdrop');
+      if (!dialogBackdrop) {
+        dialogBackdrop = document.createElement('backdrop');
+        dialogBackdrop.classList.add('dialog-backdrop');
+        dialog.insertAdjacentElement('afterend', dialogBackdrop);
+      }
+      dialogBackdrop.setAttribute('open', '');
     }
   }
 
   closeDialog(dialog) {
-    dialog.close();
-  }
-
-  toggleDialog(dialog) {
-    if (!dialog.hasAttribute('open')) {
-      this.showDialog(dialog);
-    } else {
-      this.closeDialog(dialog);
+    dialog.removeAttribute('open');
+    if (dialog.classList.contains('modal')) {
+      let dialogBackdrop = dialog.nextElementSibling;
+      if (dialogBackdrop && dialogBackdrop.tagName.toLowerCase() === 'backdrop') {
+        dialogBackdrop.removeAttribute('open');
+      }
     }
   }
 
-  setAutoHide(dialog, autoHideTimeMs = 3600) {
-    clearTimeout(dialog.hideTimeout);
-    dialog.hideTimeout = setTimeout(() => this.closeDialog(dialog), autoHideTimeMs);
-  }
-
-  handleDialogHover(dialog) {
-    dialog.addEventListener('pointerenter', () => {
-      clearTimeout(dialog.hideTimeout);
-    });
-
-    dialog.addEventListener('pointerleave', () => {
-      this.setAutoHide(dialog);
-    });
+  toggledialog(dialog) {
+    if (dialog.hasAttribute('open')) {
+      this.closeDialog(dialog);
+    } else {
+      this.openDialog(dialog);
+    }
   }
 }
+
 
 // Export an instance of Dialog to initialize it when imported
 export default new Dialog();

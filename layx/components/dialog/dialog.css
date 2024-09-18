@@ -18,6 +18,7 @@ dialog {
   width: min(calc(100% - var(--edge-offset-x, .5rem) * 2), clamp(500px, 30vw, 600px));
   border: var(--border, unset);
   border-radius: var(--radius, .5rem);
+  z-index: 5;
   background: var(--bg, rgb(245, 245, 245));
   transform-origin: center top;
   animation: dialog-hide var(--animation-duration);
@@ -39,15 +40,18 @@ dialog {
       animation: dialog-content-show calc(var(--animation-duration) * .25) forwards calc(var(--animation-duration) * .75);
     }
 
-    &::backdrop {
+    &~backdrop {
+      visibility: visible;
       opacity: 1;
     }
 
   }
 
-  &::backdrop {
+  &~backdrop {
+    --backdrop-bg: rgba(255,255,255,.3);
+    visibility: hidden;
     opacity: 0;
-    transition: .6s allow-discrete;
+    transition: .6s;
   }
 
   .content {

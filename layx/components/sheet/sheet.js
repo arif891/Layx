@@ -2,6 +2,7 @@ class Sheet {
     constructor(selector = 'sheet', dragThreshold = .4) {
         this.sheets = document.querySelectorAll(selector);
         this.dragThreshold = dragThreshold; // % of sheet size
+        this.togglers =  document.querySelectorAll('[data-sheet-target]');
         this.init();
     }
 
@@ -13,7 +14,7 @@ class Sheet {
     }
 
     addTriggerListeners() {
-        document.querySelectorAll('[data-sheet-target]').forEach(trigger => {
+        this.togglers.forEach(trigger => {
             trigger.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = trigger.getAttribute('data-sheet-target');
