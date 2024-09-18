@@ -1,11 +1,15 @@
+/* Main */
 @import url(main/base/variable.css);
 @import url(main/base/scrollbar.css);
 @import url(main/base/base.css);
 @import url(main/typography/typography.css);
+
+/* Core componets */
 @import url(main/container/container.css);
 @import url(main/layout/layout.css);
 @import url(main/layout/layuot-helper.css);
 
+/* Componets */
 @import url(components/button/button.css);
 @import url(components/form/form.css);
 @import url(components/navbar/navbar.css);
