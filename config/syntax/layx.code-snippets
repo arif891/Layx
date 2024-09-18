@@ -1,9 +1,37 @@
 {
-    "Navbar Component": {
-        "scope": "html",
+	"Section": {
+		"scope": "html",
+		"prefix": "section",
+		"body": ""
+	},
+	"Section Full": {
+		"scope": "html",
+		"prefix": "section-full",
+		"body": ""
+	},
+	"Container Component": {
+		"scope": "html",
+		"prefix": "container",
+		"body": ""
+	},
+	"Container Edge Component": {
+		"scope": "html",
+		"prefix": "container-edge",
+		"body": ""
+	},
+	"Layout Component": {
+		"scope": "html",
+		"prefix": "layout",
+		"body": ""
+	},
+	"Layout Edge Component": {
+		"scope": "html",
+		"prefix": "layout-edge",
+		"body": ""
+	},
+	"Navbar Component": {
+		"scope": "html",
 		"prefix": "navbar",
-		"body": [
-			"<navbar class=\"fixed main-navbar update-scroll-state\">\r    <div class=\"wrapper\">\r        <div class=\"main modern center move\">\r            <div class=\"brand\">\r                <h5 class=\"logo-text\">Layx</h5>\r                <button class=\"toggler\"></button>\r            </div>\r            <div class=\"warp-able side\">\r                <button class=\"close\"></button>\r                <div>\r                    <nav class=\"link-wrapper\">\r                        <a href=\"\" class=\"link\">Home</a>\r                        <a href=\"\" class=\"link\">Amout</a>\r                        <a href=\"\" class=\"link\">Demo</a>\r                        <a href=\"\" class=\"link\">Conatact</a>\r                        <a href=\"\" class=\"link\">FAQs</a>\r                        <a href=\"\" class=\"link\">Test</a>\r                    </nav>\r                </div>\r                <div>\r                    <button class=\"dark\">Button</button>\r                </div>\r            </div>\r        </div>\r    </div>\r</navbar>"
-		]
+		"body": "<navbar class=\"fixed main-navbar update-scroll-state\">\r    <div class=\"wrapper\">\r        <div class=\"main modern center move\">\r            <div class=\"brand\">\r                <h5 class=\"logo-text\">Layx</h5>\r                <button class=\"toggler\"></button>\r            </div>\r            <div class=\"warp-able side\">\r                <button class=\"close\"></button>\r                <div>\r                    <nav class=\"link-wrapper\">\r                        <a href=\"\" class=\"link\">Home</a>\r                        <a href=\"\" class=\"link\">Amout</a>\r                        <a href=\"\" class=\"link\">Demo</a>\r                        <a href=\"\" class=\"link\">Conatact</a>\r                        <a href=\"\" class=\"link\">FAQs</a>\r                        <a href=\"\" class=\"link\">Test</a>\r                    </nav>\r                </div>\r                <div>\r                    <button class=\"dark\">Button</button>\r                </div>\r            </div>\r        </div>\r    </div>\r</navbar>"
 	}
 }

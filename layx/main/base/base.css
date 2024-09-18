@@ -81,5 +81,12 @@ a {
 backdrop {
     position: fixed;
     inset: 0;
+    visibility: hidden;
+    opacity: 0;
     background: var(--backdrop-bg, rgba(0,0,0,.3));
+
+    &[open] {
+        visibility: visible;
+        opacity: 0;
+    }
 }
