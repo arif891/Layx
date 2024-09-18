@@ -7,7 +7,9 @@
 /* Core componets */
 @import url(main/container/container.css);
 @import url(main/layout/layout.css);
-@import url(main/layout/layuot-helper.css);
+
+/* helper */
+@import url(helpers/layout/layuot_helper.css);
 
 /* Componets */
 @import url(components/button/button.css);
@@ -15,3 +17,6 @@
 @import url(components/navbar/navbar.css);
 @import url(components/accordion/accordion.css);
 @import url(components/footer/footer.css);
+
+
+/* Utilities */
