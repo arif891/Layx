@@ -12,9 +12,10 @@
 
 
 :root,
-[data-theme=light] {
+[theme=light] {
     --color-rgb: 0, 0, 0;
     --bg-color-rgb: 255, 255, 255;
+    --bg: rgb(240,240,240);
     --heading-color: #000;
     --paragraph-color: #000;
     --primary-color: #0d6efd;
@@ -28,9 +29,10 @@
     color-scheme: light;
 }
 
-[data-theme=dark] {
+[theme=dark] {
     --color-rgb: 255, 255, 255;
     --bg-color-rgb: 0, 0, 0;
+    --bg: rgb(20,20,20);
     --heading-color: #fff;
     --paragraph-color: #fff;
     --primary-color: #0d6efd;
