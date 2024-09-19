@@ -95,12 +95,17 @@ class Carousel {
 
         // Scroll event handling with debouncing
         const main = carousel.querySelector('.main');
+        const items = carousel.querySelectorAll('.item');
         let scrollTimeout;
         main?.addEventListener('scroll', () => {
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(() => {
-                state.currentIndex = this.calculateCurrentIndex(main, state);
-                this.updateIndicators(carousel, state);
+                const newIndex = this.calculateCurrentIndex(main, state);
+                if (newIndex !== state.currentIndex) {
+                    state.currentIndex = newIndex;
+                    this.updateIndicators(carousel, state);
+                    this.updateActiveItem(items, state.currentIndex);
+                }
             }, 100);
         });
     }
@@ -117,18 +122,26 @@ class Carousel {
 
     updateCarousel(carousel, state) {
         const main = carousel.querySelector('.main');
+        const items = carousel.querySelectorAll('.item');
         const scrollPosition = state.isVertical
             ? { top: this.calculateScrollPosition(state, 'vertical'), behavior: 'smooth' }
             : { left: this.calculateScrollPosition(state, 'horizontal'), behavior: 'smooth' };
 
         main.scrollTo(scrollPosition);
         this.updateIndicators(carousel, state);
+        this.updateActiveItem(items, state.currentIndex);
     }
 
     updateIndicators(carousel, state) {
         const indicators = carousel.querySelectorAll('.indicator');
         indicators?.forEach((indicator, index) => {
             indicator.classList.toggle('active', index === state.currentIndex);
+        });
+    }
+
+    updateActiveItem(items, currentIndex) {
+        items.forEach((item, index) => {
+            item.classList.toggle('active', index === currentIndex);
         });
     }
 
