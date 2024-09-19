@@ -3,7 +3,7 @@
 SET "CURRENT_DIR=%CD%\"
 SET "SCRIPT_DIR=%~dp0"
 SET "CONFIG_DIR=config\"
-SET "IMAGES_DIR=assets\images\"
+SET "IMAGES_DIR=assets\image\"
 SET "NODE_EXE=%CURRENT_DIR%%CONFIG_DIR%node.exe"
 SET "WEBP_EXE=%CURRENT_DIR%%CONFIG_DIR%webp.exe"
 SET "PROGRAM_DIR=C:\Program Files\layx\"
