@@ -2,36 +2,91 @@
 	"Section": {
 		"scope": "html",
 		"prefix": "section",
-		"body": ""
+		"body": "<section class=\"__section\"></section>"
 	},
 	"Section Full": {
 		"scope": "html",
 		"prefix": "section-full",
-		"body": ""
+		"body": "<section class=\"__section\">\r    <container class=\"__container\">\r        <layout class=\"__layout\">\r\r        </layout>\r    </container>\r</section>"
 	},
 	"Container Component": {
 		"scope": "html",
 		"prefix": "container",
-		"body": ""
+		"body": "<container class=\"__container\"></container>"
 	},
 	"Container Edge Component": {
 		"scope": "html",
 		"prefix": "container-edge",
-		"body": ""
+		"body": "<container class=\"edge __container\"></container>"
 	},
 	"Layout Component": {
 		"scope": "html",
 		"prefix": "layout",
-		"body": ""
+		"body": "<layout class=\"__layout\"></layout>"
 	},
 	"Layout Edge Component": {
 		"scope": "html",
 		"prefix": "layout-edge",
-		"body": ""
+		"body": "<layout class=\"egde __layout\"></layout>"
 	},
 	"Navbar Component": {
 		"scope": "html",
 		"prefix": "navbar",
-		"body": "<navbar class=\"fixed main-navbar update-scroll-state\">\r    <div class=\"wrapper\">\r        <div class=\"main modern center move\">\r            <div class=\"brand\">\r                <h5 class=\"logo-text\">Layx</h5>\r                <button class=\"toggler\"></button>\r            </div>\r            <div class=\"warp-able side\">\r                <button class=\"close\"></button>\r                <div>\r                    <nav class=\"link-wrapper\">\r                        <a href=\"\" class=\"link\">Home</a>\r                        <a href=\"\" class=\"link\">Amout</a>\r                        <a href=\"\" class=\"link\">Demo</a>\r                        <a href=\"\" class=\"link\">Conatact</a>\r                        <a href=\"\" class=\"link\">FAQs</a>\r                        <a href=\"\" class=\"link\">Test</a>\r                    </nav>\r                </div>\r                <div>\r                    <button class=\"dark\">Button</button>\r                </div>\r            </div>\r        </div>\r    </div>\r</navbar>"
-	}
+		"body": "<navbar class=\"__navbar\">\r    <div class=\"wrapper\">\r        <div class=\"main\">\r            <div class=\"brand\">\r                <h5 class=\"logo-text\">Logo</h5>\r                <button class=\"toggler\"></button>\r            </div>\r            <div class=\"warp-able left\">\r                <button class=\"close\"></button>\r                <nav class=\"link-wrapper\">\r                    <a href=\"\" class=\"link\">link</a>\r                    <a href=\"\" class=\"link\">link</a>\r                    <a href=\"\" class=\"link\">link</a>\r                    <a href=\"\" class=\"link\">link</a>\r                    <a href=\"\" class=\"link\">link</a>\r                    <a href=\"\" class=\"link\">link</a>\r                </nav>\r                <div>\r                    <button class=\"dark\">Button</button>\r                </div>\r            </div>\r        </div>\r    </div>\r</navbar>"
+	},
+	"Navbar Center Component": {
+		"scope": "html",
+		"prefix": "lnavbar-center",
+		"body": "<navbar class=\"__navbar\">\r    <div class=\"wrapper\">\r        <div class=\"main center\">\r            <div class=\"brand\">\r                <h5 class=\"logo-text\">Logo</h5>\r                <button class=\"toggler\"></button>\r            </div>\r            <div class=\"warp-able left\">\r                <button class=\"close\"></button>\r                <nav class=\"link-wrapper\">\r                    <a href=\"\" class=\"link\">link</a>\r                    <a href=\"\" class=\"link\">link</a>\r                    <a href=\"\" class=\"link\">link</a>\r                    <a href=\"\" class=\"link\">link</a>\r                    <a href=\"\" class=\"link\">link</a>\r                    <a href=\"\" class=\"link\">link</a>\r                </nav>\r                <div>\r                    <button class=\"dark\">Button</button>\r                </div>\r            </div>\r        </div>\r    </div>\r</navbar>"
+	},
+	"Accordion Component": {
+		"scope": "html",
+		"prefix": "accordion",
+		"body": "<accordion class=\"__accordion\">\r    <div class=\"item\">\r        <button class=\"title\">Title</button>\r\r        <div class=\"content\">\r            <p>Content</p>\r        </div>\r    </div>\r    <div class=\"item\"></div>\r        <button class=\"title\">Title</button>\r\r        <div class=\"content\">\r            <p>Content</p>\r        </div>\r    </div>\r    <div class=\"item\"></div>\r        <button class=\"title\">Title</button>\r        \r        <div class=\"content\">\r            <p>Content</p>\r        </div>\r    </div>\r</accordion>"
+	},
+	"Accordion Item ": {
+		"scope": "html",
+		"prefix": "accordion-item",
+		"body": "<div class=\"item\">\r    <button class=\"title\">Title</button>\r\r    <div class=\"content\">\r        <p>Content</p>\r    </div>\r</div>"
+	},
+	"Alert Component": {
+		"scope": "html",
+		"prefix": "alert",
+		"body": "<alert class=\"modern __alert\">\r    A simple alert—check it out!\r    <button class=\"close\"></button>\r</alert>"
+	},
+	"Breadcrumb Component": {
+		"scope": "html",
+		"prefix": "breadcrumb",
+		"body": "<breadcrumb>\r    <div class=\"item\"><a href=\"#\">Home</a></div>\r    <div class=\"item\"><a href=\"#\">Libary</a></div>\r    <div class=\"item active\"><a href=\"#\">Data</a></div>\r</breadcrumb>"
+	},
+	"Breadcrumb Item": {
+		"scope": "html",
+		"prefix": "breadcrumb-item",
+		"body": "<div class=\"item\"><a href=\"#\">item</a></div>"
+	},
+	"Carousel Component": {
+		"scope": "html",
+		"prefix": "carousel",
+		"body": "<carousel class=\"__carousel\">\r    <div class=\"main\">\r        <div class=\"item\">\r            <h3>First slide</h3>\r        </div>\r        <div class=\"item\">\r            <h3>Second slide</h3>\r        </div>\r        <div class=\"item\">\r            <h3>Third slide</h3>\r        </div>\r    </div>\r    <div class=\"indicator-wrapper\">\r        <button class=\"indicator\" index=\"0\"></button>\r        <button class=\"indicator\" index=\"1\"></button>\r        <button class=\"indicator\" index=\"2\"></button>\r    </div>\r    <div class=\"control-wrapper\">\r        <div class=\"left\">\r            <button class=\"prev\"></button>\r        </div>\r        <div class=\"right\">\r            <button class=\"next\"></button>\r        </div>\r    </div>\r</carousel>"
+	},
+	"Carousel Vertical Component": {
+		"scope": "html",
+		"prefix": "carousel-vertical",
+		"body": "<carousel class=\"__carousel\">\r    <div class=\"main vertical\">\r        <div class=\"item\">\r            <h3>First slide</h3>\r        </div>\r        <div class=\"item\">\r            <h3>Second slide</h3>\r        </div>\r        <div class=\"item\">\r            <h3>Third slide</h3>\r        </div>\r    </div>\r    <div class=\"indicator-wrapper\">\r        <button class=\"indicator\" index=\"0\"></button>\r        <button class=\"indicator\" index=\"1\"></button>\r        <button class=\"indicator\" index=\"2\"></button>\r    </div>\r    <div class=\"control-wrapper\">\r        <div class=\"left\">\r            <button class=\"prev\"></button>\r        </div>\r        <div class=\"right\">\r            <button class=\"next\"></button>\r        </div>\r    </div>\r</carousel>"
+	},
+	"Carousel Auto Component": {
+		"scope": "html",
+		"prefix": "carousel-auto",
+		"body": "<carousel class=\"__carousel\" controls indicators>\r    <div class=\"main\">\r        <div class=\"item\">\r            <h3>First slide</h3>\r        </div>\r        <div class=\"item\">\r            <h3>Second slide</h3>\r        </div>\r        <div class=\"item\">\r            <h3>Third slide</h3>\r        </div>\r    </div>\r</carousel>"
+	},
+	"Dialog Component": {
+		"scope": "html",
+		"prefix": "dialog",
+		"body": "<dialog class=\"modern __dialog\">\r    <div class=\"content\">\r        <div class=\"header\">\r            <h5 class=\"title\">Some demo title</h5>\r            <button class=\"close\"></button>\r        </div>\r        <div class=\"main\">\r            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit mollitia illum perferendis\r                molestiae voluptate debitis provident veritatis ipsam autem aut quaerat recusandae</p>\r        </div>\r        <div class=\"footer grow\">\r            <button class=\"lg light wide\" type=\"button\">Demo</button>\r            <button class=\"lg dark wide\" type=\"button\">Book</button>\r        </div>\r    </div>\r</dialog>"
+	},
+	"Demo Component": {
+		"scope": "html",
+		"prefix": "demo",
+		"body": "<demo class=\" __demo\"></demo>"
+	},
 }
