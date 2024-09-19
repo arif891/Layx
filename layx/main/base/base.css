@@ -84,9 +84,10 @@ backdrop {
     visibility: hidden;
     opacity: 0;
     background: var(--backdrop-bg, rgba(0,0,0,.3));
+    transition: var(--backdrop-transition, .3s);
 
     &[open] {
         visibility: visible;
-        opacity: 0;
+        opacity: 1;
     }
 }

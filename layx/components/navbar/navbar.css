@@ -203,18 +203,7 @@ navbar,.navbar {
             }
 
             backdrop {
-                display: block;
-                position: fixed;
-                inset: 0;
-                background-color: rgba(0, 0, 0, 0.3);
-                visibility: hidden;
-                opacity: 0;
-                transition: var(--transition, .3s);
-
-                &[open] {
-                    visibility: visible;
-                    opacity: 1;
-                }
+                --backdrop-transition: var(--transition);
             }
 
             .warp-able:not(.left, .right, .full)~backdrop {

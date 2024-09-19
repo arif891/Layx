@@ -40,18 +40,6 @@ dialog {
       animation: dialog-content-show calc(var(--animation-duration) * .25) forwards calc(var(--animation-duration) * .75);
     }
 
-    &~backdrop {
-      visibility: visible;
-      opacity: 1;
-    }
-
-  }
-
-  &~backdrop {
-    --backdrop-bg: rgba(255,255,255,.3);
-    visibility: hidden;
-    opacity: 0;
-    transition: .6s;
   }
 
   .content {
@@ -142,16 +130,18 @@ dialog {
     transform-origin: bottom center;
   }
 
-  &.left.bottom,
-  &.left.center {
+  &.left.bottom,&.left.center {
     transform-origin: bottom left;
   }
 
-  &.rigth.bottom,
-  &.rigth.center {
+  &.rigth.bottom,&.rigth.center {
     transform-origin: bottom right;
   }
 
+  &~backdrop {
+    --backdrop-bg: rgba(255,255,255,.3);
+    --transition: .6s;
+  }
 }
 
 @starting-style {
