@@ -11,22 +11,6 @@ sheet,.sheet {
     visibility: visible;
   }
 
-  &:not(.none-modal) {
-    &~backdrop {
-      position: fixed;
-      inset: 0;
-      background: var(--backdrop-bg, rgba(0, 0, 0, .8));
-      visibility: hidden;
-      opacity: 0;
-      transition: var(--transition, .3s);
-
-      &[open] {
-        visibility: visible;
-        opacity: 1;
-      }
-    }
-  }
-
   &.top,&.right,&.bottom,&.left {
     &[open] {
       translate: 0 0;
@@ -78,5 +62,9 @@ sheet,.sheet {
     &.bottom::after {
       inset: .5rem 0 auto;
     }
+  }
+
+  &~backdrop {
+    --backdrop-bd:rgba(255,255,255,.3);
   }
 }
