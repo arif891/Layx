@@ -106,7 +106,7 @@ class Carousel {
                     this.updateIndicators(carousel, state);
                     this.updateActiveItem(items, state.currentIndex);
                 }
-            }, 100);
+            }, 50);
         });
     }
 

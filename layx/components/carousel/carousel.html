@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="/layx/main/base/base.css">
         <link rel="stylesheet" href="/layx/main/container/container.css">
         <link rel="stylesheet" href="/layx/components/button/button.css">
+        <link rel="stylesheet" href="/layx/main/base/animation.css">
 
         <style>
             body {
@@ -27,7 +28,21 @@
                     place-items: center;
                     background-size: cover;
                     color: #fff;
+                    animation: view_carousel_inset linear both;
+                    animation-timeline: --carousel-item;
+                    
+                    /*
+                    transition: .6s;
+                    clip-path: inset(20%);
+                    &.active {
+                        clip-path: inset(0%);
+                    }
+                    */
                 }
+            }
+
+            container {
+                --edge-offset-x: 0;
             }
         </style>
 
@@ -37,13 +52,13 @@
         <container class="__container">
             <carousel class="demo__carousel">
                 <div class="main">
-                    <div class="item" style="background-image: url(assets/img_lights_wide.webp);">
+                    <div class="item" style="background-image: url(assets/1.webp);">
                         <h3>First slide</h3>
                     </div>
-                    <div class="item" style="background-image: url(assets/img_mountains_wide.webp);">
+                    <div class="item" style="background-image: url(assets/2.webp);">
                         <h3>Second slide</h3>
                     </div>
-                    <div class="item" style="background-image: url(assets/img_snow_wide.webp);">
+                    <div class="item" style="background-image: url(assets/3.webp);">
                         <h3>Third slide</h3>
                     </div>
                 </div>
@@ -64,13 +79,13 @@
 
             <carousel class="demo__carousel">
                 <div class="main vertical">
-                    <div class="item" style="background-image: url(assets/img_lights_wide.webp);">
+                    <div class="item" style="background-image: url(assets/6.webp);">
                         <h3>First slide</h3>
                     </div>
-                    <div class="item" style="background-image: url(assets/img_mountains_wide.webp);">
+                    <div class="item" style="background-image: url(assets/11.webp);">
                         <h3>Second slide</h3>
                     </div>
-                    <div class="item" style="background-image: url(assets/img_snow_wide.webp);">
+                    <div class="item" style="background-image: url(assets/17.webp);">
                         <h3>Third slide</h3>
                     </div>
                 </div>

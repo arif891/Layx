@@ -6,22 +6,17 @@
     --base-space: .5rem;
     --base-radius: .5rem;
     --base-vpu: calc(.1vh + .1vw);
-    --base-transition-time: .6s;
-    --base-animation-time: .6s;
+    --base-transition-duration: .6s;
+    --base-animation-duration: .6s;
 }
 
 
-:root,
-[theme=light] {
+:root,[theme=light] {
     --color-rgb: 0, 0, 0;
     --bg-color-rgb: 255, 255, 255;
-    --bg: rgb(240,240,240);
+    --bg: rgb(240, 240, 240);
     --heading-color: #000;
     --paragraph-color: #000;
-    --primary-color: #0d6efd;
-    --secondary-color: #6c757d;
-    --link-color: #0d6efd;
-    --link-hover-color: #0a58ca;
     --accent-color: #7bd1ff;
     --scrollbar-color: rgba(var(--color-rgb), .4);
     --color: rgb(var(--color-rgb));
@@ -32,13 +27,9 @@
 [theme=dark] {
     --color-rgb: 255, 255, 255;
     --bg-color-rgb: 0, 0, 0;
-    --bg: rgb(20,20,20);
+    --bg: rgb(20, 20, 20);
     --heading-color: #fff;
     --paragraph-color: #fff;
-    --primary-color: #0d6efd;
-    --secondary-color: #6c757d;
-    --link-color: #6ea8fe;
-    --link-hover-color: #8bb9fe;
     --accent-color: #56a9d6;
     color-scheme: dark;
 }
