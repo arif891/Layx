@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="icon.css">
+
+    <style>
+        .demo {
+            color: red;
+        }
+
+        .demo-icon {
+            fill: blue;
+            height: 2rem;
+        } 
+    </style>
+</head>
+<body>
+    <svg class="icon">
+        <use href="/assets/image/svg/icons.svg#sun-fill" />
+    </svg>
+
+    <div class="demo">
+        <svg class="icon">
+            <use href="/assets/image/svg/icons.svg#sun-fill" />
+        </svg>
+    </div>
+    <svg class="icon demo-icon">
+        <use href="/assets/image/svg/icons.svg#sun-fill" />
+    </svg>
+</body>
+</html>

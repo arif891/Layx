@@ -1,0 +1,6 @@
+.icon {
+    display: inline-block;
+    height: 16px;
+    fill: currentColor;
+    aspect-ratio: 1;
+}
