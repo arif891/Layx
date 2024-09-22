@@ -12,7 +12,7 @@
 @supports (scrollbar-width: auto) {
     :root {
         scrollbar-width: thin;
-        scrollbar-color: var(--scrollbar-color, rgba(0, 0, 0, 0.3)) var(--bg-color, #fff);
+        scrollbar-color: var(--scrollbar-color, rgba(0, 0, 0, 0.3)) var(--bg-color);
     }
 
     body {
