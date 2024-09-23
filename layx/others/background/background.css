@@ -1,15 +1,15 @@
-.layou-visualizer {
+.layout-visualizer {
     --edge-offset-x: .75rem;
     --color: rgba(255, 0, 0, .3);
     --num-x: 12;
-    --gap: clamp(.2rem, 1vw, 1rem);
+    --gap-x: clamp(.2rem, 1vw, 1rem);
     --gap-color: transparent;
     min-height: 100vh;
     background: repeating-linear-gradient(to right,
             var(--color),
-            var(--color) calc(100% / var(--num-x) - var(--gap)),
-            var(--gap-color) calc(100% / var(--num-x) - var(--gap)),
-            var(--gap-color) calc(100% / var(--num-x) + (var(--gap) / 12)));
+            var(--color) calc(100% / var(--num-x) - var(--gap-x)),
+            var(--gap-color) calc(100% / var(--num-x) - var(--gap-x)),
+            var(--gap-color) calc(100% / var(--num-x) + (var(--gap-x) / 12)));
     background-size: calc(100% - var(--edge-offset-x) * 2) 100%;
     background-repeat: no-repeat;
     background-position: center;
