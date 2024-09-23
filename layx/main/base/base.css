@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+:root {
+    interpolate-size: allow-keywords;
+}
+
 @media (prefers-reduced-motion: no-preference) {
     :root {
         scroll-behavior: smooth;
