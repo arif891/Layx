@@ -1,3 +1,10 @@
 section {
-    
+    --padding-y: clamp(1rem, 5vh, 3rem);
+
+    &:not(.defult) {
+        layout {
+            height: 100vh;
+            padding: var(--padding-y, var(--padding, 0)) var(--padding-x, var(--padding, 0));
+        }
+    }
 }

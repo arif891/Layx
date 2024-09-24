@@ -131,6 +131,12 @@ self.addEventListener("fetch", (event) => {
             }
             break;
 
+        case "POST":
+            if (request.headers.get('X-Requested-With') === 'FormSubmission') {
+                console.log('Intercepted a form submission in the service worker');
+                handleFormSubmission(request);
+            };
+            break
 
         default:
 
@@ -191,7 +197,7 @@ async function cacheFirstStrategy(request, event, cacheName = STATIC_CACHE) {
 
 // Generic function for stale-while-revalidate strategy
 async function staleWhileRevalidateStrategy(request, event, cacheName = RUNTIME_CACHE) {
-       
+
     try {
         const cachedResponse = await caches.match(request);
         const cache = await caches.open(cacheName);
@@ -212,6 +218,19 @@ async function staleWhileRevalidateStrategy(request, event, cacheName = RUNTIME_
     } catch (error) {
         return error;
     }
+}
+
+async function handleFormSubmission(request) {
+    // Clone the request to read its body
+    const formData = await request.formData();
+
+    // Process the form data
+    for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+    }
+
+    // Forward the request to the network
+    return fetch(request);
 }
 
 // Funtion for match url pattern
@@ -254,10 +273,10 @@ async function checkAndClearCache(cacheName = RUNTIME_CACHE) {
             storageUsed >= minimalUsedStorageMB
         ) {
             await caches.delete(cacheName);
-            return { cleared: true, message: `${cacheName}  cache cleared successfully`};
+            return { cleared: true, message: `${cacheName}  cache cleared successfully` };
         }
 
-        return { cleared: false, message: `There's no need to clear the ${cacheName} cache at the moment. User devices currently have sufficient free space.`};
+        return { cleared: false, message: `There's no need to clear the ${cacheName} cache at the moment. User devices currently have sufficient free space.` };
     } catch (error) {
         console.error('Error checking storage usage:', error);
         throw new Error('Failed to check storage usage');
