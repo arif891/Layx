@@ -1,14 +1,16 @@
-form,label,input,textarea,select {
+:is(form,label,input,textarea,select, option,::picker(select)) {
     --padding-x: .8rem;
     --padding-y: 1rem;
     --radius: .5rem;
-    --color: #000;
-    --bg-color: #fff;
+    --color-rgb:0,0,0;
+    --bg-color-rgb:255,255,255;
     --form-bg-color: rgb(245, 245, 245);
     --accent-color: rgb(178, 241, 255);
     --valid-color: rgb(58, 230, 170);
     --invalid-color: rgb(255, 81, 81);
-}
+    --color: rgb(var(--color-rgb));
+    --bg-color: rgb(var(--bg-color-rgb));
+} 
 
 form {
     padding: .5rem;
@@ -27,7 +29,7 @@ input,textarea,select {
     display: block;
     min-width: 0;
     max-width: 100%;
-    padding: var(--padding-y) var(--padding-x);
+    padding: var(--padding-y,0) var(--padding-x,0);
     margin: unset;
     margin-bottom: var(--margin-bottom, 1rem);
     font: inherit;
@@ -126,6 +128,7 @@ input {
                 border: var(--border, none);
                 border-radius: var(--radius);
                 margin-bottom: var(--margin-bottom, 1rem);
+                transition: .3s;
 
                 &:focus-visible {
                     outline: 1.5px solid var(--accent-color);
@@ -170,7 +173,7 @@ input {
 
     &[type=file] {
 
-        padding-block: calc(var(--padding-y) * .5);
+        padding: calc(var(--padding-y) * .5);
 
         &::-webkit-file-upload-button {
             border: unset;
@@ -262,7 +265,8 @@ input {
         }
     }
 
-    &[type=submit],&[type=button] {
+    &[type=submit],
+    &[type=button] {
         --padding-x: 1rem;
         cursor: pointer;
     }
@@ -287,6 +291,50 @@ select {
     padding-inline: var(--padding-x) calc(var(--padding-x) + 1.3lh);
     background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23818181' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") no-repeat right var(--padding-x) center, var(--bg-color);
     background-size: .8lh;
+
+    option {
+        padding: var(--padding-y,0) var(--padding-x,0);
+        color: var(--color);
+        border-radius: var(--radius);
+        font-weight: 500;
+        transition: .3s;
+
+        &:hover{
+            background-color: var(--accent-color);
+        }
+    }
+
+    &,&::picker(select) {
+        appearance: base-select;
+    }
+
+    &::picker(select) {
+        padding: .25rem;
+        border-radius: calc(var(--radius) + .25rem);
+        background-color: rgba(var(--bg-color-rgb), .6);
+        backdrop-filter: blur(calc(.55rem + .55vw));
+        transition:
+            display allow-discrete .6s,
+            opacity .6s,
+            overlay .6s allow-discrete;
+    }
+
+    &:not(:open)::picker(select) {
+        opacity: 0;
+    }
+
+    &:open::picker(select) {
+        opacity: 1;
+
+        @starting-style {
+            opacity: 0;
+        }
+    }
+
+    &::after {
+        display: none;
+    }
+
 }
 
 .validate-wrapper:is([valid], [invalid]):has(input, textarea, select) {

@@ -19,14 +19,8 @@ class Form {
                 e.preventDefault();
 
                 const formData = new FormData(form);
-
-                let formUrl;
-                if (!form.hasAttribute('action') || form.getAttribute('action') === '') {
-                    formUrl = window.location.href;
-                } else {
-                    formUrl = form.getAttribute('action');
-                }
-
+                const formUrl = form.action;
+               
                 try {
                     // Call beforeSubmit and allow it to modify formData
                     const modifiedFormData = await this.options.beforeSubmit(formData, form);
@@ -44,6 +38,7 @@ class Form {
         const response = await fetch(formUrl, {
             method: 'POST',
             body: formData,
+            // Header for sevice worker and server
             headers: {
                 'X-Requested-With': 'FormSubmission'
             }
