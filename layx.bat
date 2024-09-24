@@ -46,14 +46,12 @@ IF NOT "%~1"=="" (
             GOTO create
         ) ELSE IF /I "%%A"=="optimage" (
             GOTO optimizeImages
-        ) ELSE IF /I "%%A"=="noconfig" (
-            GOTO noconfig
         ) ELSE IF /I "%%A"=="install" (
             GOTO install
         ) ELSE IF /I "%%A"=="uninstall" (
             GOTO uninstall
         ) ELSE (
-            ECHO Available options are "build", "unbuild", "create","optimage", "noconfig", "install" and "uninstall".
+            ECHO Available options are "build", "unbuild", "create","optimage", "install" and "uninstall".
             IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
                ECHO Forwading cmd to config.mjs
                "%NODE_EXE%" "%USE_DIR%%CONFIG_DIR%config.mjs"  %*
@@ -105,28 +103,18 @@ GOTO end
 
 :create
 IF EXIST "%PROGRAM_DIR%"  (
+IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
  Xcopy "%PROGRAM_DIR%" "%CURRENT_DIR%" /Y /E /S /V /I 
+ rmdir "%CURRENT_DIR%%CONFIG_DIR%" /S /Q
+ DEL "%CURRENT_DIR%layx.bat" /S /Q
+) ELSE (
+    ECHO Can not perform this action here "%FR_CURRENT_DIR%"
+)
 ) ELSE (
  ECHO Please first install layx
 )
 
 ECHO Layx project created in current directory.
-
-GOTO end
-
-:noconfig
-IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
-    IF EXIST "%PROGRAM_DIR%" (
-    ECHO Removing Config Files.
-    rmdir "%CURRENT_DIR%%CONFIG_DIR%" /S /Q
-    DEL "%CURRENT_DIR%layx.bat" /S /Q
-    ECHO Removed Config Files.
-    ) ELSE (
-      ECHO Please first install layx
-    )
-) ELSE (
-    ECHO Can not perform this action here "%FR_CURRENT_DIR%"
-)
 
 GOTO end
 
@@ -221,11 +209,10 @@ ECHO Please choose an option:
 ECHO 1. Build
 ECHO 2. Unbuild
 ECHO 3. Create
-ECHO 4. Remove Config
-ECHO 5. Optimize Images
-ECHO 6. Install
-ECHO 7. Uninstall
-ECHO 8. Exit
+ECHO 4. Optimize Images
+ECHO 5. Install
+ECHO 6. Uninstall
+ECHO 7. Exit
 
 SET /P choice="Enter your choice (1-8): "
 
@@ -236,14 +223,12 @@ IF "%choice%"=="1" (
 ) ELSE IF "%choice%"=="3" (
     GOTO create
 ) ELSE IF "%choice%"=="4" (
-    GOTO noconfig  
-) ELSE IF "%choice%"=="5" (
     GOTO optimizeImages 
-) ELSE IF "%choice%"=="6" (
+) ELSE IF "%choice%"=="5" (
     GOTO install
-) ELSE IF "%choice%"=="7" (
+) ELSE IF "%choice%"=="6" (
     GOTO uninstall
-) ELSE IF "%choice%"=="8" (
+) ELSE IF "%choice%"=="7" (
     GOTO end
 ) ELSE (
     ECHO Please choose a valid option.
