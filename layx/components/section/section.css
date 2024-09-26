@@ -3,7 +3,6 @@ section {
 
     &:not(.defult) {
         layout {
-            height: 100vh;
             padding: var(--padding-y, var(--padding, 0)) var(--padding-x, var(--padding, 0));
         }
     }
