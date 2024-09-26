@@ -20,23 +20,23 @@ h6,h5,h4,h3,h2,h1 {
 }
 
 h1 {
-    font-size: min(calc(2rem + 1.8vw), 4.125rem);
+    font-size: min(calc(1.5rem + 1.8vw), 4.125rem);
 }
 
 h2 {
-    font-size: min(calc(1.8rem + 1.5vw), 3.625rem);
+    font-size: min(calc(1.4rem + 1.5vw), 3.625rem);
 }
 
 h3 {
-    font-size: min(calc(1.6rem + 1.2vw), 3rem);
+    font-size: min(calc(1.3rem + 1.2vw), 3rem);
 }
 
 h4 {
-    font-size: min(calc(1.4rem + .9vw), 2.5rem);
+    font-size: min(calc(1.2rem + .9vw), 2.5rem);
 }
 
 h5 {
-    font-size: min(calc(1.2rem + .6vw), 1.875rem);
+    font-size: min(calc(1.1rem + .6vw), 1.875rem);
 }
 
 h6 {
