@@ -2,7 +2,7 @@ class SmoothScroll {
     constructor(options = {}) {
         this.targetScroll = window.scrollY;
         this.currentScroll = window.scrollY;
-        this.ease = options.ease || .050;
+        this.ease = options.ease || .075;
         this.threshold = options.threshold || .5;
         this.isScrolling = false;
         this.rafId = null;
@@ -128,4 +128,4 @@ class SmoothScroll {
 }
 
 // Usage example:
-new SmoothScroll();
+export default new SmoothScroll();

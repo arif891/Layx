@@ -83,6 +83,7 @@ a {
 }
 
 backdrop {
+    --backdrop-bg:rgba(var(--color-rgb),.3);
     position: fixed;
     inset: 0;
     visibility: hidden;

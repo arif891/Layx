@@ -1,4 +1,4 @@
-class ThemeManager {
+class Theme {
     constructor() {
         this.themeToggleButton = document.querySelector('.theme-toggler');
         this.themeUpdateElements = document.querySelectorAll('.theme-update');
@@ -47,6 +47,18 @@ class ThemeManager {
         localStorage.setItem('theme', theme);
         this.updateThemeAttributes(theme);
         this.updateMetaThemeColor();
+        this.updateActiveThemeButton(theme);
+    }
+
+    //method to update active state of theme buttons
+    updateActiveThemeButton(theme) {
+        this.themeButtons.forEach(button => {
+            if (button.getAttribute('data-theme-value') === theme) {
+                button.classList.add('active');
+            } else {
+                button.classList.remove('active');
+            }
+        });
     }
 
     // Function to get the system theme based on media query
@@ -90,5 +102,5 @@ class ThemeManager {
     }
 }
 
-// Initialize ThemeManager
-new ThemeManager();
+// Initialize Theme
+export default new Theme();

@@ -6,8 +6,8 @@ navbar,.navbar {
     --link-gap: 0;
     --link-padding-x: 0;
     --link-padding-y: .25rem;
-    --navbar-bg: #fff;
-    --navbar-warp-bg: #fff;
+    --navbar-bg: var(--bg-color,#fff);
+    --navbar-warp-bg: var(--bg-color,#fff);
     --radius: none;
     --blur: none;
     --transition: .3s;
@@ -49,6 +49,10 @@ navbar,.navbar {
                         height: clamp(25px, 100%, 30px);
                         aspect-ratio: 1;
                         background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") no-repeat center;
+
+                        [theme=dark] & {
+                            background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28245, 245, 245, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") no-repeat center;
+                        }
                     }
 
                     @media (width >=992px) {
@@ -165,10 +169,13 @@ navbar,.navbar {
 
             &.modern {
                 padding: var(--padding-y, var(--padding, .5rem)) var(--padding-x, var(--padding, .5rem));
-                background: var(--navbar-bg, #fff);
                 border: var(--border);
                 border-radius: var(--radius);
-                backdrop-filter: blur(var(--blur));
+                
+                &:not(.move) {
+                    background: var(--navbar-bg, #fff);
+                    backdrop-filter: blur(var(--blur));
+                }
             }
 
 
@@ -204,6 +211,10 @@ navbar,.navbar {
 
             backdrop {
                 --backdrop-transition: var(--transition);
+
+                @media (width >=992px) {
+                   display: none; 
+                }
             }
 
             .warp-able:not(.left, .right, .full)~backdrop {
@@ -264,6 +275,7 @@ navbar,.navbar {
 
                     .main {
                         flex-grow: 0;
+                        backdrop-filter: blur(var(--blur));
                     }
                 }
             }

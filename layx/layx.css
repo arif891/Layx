@@ -2,6 +2,7 @@
 @import url(main/base/variable.css);
 @import url(main/base/scrollbar.css);
 @import url(main/base/base.css);
+@import url(main/base/animation.css);
 @import url(main/typography/typography.css);
 
 /* Core componets */
@@ -16,7 +17,13 @@
 @import url(components/form/form.css);
 @import url(components/navbar/navbar.css);
 @import url(components/accordion/accordion.css);
+@import url(components/section/section.css);
 @import url(components/footer/footer.css);
 
 
 /* Utilities */
+
+
+/* Other */
+@import url(others/icon/icon.css);
+@import url(others/theme/theme.css)

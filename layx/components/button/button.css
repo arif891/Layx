@@ -70,13 +70,13 @@ button:not(.defult),.btn {
     }
 
     &.dark {
-        --color: #fff;
-        --bg: #000;
+        --color: rgb(var(--bg-color-rgb));
+        --bg: rgb(var(--color-rgb));
     }
 
     &.light {
-        --color: #000;
-        --bg: #fff;
+        --color: rgb(var(--color-rgb));
+        --bg: rgb(var(--bg-color-rgb));
     }
 
     &.close {
