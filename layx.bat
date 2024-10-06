@@ -4,7 +4,7 @@ SET "CURRENT_DIR=%CD%\"
 SET "SCRIPT_DIR=%~dp0"
 SET "CONFIG_DIR=config\"
 SET "IMAGES_DIR=assets\image\"
-SET "BUN_EXE=%CURRENT_DIR%%CONFIG_DIR%bun.exe"
+SET "NODE_EXE=%CURRENT_DIR%%CONFIG_DIR%node.exe"
 SET "WEBP_EXE=%CURRENT_DIR%%CONFIG_DIR%webp.exe"
 SET "PROGRAM_DIR=C:\Program Files\layx\"
 SET "FR_CURRENT_DIR=%CURRENT_DIR:\=/%"
@@ -17,21 +17,21 @@ IF "%SCRIPT_DIR%"=="%PROGRAM_DIR%" (
 
 ECHO Layx version 0.1 alpha
 
-IF NOT EXIST "%BUN_EXE%" (
-    ECHO Local folder Bun js not found.
+IF NOT EXIST "%NODE_EXE%" (
+    ECHO Local folder Node js not found.
 
-    IF EXIST "%PROGRAM_DIR%%CONFIG_DIR%bun.exe" (
-        SET "BUN_EXE=%PROGRAM_DIR%%CONFIG_DIR%bun.exe"
+    IF EXIST "%PROGRAM_DIR%%CONFIG_DIR%node.exe" (
+        SET "NODE_EXE=%PROGRAM_DIR%%CONFIG_DIR%node.exe"
         SET "WEBP_EXE=%PROGRAM_DIR%%CONFIG_DIR%webp.exe"
-        ECHO Using program Bun js .
+        ECHO Using program Node js .
     ) ELSE ( 
-    ECHO Program Bun js also not found.   
+    ECHO Program Node js also not found.   
     bun -v >nul 2>&1
     IF ERRORLEVEL 1 (
-        ECHO Bun js is not installed.
+        ECHO Node js is not installed.
     ) ELSE (
-        ECHO Bun js found globally.
-        SET "BUN_EXE=bun"
+        ECHO Node js found globally.
+        SET "NODE_EXE=node"
     )
     )
 )
@@ -54,7 +54,7 @@ IF NOT "%~1"=="" (
             ECHO Available options are "build", "unbuild", "create","optimage", "install" and "uninstall".
             IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
                ECHO Forwading cmd to config.mjs
-               "%BUN_EXE%" "%USE_DIR%%CONFIG_DIR%config.mjs"  %*
+               "%NODE_EXE%" "%USE_DIR%%CONFIG_DIR%config.mjs"  %*
             ) ELSE (
                ECHO Can not perform this action here "%FR_CURRENT_DIR%"
             )
@@ -69,15 +69,15 @@ GOTO end
 
 :build
 ECHO Building...
-ECHO Using Node: "%BUN_EXE%"
-"%BUN_EXE%" -v
+ECHO Using Node: "%NODE_EXE%"
+"%NODE_EXE%" -v
 IF ERRORLEVEL 1 (
-    ECHO Failed to execute Bun js. Please check the path and installation.
+    ECHO Failed to execute Node js. Please check the path and installation.
     GOTO end
 )
 
 IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
-  "%BUN_EXE%" "%USE_DIR%%CONFIG_DIR%config.mjs" "build"
+  "%NODE_EXE%" "%USE_DIR%%CONFIG_DIR%config.mjs" "build"
 ) ELSE (
     ECHO Can not perform this action here "%FR_CURRENT_DIR%"
 )
@@ -86,15 +86,15 @@ GOTO end
 
 :unbuild
 ECHO Unbuilding...
-ECHO Using Node: "%BUN_EXE%"
-"%BUN_EXE%" -v
+ECHO Using Node: "%NODE_EXE%"
+"%NODE_EXE%" -v
 IF ERRORLEVEL 1 (
-    ECHO Failed to execute Bun js. Please check the path and installation.
+    ECHO Failed to execute Node js. Please check the path and installation.
     GOTO end
 )
 
 IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
-  "%BUN_EXE%" "%USE_DIR%%CONFIG_DIR%config.mjs" "unbuild"
+  "%NODE_EXE%" "%USE_DIR%%CONFIG_DIR%config.mjs" "unbuild"
 ) ELSE (
     ECHO Can not perform this action here "%FR_CURRENT_DIR%"
 )
