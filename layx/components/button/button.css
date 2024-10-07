@@ -22,7 +22,6 @@ button:not(.defult),.btn {
         cursor: pointer;
     }
 
-
     &:focus-visible {
         outline: 1px solid var(--accent-color, #b7f7ff);
     }
@@ -95,10 +94,5 @@ button:not(.defult),.btn {
 }
 
 a.btn {
-    color: inherit;
     text-decoration: none;
-
-    &:visited {
-        color: inherit;
-    }
 }
