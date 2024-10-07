@@ -26,4 +26,5 @@
 
 /* Other */
 @import url(others/icon/icon.css);
-@import url(others/theme/theme.css)
+@import url(others/theme/theme.css);
+@import url(others/view_transition/mpa_view_transition/page_transition/page_transition.css);
