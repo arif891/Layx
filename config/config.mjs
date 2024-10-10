@@ -305,7 +305,7 @@ class BuildTool {
     const importUrls = this.extractImportUrls(content, fileType);
     const importedContents = await Promise.all(importUrls.map(async (url) => {
       const importedFilePath = path.resolve(path.dirname(filePath), url);
-       
+
       try {
         return await this.readFile(importedFilePath);
       } catch (error) {
@@ -321,18 +321,18 @@ class BuildTool {
     if (fileType === 'css') {
       return content
         .replace(/\/\*[\s\S]*?\*\//g, '')
-        .replace(/\s+/g, ' ')
-        .replace(/\s*([{}:;>+,])\s*/g, '$1')
-        .replace(/;}/g, '}')
+        .replace(/([^{}])\s+/g, '$1 ')
+        .replace(/\s*\n\s*/g, '')
+        .replace(/\s*{\s*/g, '{')
+        .replace(/\s*}\s*/g, '}')
+        .replace(/\s*;\s*/g, ';')
         .trim();
     } else if (fileType === 'js') {
       return content
         .replace(/\/\/.*?$/gm, '')
         .replace(/\/\*[\s\S]*?\*\//g, '')
         .replace(/\s+/g, ' ')
-        .replace(/\s*([+\-*/%=<>!?:&|,{}()[\];])\s*/g, '$1')
-        .replace(/;+\}/g, '}')
-        .replace(/;\s*$/, '')
+        .replace(/\s*\n\s*/g, '')
         .trim();
     }
     return content;
@@ -376,9 +376,9 @@ class BuildTool {
   }
 
 
-// This can be used to optimize the layout CSS code.
-// extractClasses(htmlString, 'x-') will return all classes like ['x-1', 'x-2', 'x-3', ...].
-// extractClasses(htmlString, 'x-', 'media') will return all breakpoints like ['md', 'lg', 'xl', ...].
+  // This can be used to optimize the layout CSS code.
+  // extractClasses(htmlString, 'x-') will return all classes like ['x-1', 'x-2', 'x-3', ...].
+  // extractClasses(htmlString, 'x-', 'media') will return all breakpoints like ['md', 'lg', 'xl', ...].
 
   extractClasses(html, startClass, type = 'class') {
     const escapedStartClass = startClass.replace(/[-_]/g, '\\$&');
