@@ -329,10 +329,8 @@ class BuildTool {
         .trim();
     } else if (fileType === 'js') {
       return content
-        .replace(/\/\/.*?$/gm, '')
-        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .replace(/\/\/.*|\/\*[\s\S]*?\*\//g, '')
         .replace(/\s+/g, ' ')
-        .replace(/\s*\n\s*/g, '')
         .trim();
     }
     return content;
@@ -341,10 +339,11 @@ class BuildTool {
   extractImportUrls(content, fileType) {
     const regex = fileType === 'css'
       ? /@import\s+url\(([^)]+)\);/g
-      : /import\s+\w+\s+from\s+['"]([^'"]+)['"]/g;
-
+      : /import\s+(?:\w+|\{[^}]+\})\s+from\s+['"]([^'"]+)['"]/g;
+  
     return [...content.matchAll(regex)].map(match => match[1].replace(/['"]/g, ''));
   }
+  
 
   removeExportAndDefault(content) {
     return content
