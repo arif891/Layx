@@ -183,59 +183,130 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 class BuildTool {
-  constructor() {
-    this.currentDirectory = process.cwd();
-    this.programDirectory = 'C:/Program Files/layx/';
-    this.configDirectory = path.join(this.currentDirectory, 'config');
-    this.assetsDirectory = path.join(this.currentDirectory, 'assets');
-    this.layxDirectory = path.join(this.currentDirectory, 'layx');
-    this.pagesDirectory = path.join(this.currentDirectory, 'pages');
+  static CONFIG = {
+    fileTypes: ['css', 'js'],
+    mediaBreakpoints: ['sm', 'md', 'lg', 'xl', 'xxl']
+  };
+
+  constructor(options = {}) {
+    this.initializePaths(options);
+    this.validateDirectories();
+  }
+
+  async initializePaths(options) {
+    const currentDirectory = options.currentDirectory || process.cwd();
+    const programDirectory = options.programDirectory || 'C:/Program Files/layx/';
 
     this.directories = {
-      images: path.join(this.assetsDirectory, 'images'),
-      css: path.join(this.assetsDirectory, 'css'),
-      js: path.join(this.assetsDirectory, 'js'),
-      layxCss: path.join(this.layxDirectory, 'assets', 'css'),
-      layxJs: path.join(this.layxDirectory, 'assets', 'js'),
-      pagesCss: path.join(this.assetsDirectory, 'css', 'pages'),
-      pagesJs: path.join(this.assetsDirectory, 'js', 'pages'),
-      pagesCssOut: path.join(this.layxDirectory, 'assets', 'css', 'pages'),
-      pagesJsOut: path.join(this.layxDirectory, 'assets', 'js', 'pages'),
+      current: currentDirectory,
+      program: programDirectory,
+      config: path.join(currentDirectory, 'config'),
+      assets: path.join(currentDirectory, 'assets'),
+      layx: path.join(currentDirectory, 'layx'),
+      pages: path.join(currentDirectory, 'pages'),
+      images: path.join(currentDirectory, 'assets/images'),
+      css: path.join(currentDirectory, 'assets/css'),
+      js: path.join(currentDirectory, 'assets/js'),
+      layxAssets: path.join(currentDirectory, 'layx/assets'),
+      layxCss: path.join(currentDirectory, 'layx/assets/css'),
+      layxJs: path.join(currentDirectory, 'layx/assets/js'),
+      pagesCss: path.join(currentDirectory, 'assets/css/pages'),
+      pagesJs: path.join(currentDirectory, 'assets/js/pages'),
+      pagesCssOut: path.join(currentDirectory, 'layx/assets/css/pages'),
+      pagesJsOut: path.join(currentDirectory, 'layx/assets/js/pages')
     };
 
     this.files = {
       baseCss: path.join(this.directories.css, 'base.css'),
       baseJs: path.join(this.directories.js, 'base.js'),
-      layxCss: path.join(this.layxDirectory, 'layx.css'),
-      layxJs: path.join(this.layxDirectory, 'layx.js'),
+      layxCss: path.join(this.directories.layx, 'layx.css'),
+      layxJs: path.join(this.directories.layx, 'layx.js'),
       layxCssOut: path.join(this.directories.layxCss, 'base.css'),
       layxJsOut: path.join(this.directories.layxJs, 'base.js'),
       baseCssOut: path.join(this.directories.layxCss, 'user_base.css'),
       baseJsOut: path.join(this.directories.layxJs, 'user_base.js'),
+      buildInfo: path.join(this.directories.layxAssets, 'build_info.json')
     };
   }
 
-  async build() {
+  async validateDirectories() {
+    try {
+      await Promise.all(
+        Object.values(this.directories).map(dir =>
+          fs.mkdir(dir, { recursive: true })
+        )
+      );
+    } catch (error) {
+      throw new Error(`Failed to create directories: ${error.message}`);
+    }
+  }
+
+  async build(isRebuild = false) {
     console.log('Starting build process...');
-    await this.processFiles('css');
-    await this.processFiles('js');
-    await this.processPages('css');
-    await this.processPages('js');
-    console.log('Build process completed.');
-    console.warn('Warning: Do not build again. If you want to modify your project, first unbuild with "layx unbuild".');
+    try {
+      if (!isRebuild) {
+        const buildInfo = await this.getBuildInfo();
+        if (buildInfo?.build) {
+          console.warn('Existing build detected. Initiating rebuild...');
+          await this.unbuild();
+          return this.build(true);
+        }
+      }
+
+      await Promise.all([
+        ...BuildTool.CONFIG.fileTypes.map(type => this.processFiles(type)),
+        ...BuildTool.CONFIG.fileTypes.map(type => this.processPages(type))
+      ]);
+
+      await this.genBuildInfo(true);
+      console.log('Build process completed successfully.');
+    } catch (error) {
+      console.error('Build process failed:', error);
+      await this.handleBuildFailure();
+      throw error;
+    }
+  }
+
+  async checkAndHandleExistingBuild() {
+    try {
+      const buildInfo = await this.getBuildInfo();
+      if (buildInfo?.build) {
+        console.log('Existing build detected. Initiating rebuild...');
+        await this.unbuild();
+        return this.build();
+      }
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+  }
+
+  async processBuild() {
+    await Promise.all([
+      ...BuildTool.CONFIG.fileTypes.map(type => this.processFiles(type)),
+      ...BuildTool.CONFIG.fileTypes.map(type => this.processPages(type))
+    ]);
   }
 
   async unbuild() {
     console.log('Starting unbuild process...');
-    await this.restoreFile(this.files.baseCssOut, this.files.baseCss, 'css');
-    await this.restoreFile(this.files.baseJsOut, this.files.baseJs, 'js');
-    await this.restorePages('css');
-    await this.restorePages('js');
-    console.log('Unbuild process completed.');
+    try {
+      await Promise.all([
+        ...BuildTool.CONFIG.fileTypes.map(type =>
+          this.restoreFile(
+            type === 'css' ? this.files.baseCssOut : this.files.baseJsOut,
+            type === 'css' ? this.files.baseCss : this.files.baseJs,
+            type
+          )
+        ),
+        ...BuildTool.CONFIG.fileTypes.map(type => this.restorePages(type))
+      ]);
+      await this.genBuildInfo(false);
+      console.log('Unbuild process completed successfully.');
+    } catch (error) {
+      console.error('Unbuild process failed:', error);
+      throw error;
+    }
   }
 
   async processFiles(fileType) {
@@ -301,6 +372,154 @@ class BuildTool {
     }
   }
 
+  async processFiles(fileType) {
+    const { source, base, output, baseOutput } = this.getFilePaths(fileType);
+
+    try {
+      const [sourceContent, baseContent] = await Promise.all([
+        this.readFile(source),
+        this.readFile(base).catch(() => '')
+      ]);
+
+      const processed = await this.processImports(sourceContent, source, fileType);
+      const filtered = this.removeImportStatements(processed);
+      const final = fileType === 'js' ? this.removeExportAndDefault(filtered) : filtered;
+
+      await Promise.all([
+        this.writeFile(output, `/* layx ${fileType} code */\n${final}`),
+        this.writeFile(baseOutput, `/* User base ${fileType} code */\n${this.removeComments(baseContent)}`),
+        this.writeFile(base, this.minify(final + baseContent, fileType))
+      ]);
+    } catch (error) {
+      throw new Error(`Failed to process ${fileType} files: ${error.message}`);
+    }
+  }
+
+  async processPages(fileType) {
+    const pagesDir = fileType === 'css' ? this.directories.pagesCss : this.directories.pagesJs;
+    const pagesOutDir = fileType === 'css' ? this.directories.pagesCssOut : this.directories.pagesJsOut;
+
+    const pageFiles = await this.getFilesWithExtension(pagesDir, fileType);
+
+    for (const file of pageFiles) {
+      const filePath = path.join(pagesDir, file);
+      const outPath = path.join(pagesOutDir, file);
+      const content = await this.readFile(filePath);
+
+      await this.writeFile(outPath, content);
+      await this.writeFile(filePath, this.minify(content, fileType));
+      console.log(`Processed ${file}`);
+    }
+  }
+
+  async restoreFile(sourcePath, destinationPath, fileType) {
+    try {
+      const content = await this.readFile(sourcePath);
+      await this.writeFile(destinationPath, content);
+      console.log(`Restored ${fileType.toUpperCase()} file: ${path.basename(destinationPath)}`);
+    } catch (error) {
+      console.error(`Error restoring ${fileType.toUpperCase()} file:`, error.message);
+    }
+  }
+
+  async restorePages(fileType) {
+    const pagesDir = fileType === 'css' ? this.directories.pagesCssOut : this.directories.pagesJsOut;
+    const destDir = fileType === 'css' ? this.directories.pagesCss : this.directories.pagesJs;
+
+    const pageFiles = await this.getFilesWithExtension(pagesDir, fileType);
+
+    for (const file of pageFiles) {
+      const sourcePath = path.join(pagesDir, file);
+      const destPath = path.join(destDir, file);
+      await this.restoreFile(sourcePath, destPath, fileType);
+    }
+  }
+
+  getFilePaths(fileType) {
+    const paths = {
+      css: {
+        source: this.files.layxCss,
+        base: this.files.baseCss,
+        output: this.files.layxCssOut,
+        baseOutput: this.files.baseCssOut
+      },
+      js: {
+        source: this.files.layxJs,
+        base: this.files.baseJs,
+        output: this.files.layxJsOut,
+        baseOutput: this.files.baseJsOut
+      }
+    };
+    return paths[fileType];
+  }
+
+  async genBuildInfo(buildState) {
+    try {
+      const buildInfo = JSON.stringify({ build: buildState }, null, 2);
+      await this.writeFile(this.files.buildInfo, buildInfo);
+    } catch (error) {
+      console.error('Failed to generate build info:', error);
+      throw error;
+    }
+  }
+
+  async getBuildInfo() {
+    try {
+      const content = await this.readFile(this.files.buildInfo);
+      return JSON.parse(content);
+    } catch (error) {
+      if (error.code === 'ENOENT') return null;
+      throw error;
+    }
+  }
+
+  extractClasses(html, startClass, type = 'class') {
+    if (!html || typeof html !== 'string') {
+      throw new Error('Invalid HTML input');
+    }
+
+    const escapedStartClass = startClass.replace(/[-_]/g, '\\$&');
+    const patterns = {
+      class: {
+        regex: new RegExp(`class="([^"]*?\\b${escapedStartClass}\\d+\\b[^"]*?)"`, 'g'),
+        process: match => match[1].split(/\s+/).filter(className => className.startsWith(startClass))
+      },
+      media: {
+        regex: new RegExp(`\\b${escapedStartClass}(\\w+)-\\d+\\b`, 'g'),
+        process: match => [match[1]]
+      }
+    };
+
+    if (!patterns[type]) {
+      throw new Error(`Invalid type: ${type}`);
+    }
+
+    const { regex, process } = patterns[type];
+    const resultSet = new Set();
+    let match;
+
+    while ((match = regex.exec(html)) !== null) {
+      process(match).forEach(item => resultSet.add(item));
+    }
+
+    const sortFunctions = {
+      class: (a, b) => parseInt(a.split(/[-_]/).pop()) - parseInt(b.split(/[-_]/).pop()),
+      media: (a, b) => BuildTool.CONFIG.mediaBreakpoints.indexOf(a) - BuildTool.CONFIG.mediaBreakpoints.indexOf(b)
+    };
+
+    return Array.from(resultSet).sort(sortFunctions[type]);
+  }
+
+  async handleBuildFailure() {
+    try {
+      await this.genBuildInfo(false);
+      console.log('Build state reset due to failure');
+    } catch (error) {
+      console.error('Failed to reset build state:', error);
+    }
+  }
+
+  // Utility methods (kept from original)
   async processImports(content, filePath, fileType) {
     const importUrls = this.extractImportUrls(content, fileType);
     const importedContents = await Promise.all(importUrls.map(async (url) => {
@@ -340,10 +559,10 @@ class BuildTool {
     const regex = fileType === 'css'
       ? /@import\s+url\(([^)]+)\);/g
       : /import\s+(?:\w+|\{[^}]+\})\s+from\s+['"]([^'"]+)['"]/g;
-  
+
     return [...content.matchAll(regex)].map(match => match[1].replace(/['"]/g, ''));
   }
-  
+
 
   removeExportAndDefault(content) {
     return content
@@ -374,51 +593,20 @@ class BuildTool {
     return await fs.writeFile(filePath, content, { flag });
   }
 
-
-  // This can be used to optimize the layout CSS code.
-  // extractClasses(htmlString, 'x-') will return all classes like ['x-1', 'x-2', 'x-3', ...].
-  // extractClasses(htmlString, 'x-', 'media') will return all breakpoints like ['md', 'lg', 'xl', ...].
-
-  extractClasses(html, startClass, type = 'class') {
-    const escapedStartClass = startClass.replace(/[-_]/g, '\\$&');
-    let regex, processMatch;
-
-    if (type === 'class') {
-      regex = new RegExp(`class="([^"]*?\\b${escapedStartClass}\\d+\\b[^"]*?)"`, 'g');
-      processMatch = (match) => match[1].split(/\s+/).filter(className => className.startsWith(startClass));
-    } else if (type === 'media') {
-      regex = new RegExp(`\\b${escapedStartClass}(\\w+)-\\d+\\b`, 'g');
-      processMatch = (match) => [match[1]];
-    } else {
-      throw new Error('Invalid type specified');
-    }
-
-    const resultSet = new Set();
-    let match;
-    while ((match = regex.exec(html)) !== null) {
-      processMatch(match).forEach(item => resultSet.add(item));
-    }
-
-    const sortFn = type === 'class'
-      ? (a, b) => parseInt(a.split(/[-_]/).pop()) - parseInt(b.split(/[-_]/).pop())
-      : (() => {
-        const mediaOrder = ['sm', 'md', 'lg', 'xl', 'xxl'];
-        return (a, b) => mediaOrder.indexOf(a) - mediaOrder.indexOf(b);
-      })();
-
-    return Array.from(resultSet).sort(sortFn);
-  }
 }
 
-// Usage
+// CLI interface
+const [, , command] = process.argv;
 const buildTool = new BuildTool();
 
-const [, , command] = process.argv;
-
-if (command === 'build') {
-  buildTool.build().catch(console.error);
-} else if (command === 'unbuild') {
-  buildTool.unbuild().catch(console.error);
-} else {
-  console.log(`Can no handle ${command}. Usage: layx [build|unbuild]`);
+switch (command) {
+  case 'build':
+    await buildTool.build();
+    break;
+  case 'unbuild':
+    await buildTool.unbuild();
+    break;
+  default:
+    console.error('Usage: layx [build|unbuild]');
+    process.exit(1);
 }
