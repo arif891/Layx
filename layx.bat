@@ -113,19 +113,44 @@ IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
 GOTO end
 
 :create
-IF EXIST "%PROGRAM_DIR%"  (
-IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
- Xcopy "%PROGRAM_DIR%" "%CURRENT_DIR%" /Y /E /S /V /I 
- rmdir "%CURRENT_DIR%%CONFIG_DIR%" /S /Q
- DEL "%CURRENT_DIR%layx.bat" /S /Q
-) ELSE (
-    ECHO %STRING_dir_error%
-)
-) ELSE (
- ECHO %COLOR_yellow%Please first install layx%COLOR_RESET%
-)
 
-ECHO %COLOR_cyan%LayX project created in current directory.%COLOR_RESET%
+IF EXIST "%PROGRAM_DIR%" (
+    IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
+        
+        IF EXIST "%CURRENT_DIR%\layx" (
+            SET /P choice="There may be an existing LayX project. Do you want to replace it? (Y/N): "
+
+             IF /I "%choice%"=="y" (
+             ECHO %COLOR_cyan%Continuing...%COLOR_RESET%
+             ) ELSE IF /I "%choice%"=="n" (
+             GOTO end
+        ) ELSE (
+        ECHO %COLOR_yellow%Please choose a valid option.%COLOR_RESET%
+        GOTO create
+        )
+        )
+        
+        ECHO %COLOR_cyan%Copying LayX files...%COLOR_RESET%
+        Xcopy "%PROGRAM_DIR%" "%CURRENT_DIR%" /Y /E /S /V /I 
+ 
+        IF EXIST "%CURRENT_DIR%%CONFIG_DIR%" (
+            ECHO %COLOR_cyan%Cleaning up unnecessary files...%COLOR_RESET%
+            rmdir "%CURRENT_DIR%%CONFIG_DIR%" /S /Q
+        )
+        
+        IF EXIST "%CURRENT_DIR%\layx.bat" (
+            DEL "%CURRENT_DIR%\layx.bat" /S /Q
+        )
+
+        ECHO %COLOR_green%LayX project created in the current directory.%COLOR_RESET%
+
+    ) ELSE (
+        ECHO %COLOR_red%Error: You are already in the LayX program directory. Please change to a different directory.%COLOR_RESET%
+    )
+
+) ELSE (
+    ECHO %COLOR_yellow%LayX is not installed. Please install it first.%COLOR_RESET%
+)
 
 GOTO end
 
@@ -180,7 +205,7 @@ IF EXIST "%PROGRAM_DIR%" (
     )
 )
 
-ECHO %COLOR_cyan% Installing...%COLOR_RESET%
+ECHO %COLOR_cyan%Installing...%COLOR_RESET%
 ECHO Copying Files.
 Xcopy "%SCRIPT_DIR%" "%PROGRAM_DIR%" /Y /E /S /V /I 
 Xcopy "%SCRIPT_DIR%%CONFIG_DIR%syntax\layx.code-snippets" "C:\Users\%username%\AppData\Roaming\Code\User\snippets\" /Y /E /S /V /I 

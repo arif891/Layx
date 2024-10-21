@@ -186,69 +186,69 @@ import { fileURLToPath } from 'url';
 const colors = {
   // Basic formatting
   format: {
-      reset: "\x1b[0m",
-      bold: "\x1b[1m",
-      dim: "\x1b[2m",
-      italic: "\x1b[3m",
-      underscore: "\x1b[4m",
-      blink: "\x1b[5m",
-      reverse: "\x1b[7m",
-      hidden: "\x1b[8m",
-      strikethrough: "\x1b[9m"
+    reset: "\x1b[0m",
+    bold: "\x1b[1m",
+    dim: "\x1b[2m",
+    italic: "\x1b[3m",
+    underscore: "\x1b[4m",
+    blink: "\x1b[5m",
+    reverse: "\x1b[7m",
+    hidden: "\x1b[8m",
+    strikethrough: "\x1b[9m"
   },
-  
+
   // Foreground colors (standard)
   fg: {
-      black: "\x1b[30m",
-      red: "\x1b[31m",
-      green: "\x1b[32m",
-      yellow: "\x1b[33m",
-      blue: "\x1b[34m",
-      magenta: "\x1b[35m",
-      cyan: "\x1b[36m",
-      white: "\x1b[37m",
-      // Bright variants
-      brightBlack: "\x1b[90m",
-      brightRed: "\x1b[91m",
-      brightGreen: "\x1b[92m",
-      brightYellow: "\x1b[93m",
-      brightBlue: "\x1b[94m",
-      brightMagenta: "\x1b[95m",
-      brightCyan: "\x1b[96m",
-      brightWhite: "\x1b[97m",
+    black: "\x1b[30m",
+    red: "\x1b[31m",
+    green: "\x1b[32m",
+    yellow: "\x1b[33m",
+    blue: "\x1b[34m",
+    magenta: "\x1b[35m",
+    cyan: "\x1b[36m",
+    white: "\x1b[37m",
+    // Bright variants
+    brightBlack: "\x1b[90m",
+    brightRed: "\x1b[91m",
+    brightGreen: "\x1b[92m",
+    brightYellow: "\x1b[93m",
+    brightBlue: "\x1b[94m",
+    brightMagenta: "\x1b[95m",
+    brightCyan: "\x1b[96m",
+    brightWhite: "\x1b[97m",
   },
-  
+
   // Background colors (standard)
   bg: {
-      black: "\x1b[40m",
-      red: "\x1b[41m",
-      green: "\x1b[42m",
-      yellow: "\x1b[43m",
-      blue: "\x1b[44m",
-      magenta: "\x1b[45m",
-      cyan: "\x1b[46m",
-      white: "\x1b[47m",
-      // Bright variants
-      brightBlack: "\x1b[100m",
-      brightRed: "\x1b[101m",
-      brightGreen: "\x1b[102m",
-      brightYellow: "\x1b[103m",
-      brightBlue: "\x1b[104m",
-      brightMagenta: "\x1b[105m",
-      brightCyan: "\x1b[106m",
-      brightWhite: "\x1b[107m",
+    black: "\x1b[40m",
+    red: "\x1b[41m",
+    green: "\x1b[42m",
+    yellow: "\x1b[43m",
+    blue: "\x1b[44m",
+    magenta: "\x1b[45m",
+    cyan: "\x1b[46m",
+    white: "\x1b[47m",
+    // Bright variants
+    brightBlack: "\x1b[100m",
+    brightRed: "\x1b[101m",
+    brightGreen: "\x1b[102m",
+    brightYellow: "\x1b[103m",
+    brightBlue: "\x1b[104m",
+    brightMagenta: "\x1b[105m",
+    brightCyan: "\x1b[106m",
+    brightWhite: "\x1b[107m",
   },
 
   // Utility functions
   style: (text, ...styles) => {
-      const combined = styles.join('');
-      return `${combined}${text}${colors.format.reset}`;
+    const combined = styles.join('');
+    return `${combined}${text}${colors.format.reset}`;
   },
-  
+
   // RGB support (0-255 for each channel)
   rgb: {
-      fg: (r, g, b) => `\x1b[38;2;${r};${g};${b}m`,
-      bg: (r, g, b) => `\x1b[48;2;${r};${g};${b}m`
+    fg: (r, g, b) => `\x1b[38;2;${r};${g};${b}m`,
+    bg: (r, g, b) => `\x1b[48;2;${r};${g};${b}m`
   }
 };
 
@@ -322,7 +322,7 @@ class BuildTool {
         const buildInfo = await this.getBuildInfo();
         if (buildInfo?.build) {
           console.log(colors.style('Existing build detected. Initiating rebuild...', colors.fg.yellow));
-          await this.unbuild();
+          await this.unbuild(true);
           return this.build(true);
         }
       }
@@ -332,7 +332,9 @@ class BuildTool {
         ...BuildTool.CONFIG.fileTypes.map(type => this.processPages(type))
       ]);
 
-      await this.processHtmlFiles(this.directories.pages);
+      if (!isRebuild) {
+        await this.processHtmlFiles(this.directories.pages);
+      }
 
       await this.genBuildInfo(true);
       console.log(colors.style('Build process completed successfully.', colors.fg.green));
@@ -343,14 +345,7 @@ class BuildTool {
     }
   }
 
-  async processBuild() {
-    await Promise.all([
-      ...BuildTool.CONFIG.fileTypes.map(type => this.processFiles(type)),
-      ...BuildTool.CONFIG.fileTypes.map(type => this.processPages(type))
-    ]);
-  }
-
-  async unbuild() {
+  async unbuild(isRebuild = false) {
     console.log(colors.style('Starting unbuild process...', colors.fg.cyan));
     try {
       await Promise.all([
@@ -364,7 +359,9 @@ class BuildTool {
         ...BuildTool.CONFIG.fileTypes.map(type => this.restorePages(type))
       ]);
 
-      await this.processHtmlFiles(this.directories.pages, 'uncomment');
+      if (!isRebuild) {
+        await this.processHtmlFiles(this.directories.pages, 'uncomment');
+      }
 
       await this.genBuildInfo(false);
       console.log(colors.style('Unbuild process completed successfully.', colors.fg.green));
@@ -386,7 +383,7 @@ class BuildTool {
         }
       }
     }
-  
+
     const patterns = {
       comment: [
         {
@@ -409,11 +406,11 @@ class BuildTool {
         }
       ]
     };
-  
+
     async function processFile(filePath) {
       let content = await fs.readFile(filePath, 'utf8');
       let modified = false;
-      
+
       patterns[mode].forEach(({ from, to }) => {
         const newContent = content.replace(from, to);
         if (newContent !== content) {
@@ -421,20 +418,20 @@ class BuildTool {
           modified = true;
         }
       });
-  
+
       if (modified) {
         await fs.writeFile(filePath, content, 'utf8');
         console.log(`${mode}ed layX files in ${filePath}`);
       }
     }
-  
+
     try {
-  
+
       const indexPath = path.join(this.directories.current, 'index.html');
       if (await fs.stat(indexPath).catch(() => false)) {
         await processFile(indexPath);
       }
-  
+
       for await (const filePath of findHtmlFiles(startPath)) {
         await processFile(filePath);
       }
