@@ -1,5 +1,16 @@
 @ECHO OFF
 
+SET COLOR_red=[31m
+SET COLOR_green=[32m
+SET COLOR_yellow=[33m
+SET COLOR_cyan=[36m
+SET COLOR_RESET=[0m
+
+
+SET "STRING_node_fail=%COLOR_red%Failed to execute Node js. Please check the path and installation.%COLOR_RESET%"
+SET "STRING_dir_error=%COLOR_red%Can not perform this action here "%FR_CURRENT_DIR%"%COLOR_RESET%"
+
+
 SET "CURRENT_DIR=%CD%\"
 SET "SCRIPT_DIR=%~dp0"
 SET "CONFIG_DIR=config\"
@@ -15,7 +26,7 @@ IF "%SCRIPT_DIR%"=="%PROGRAM_DIR%" (
     SET "USE_DIR=%CURRENT_DIR%"
 )
 
-ECHO Layx version 0.1 alpha
+ECHO LayX version 0.1.0 alpha
 
 IF NOT EXIST "%NODE_EXE%" (
     ECHO Local folder Node js not found.
@@ -51,12 +62,12 @@ IF NOT "%~1"=="" (
         ) ELSE IF /I "%%A"=="uninstall" (
             GOTO uninstall
         ) ELSE (
-            ECHO Available options are "build", "unbuild", "create","optimage", "install" and "uninstall".
+            ECHO Available options are %COLOR_yellow%"build"%COLOR_RESET%, %COLOR_yellow%"unbuild"%COLOR_RESET%, %COLOR_yellow%"create"%COLOR_RESET%, %COLOR_yellow%"optimage"%COLOR_RESET%, %COLOR_yellow%"install"%COLOR_RESET% and %COLOR_yellow%"uninstall"%COLOR_RESET%.
             IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
-               ECHO Forwading cmd to config.mjs
+               ECHO Forwading cmd to "config.mjs"
                "%NODE_EXE%" "%USE_DIR%%CONFIG_DIR%config.mjs"  %*
             ) ELSE (
-               ECHO Can not perform this action here "%FR_CURRENT_DIR%"
+              ECHO %STRING_dir_error%
             )
         )
     )
@@ -72,14 +83,14 @@ ECHO Building...
 ECHO Using Node: "%NODE_EXE%"
 "%NODE_EXE%" -v
 IF ERRORLEVEL 1 (
-    ECHO Failed to execute Node js. Please check the path and installation.
+    ECHO %STRING_node_fail%
     GOTO end
 )
 
 IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
   "%NODE_EXE%" "%USE_DIR%%CONFIG_DIR%config.mjs" "build"
 ) ELSE (
-    ECHO Can not perform this action here "%FR_CURRENT_DIR%"
+    ECHO %STRING_dir_error%
 )
 
 GOTO end
@@ -89,14 +100,14 @@ ECHO Unbuilding...
 ECHO Using Node: "%NODE_EXE%"
 "%NODE_EXE%" -v
 IF ERRORLEVEL 1 (
-    ECHO Failed to execute Node js. Please check the path and installation.
+    ECHO %STRING_node_fail%
     GOTO end
 )
 
 IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
   "%NODE_EXE%" "%USE_DIR%%CONFIG_DIR%config.mjs" "unbuild"
 ) ELSE (
-    ECHO Can not perform this action here "%FR_CURRENT_DIR%"
+    ECHO %STRING_dir_error%
 )
 
 GOTO end
@@ -108,17 +119,19 @@ IF NOT "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
  rmdir "%CURRENT_DIR%%CONFIG_DIR%" /S /Q
  DEL "%CURRENT_DIR%layx.bat" /S /Q
 ) ELSE (
-    ECHO Can not perform this action here "%FR_CURRENT_DIR%"
+    ECHO %STRING_dir_error%
 )
 ) ELSE (
- ECHO Please first install layx
+ ECHO %COLOR_yellow%Please first install layx%COLOR_RESET%
 )
 
-ECHO Layx project created in current directory.
+ECHO %COLOR_cyan%LayX project created in current directory.%COLOR_RESET%
 
 GOTO end
 
 :optimizeImages
+
+ECHO %COLOR_cyan%Optimizing images in "%IMAGES_DIR%"%COLOR_RESET%.
 
 for /r "%CURRENT_DIR%%IMAGES_DIR%" %%d in (*.png *.jpg) do (
     echo %%d | findstr /v /i "orginal_images_dir" > nul && (
@@ -144,7 +157,7 @@ GOTO end
 :install
 net session >nul 2>&1
 IF ERRORLEVEL 1 (
-    ECHO Requesting Administrator privileges...
+    ECHO %COLOR_yellow%Requesting Administrator privileges...%COLOR_RESET%
     powershell start-process -verb runas -filepath "%~0 install"
     EXIT /B
 )
@@ -152,47 +165,47 @@ IF ERRORLEVEL 1 (
 IF EXIST "%PROGRAM_DIR%" (
 
     IF "%CURRENT_DIR%"=="%PROGRAM_DIR%" (
-        ECHO Program already installated.
+        ECHO %COLOR_yellow%Program already installated.%COLOR_RESET%
         GOTO pause
     )
 
     SET /P choice="Program directory already exists, would you like to update or replace? ('Y' or 'N'): "
     IF /I "%choice%"=="y" (
-        ECHO Continuing...
+        ECHO %COLOR_cyan%Continuing...%COLOR_RESET%
     ) ELSE IF /I "%choice%"=="n" (
         GOTO end
     ) ELSE (
-        ECHO Please choose a valid option.
+        ECHO %COLOR_yellow%Please choose a valid option.%COLOR_RESET%
         GOTO install
     )
 )
 
-ECHO Installing...
+ECHO %COLOR_cyan% Installing...%COLOR_RESET%
 ECHO Copying Files.
 Xcopy "%SCRIPT_DIR%" "%PROGRAM_DIR%" /Y /E /S /V /I 
 Xcopy "%SCRIPT_DIR%%CONFIG_DIR%syntax\layx.code-snippets" "C:\Users\%username%\AppData\Roaming\Code\User\snippets\" /Y /E /S /V /I 
 
 ECHO %PATH% | FIND /I "%PROGRAM_DIR%" >nul
 IF ERRORLEVEL 1 (
-    ECHO Adding "%PROGRAM_DIR%" to PATH
+    ECHO %COLOR_cyan%Adding "%PROGRAM_DIR%" to PATH%COLOR_RESET%
     setx PATH "%PATH%;%PROGRAM_DIR%"
 ) ELSE (
-    ECHO "%PROGRAM_DIR%" is already in the PATH
+    ECHO %COLOR_yellow%"%PROGRAM_DIR%" is already in the PATH%COLOR_RESET%
 )
 
-ECHO Installation completed.
+ECHO %COLOR_green%Installation completed.%COLOR_RESET%
 
 GOTO pause
 
 :uninstall
 net session >nul 2>&1
 IF ERRORLEVEL 1 (
-    ECHO Requesting Administrator privileges...
+    ECHO %COLOR_yellow%Requesting Administrator privileges...%COLOR_RESET%
     powershell start-process -verb runas -filepath "%~0 uninstall"
     EXIT /B
 )
 
-ECHO Uninstalling...
+ECHO %COLOR_cyan%Uninstalling...%COLOR_RESET%
 
 IF EXIST "%PROGRAM_DIR%" (
     rmdir "%PROGRAM_DIR%" /S /Q
@@ -205,7 +218,7 @@ ECHO Uninstallation completed.
 GOTO end
 
 :option
-ECHO Please choose an option:
+ECHO %COLOR_cyan%Please choose an option:%COLOR_RESET%
 ECHO 1. Build
 ECHO 2. Unbuild
 ECHO 3. Create
@@ -231,7 +244,7 @@ IF "%choice%"=="1" (
 ) ELSE IF "%choice%"=="7" (
     GOTO end
 ) ELSE (
-    ECHO Please choose a valid option.
+    ECHO %COLOR_yellow%Please choose a valid option.%COLOR_RESET%
     GOTO option
 )
 

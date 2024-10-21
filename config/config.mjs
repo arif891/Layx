@@ -183,6 +183,79 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+const colors = {
+  // Basic formatting
+  format: {
+      reset: "\x1b[0m",
+      bold: "\x1b[1m",
+      dim: "\x1b[2m",
+      italic: "\x1b[3m",
+      underscore: "\x1b[4m",
+      blink: "\x1b[5m",
+      reverse: "\x1b[7m",
+      hidden: "\x1b[8m",
+      strikethrough: "\x1b[9m"
+  },
+  
+  // Foreground colors (standard)
+  fg: {
+      black: "\x1b[30m",
+      red: "\x1b[31m",
+      green: "\x1b[32m",
+      yellow: "\x1b[33m",
+      blue: "\x1b[34m",
+      magenta: "\x1b[35m",
+      cyan: "\x1b[36m",
+      white: "\x1b[37m",
+      // Bright variants
+      brightBlack: "\x1b[90m",
+      brightRed: "\x1b[91m",
+      brightGreen: "\x1b[92m",
+      brightYellow: "\x1b[93m",
+      brightBlue: "\x1b[94m",
+      brightMagenta: "\x1b[95m",
+      brightCyan: "\x1b[96m",
+      brightWhite: "\x1b[97m",
+  },
+  
+  // Background colors (standard)
+  bg: {
+      black: "\x1b[40m",
+      red: "\x1b[41m",
+      green: "\x1b[42m",
+      yellow: "\x1b[43m",
+      blue: "\x1b[44m",
+      magenta: "\x1b[45m",
+      cyan: "\x1b[46m",
+      white: "\x1b[47m",
+      // Bright variants
+      brightBlack: "\x1b[100m",
+      brightRed: "\x1b[101m",
+      brightGreen: "\x1b[102m",
+      brightYellow: "\x1b[103m",
+      brightBlue: "\x1b[104m",
+      brightMagenta: "\x1b[105m",
+      brightCyan: "\x1b[106m",
+      brightWhite: "\x1b[107m",
+  },
+
+  // Utility functions
+  style: (text, ...styles) => {
+      const combined = styles.join('');
+      return `${combined}${text}${colors.format.reset}`;
+  },
+  
+  // RGB support (0-255 for each channel)
+  rgb: {
+      fg: (r, g, b) => `\x1b[38;2;${r};${g};${b}m`,
+      bg: (r, g, b) => `\x1b[48;2;${r};${g};${b}m`
+  }
+};
+
+// Example usage:
+// console.log(colors.style('Hello', colors.fg.red, colors.bg.white));
+// console.log(colors.style('RGB Text', colors.rgb.fg(255, 128, 0)));
+
 class BuildTool {
   static CONFIG = {
     fileTypes: ['css', 'js'],
@@ -243,12 +316,12 @@ class BuildTool {
   }
 
   async build(isRebuild = false) {
-    console.log('Starting build process...');
+    console.log(colors.style('Starting build process...', colors.fg.cyan));
     try {
       if (!isRebuild) {
         const buildInfo = await this.getBuildInfo();
         if (buildInfo?.build) {
-          console.warn('Existing build detected. Initiating rebuild...');
+          console.log(colors.style('Existing build detected. Initiating rebuild...', colors.fg.yellow));
           await this.unbuild();
           return this.build(true);
         }
@@ -259,25 +332,14 @@ class BuildTool {
         ...BuildTool.CONFIG.fileTypes.map(type => this.processPages(type))
       ]);
 
+      await this.processHtmlFiles(this.directories.pages);
+
       await this.genBuildInfo(true);
-      console.log('Build process completed successfully.');
+      console.log(colors.style('Build process completed successfully.', colors.fg.green));
     } catch (error) {
       console.error('Build process failed:', error);
       await this.handleBuildFailure();
       throw error;
-    }
-  }
-
-  async checkAndHandleExistingBuild() {
-    try {
-      const buildInfo = await this.getBuildInfo();
-      if (buildInfo?.build) {
-        console.log('Existing build detected. Initiating rebuild...');
-        await this.unbuild();
-        return this.build();
-      }
-    } catch (error) {
-      if (error.code !== 'ENOENT') throw error;
     }
   }
 
@@ -289,7 +351,7 @@ class BuildTool {
   }
 
   async unbuild() {
-    console.log('Starting unbuild process...');
+    console.log(colors.style('Starting unbuild process...', colors.fg.cyan));
     try {
       await Promise.all([
         ...BuildTool.CONFIG.fileTypes.map(type =>
@@ -301,10 +363,83 @@ class BuildTool {
         ),
         ...BuildTool.CONFIG.fileTypes.map(type => this.restorePages(type))
       ]);
+
+      await this.processHtmlFiles(this.directories.pages, 'uncomment');
+
       await this.genBuildInfo(false);
-      console.log('Unbuild process completed successfully.');
+      console.log(colors.style('Unbuild process completed successfully.', colors.fg.green));
     } catch (error) {
       console.error('Unbuild process failed:', error);
+      throw error;
+    }
+  }
+
+  async processHtmlFiles(startPath, mode = 'comment') {
+    async function* findHtmlFiles(dir) {
+      const entries = await fs.readdir(dir, { withFileTypes: true });
+      for (const entry of entries) {
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+          yield* findHtmlFiles(fullPath);
+        } else if (entry.isFile() && path.extname(entry.name) === '.html') {
+          yield fullPath;
+        }
+      }
+    }
+  
+    const patterns = {
+      comment: [
+        {
+          from: /<link rel="stylesheet" href="\/layx\/layx\.css">/g,
+          to: '<!--<link rel="stylesheet" href="/layx/layx.css">-->'
+        },
+        {
+          from: /<script src="\/layx\/layx\.js" type="module"><\/script>/g,
+          to: '<!--<script src="/layx/layx.js" type="module"></script>-->'
+        }
+      ],
+      uncomment: [
+        {
+          from: /<!--<link rel="stylesheet" href="\/layx\/layx\.css">-->/g,
+          to: '<link rel="stylesheet" href="/layx/layx.css">'
+        },
+        {
+          from: /<!--<script src="\/layx\/layx\.js" type="module"><\/script>-->/g,
+          to: '<script src="/layx/layx.js" type="module"></script>'
+        }
+      ]
+    };
+  
+    async function processFile(filePath) {
+      let content = await fs.readFile(filePath, 'utf8');
+      let modified = false;
+      
+      patterns[mode].forEach(({ from, to }) => {
+        const newContent = content.replace(from, to);
+        if (newContent !== content) {
+          content = newContent;
+          modified = true;
+        }
+      });
+  
+      if (modified) {
+        await fs.writeFile(filePath, content, 'utf8');
+        console.log(`${mode}ed layX files in ${filePath}`);
+      }
+    }
+  
+    try {
+  
+      const indexPath = path.join(this.directories.current, 'index.html');
+      if (await fs.stat(indexPath).catch(() => false)) {
+        await processFile(indexPath);
+      }
+  
+      for await (const filePath of findHtmlFiles(startPath)) {
+        await processFile(filePath);
+      }
+    } catch (error) {
+      console.error('Error processing HTML files:', error);
       throw error;
     }
   }
@@ -607,6 +742,6 @@ switch (command) {
     await buildTool.unbuild();
     break;
   default:
-    console.error('Usage: layx [build|unbuild]');
+    console.log(`${colors.style('config.mjs:', colors.fg.cyan)} Can not handle "${command}", supported command are ${colors.style('[build|unbuild]', colors.fg.yellow)}.`);
     process.exit(1);
 }
